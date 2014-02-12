@@ -1,4 +1,4 @@
-songator
-========
+Songator layout
+===============
 
-DJ's open playlist
+Templete and layout for DJ's open playlist
