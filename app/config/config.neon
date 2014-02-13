@@ -43,9 +43,9 @@ common:
 production < common:
 	nette:
 		database:
-			dsn: 'mysql:host=wm43.wedos.net;dbname=d34561_asparty'
-			user: 'w34561_asparty'
-			password: 'chrochtavec'
+			dsn: 'mysql:host=<remote>;dbname=<dbname>'
+			user: '<user>'
+			password: '<pass>'
 
 development < common:
 	nette:
