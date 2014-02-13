@@ -74,18 +74,37 @@
           <p class="lead">Online databáze playlistu na AsianStyle party</p>
         </div>
       </div>
+      
       <div class="container">
+        <form>
+            <strong>Filtrovat: </strong> 
+            <input type="checkbox"> <i class="glyphicon glyphicon-star" title="Pecka"></i>
+            <input type="checkbox"> <i class="glyphicon glyphicon-music" title="S instrumentálkou"></i>
+            <input type="checkbox"> <i class="glyphicon glyphicon-info-sign" title="S poznámkou DJe"></i>
+            <input type="checkbox"> <i class="glyphicon glyphicon-star" title="Remix"></i>
+            <input type="submit" class="btn btn-default btn-sm" value="Třídit">
+        </form>
+        <br />
         <div class="progress">
-          <div class="progress-bar progress-bar-success" style="width: 60%" title="600 Schválených">
+          <div class="progress-bar progress-bar-success" style="width: 60%" data-toggle="tooltip" title="600 Schválených">
             <span class="sr-only">600 Schválených</span>
           </div>
-          <div class="progress-bar progress-bar-warning" style="width: 30%" title="300 Čekajících ke schválení">
+          <div class="progress-bar progress-bar-warning" style="width: 30%" data-toggle="tooltip" title="300 Čekajících ke schválení">
             <span class="sr-only">300 Čekajících ve frontě ke schválení</span>
           </div>
-          <div class="progress-bar progress-bar-danger" style="width: 10%" title="100 Zamítnutých">
+          <div class="progress-bar progress-bar-danger" style="width: 10%" data-toggle="tooltip" title="100 Zamítnutých">
             <span class="sr-only">100 Zamítnutých</span>
           </div>
         </div>
+        
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#">Vše</a></li>
+          <li><a href="#">Zařazené</a></li>
+          <li><a href="#">Čekající <span class="badge">16</span></a></li>
+          <li><a href="#">Vyřazené</a></li>
+        </ul>
+
+        
         <table class="table table-striped">
           <thead>
             <th>Datum</th>
@@ -104,7 +123,7 @@
               <td>Do you love me</td>
               <td>K-POP</td>
               <td>Uživatel1</td>
-              <td><span class="label label-success">Zařazen</span></td>
+              <td><span class="label label-success" title="Schválil(a): Admin">Zařazen</span></td>
               <td>Enter your text here...</td>
               <td>
                 <div class="btn-group">
@@ -130,7 +149,7 @@
               <td>Haru Haru</td>
               <td>K-POP</td>
               <td>Uživatel2</td>
-              <td><span class="label label-warning">Čeká</span></td>
+              <td><span class="label label-warning" title="Čeká ve frontě ke schválení">Čeká</span></td>
               <td>Další vzkaz pro DJe, tentokráte o trochu delší.</td>
               <td>
                 <div class="btn-group">
@@ -156,7 +175,7 @@
               <td>Hello</td>
               <td>K-POP</td>
               <td>Uživatel1</td>
-              <td><span class="label label-danger">Vyřazen</span></td>
+              <td><span class="label label-danger" title="Zamítl(a): Admin">Vyřazen</span></td>
               <td></td>
               <td>
                 <div class="btn-group">
@@ -195,5 +214,8 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script>
+      $(".progress-bar, .btn, .label").tooltip();
+    </script>
   </body>
 </html>
