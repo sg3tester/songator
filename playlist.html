@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    
+    <!-- The style -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Songátor 3</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#add">Přidat song</a></li>
+            <li class="active"><a href="#about">Playlist <span class="badge">16</span></a></li>
+            <li><a href="#interpreti">Interpreti</a></li>
+            <li><a href="#contact">Kontakt</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> JDC <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><b>Administrace</b></a></li>
+                <li><a href="#">Spravovat interprety</a></li>
+                <li><a href="#">Zapnout WIP režim</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Odhlásit</a></li>
+              </ul>
+              <li>
+                <form class="navbar-form navbar-left" role="search">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Hledáte něco?">
+                  </div>
+                  <button type="submit" class="btn btn-default">Hledej</button>
+                </form>
+            </li>
+            </li>
+        </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="sg-header">
+        <div class="container">
+          <h1>Seznam songů</h1>
+          <p class="lead">Online databáze playlistu na AsianStyle party</p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success" style="width: 60%" title="600 Schválených">
+            <span class="sr-only">600 Schválených</span>
+          </div>
+          <div class="progress-bar progress-bar-warning" style="width: 30%" title="300 Čekajících ke schválení">
+            <span class="sr-only">300 Čekajících ve frontě ke schválení</span>
+          </div>
+          <div class="progress-bar progress-bar-danger" style="width: 10%" title="100 Zamítnutých">
+            <span class="sr-only">100 Zamítnutých</span>
+          </div>
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <th>Datum</th>
+            <th>Interpret</th>
+            <th>Song</th>
+            <th>Žánr</th>
+            <th>Přidal(a)</th>
+            <th>Status</th>
+            <th>Vzkaz DJovi</th>
+            <th>Akce</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>06.12.14</td>
+              <td>2NE1</td>
+              <td>Do you love me</td>
+              <td>K-POP</td>
+              <td>Uživatel1</td>
+              <td><span class="label label-success">Zařazen</span></td>
+              <td>Enter your text here...</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-new-window"></i></a>
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Detail</a></li>
+                    <li><a href="#">Upravit</a></li>
+                    <li><a href="#">Smazat</a></li>
+                  </ul>
+                </div>
+                <a href="#" class="btn btn-success btn-xs" title="Schválit"><i class="glyphicon glyphicon-ok"></i></a>
+                <a href="#" class="btn btn-danger btn-xs" title="Schválit"><i class="glyphicon glyphicon-remove"></i></a>
+                <a href="#" class="btn btn-info btn-xs" title="Přehrát"><i class="glyphicon glyphicon-play"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td>06.12.14</td>
+              <td>BIG BANG</td>
+              <td>Haru Haru</td>
+              <td>K-POP</td>
+              <td>Uživatel2</td>
+              <td><span class="label label-warning">Čeká</span></td>
+              <td>Další vzkaz pro DJe, tentokráte o trochu delší.</td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-new-window"></i></a>
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Detail</a></li>
+                    <li><a href="#">Upravit</a></li>
+                    <li><a href="#">Smazat</a></li>
+                  </ul>
+                </div>
+                <a href="#" class="btn btn-success btn-xs" title="Schválit"><i class="glyphicon glyphicon-ok"></i></a>
+                <a href="#" class="btn btn-danger btn-xs" title="Schválit"><i class="glyphicon glyphicon-remove"></i></a>
+                <a href="#" class="btn btn-info btn-xs" title="Přehrát"><i class="glyphicon glyphicon-play"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td>06.12.14</td>
+              <td>FT Island</td>
+              <td>Hello</td>
+              <td>K-POP</td>
+              <td>Uživatel1</td>
+              <td><span class="label label-danger">Vyřazen</span></td>
+              <td></td>
+              <td>
+                <div class="btn-group">
+                  <a href="#" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-new-window"></i></a>
+                  <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Detail</a></li>
+                    <li><a href="#">Upravit</a></li>
+                    <li><a href="#">Smazat</a></li>
+                  </ul>
+                </div>
+                <a href="#" class="btn btn-success btn-xs" title="Schválit"><i class="glyphicon glyphicon-ok"></i></a>
+                <a href="#" class="btn btn-danger btn-xs" title="Schválit"><i class="glyphicon glyphicon-remove"></i></a>
+                <a href="#" class="btn btn-info btn-xs" title="Přehrát"><i class="glyphicon glyphicon-play"></i></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    
+    <footer>
+      <div class="container text-center">
+      <iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; height:35px;" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FofficialJDC&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35"></iframe>
+      <p>Songátor v3.0<br />
+         Copyright © 2013-2014 - JDC Entertainment & AsianStyle<br />
+         Powered by Kobliha and 3rd party components Nette framework, Twitter bootstrap</p>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
