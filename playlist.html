@@ -34,14 +34,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Songátor 3</a>
+          <a class="navbar-brand" href="index.html">Songátor 3</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#add">Přidat song</a></li>
-            <li class="active"><a href="#about">Playlist <span class="badge">16</span></a></li>
-            <li><a href="#interpreti">Interpreti</a></li>
-            <li><a href="#contact">Kontakt</a></li>
+            <li class="dropdown active"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-music"></i> Playlist <span class="badge">16</span> <b class="caret"></b> </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Přidat song</a></li>
+                <li><a href="playlist.html">Procházet playlist <span class="badge">16</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#">Pravidla přidávání songů</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-star-empty"></i> Interpreti <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Seznam interpretů</a></li>
+                <li><a href="playlist.html">Přidat interpreta</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Pravidla přidávání interpretů</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact"><i class="glyphicon glyphicon-book"></i> DJ's blog</a></li>
+            <li><a href="#contact"><i class="glyphicon glyphicon-envelope"></i> Kontakt</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

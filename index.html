@@ -38,10 +38,25 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#add">Přidat song</a></li>
-            <li><a href="playlist.html">Playlist <span class="badge">16</span></a></li>
-            <li><a href="#interpreti">Interpreti</a></li>
-            <li><a href="#contact">Kontakt</a></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-music"></i> Playlist <span class="badge">16</span> <b class="caret"></b> </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Přidat song</a></li>
+                <li><a href="playlist.html">Procházet playlist <span class="badge">16</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#">Pravidla přidávání songů</a></li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-star-empty"></i> Interpreti <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Seznam interpretů</a></li>
+                <li><a href="playlist.html">Přidat interpreta</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Pravidla přidávání interpretů</a></li>
+              </ul>
+            </li>
+            <li><a href="#contact"><i class="glyphicon glyphicon-book"></i> DJ's blog</a></li>
+            <li><a href="#contact"><i class="glyphicon glyphicon-envelope"></i> Kontakt</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">
@@ -67,7 +82,7 @@
       </div>
     </div>
 
-    <div id="sg-main">
+    <div id="sg-main"> 
       <div class="container">
         <div class="jumbotron">
           <h1>DJ JDC's otevřený playlist</h1>
@@ -213,6 +228,6 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>      
   </body>
 </html>
