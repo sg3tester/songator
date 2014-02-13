@@ -1,0 +1,67 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+
+	<title>{block title|striptags}{$sitename} - Adminex NESys control panel{/block}</title>
+
+	<link rel="stylesheet" href="{$basePath}/css/nesys.css">
+	<link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/adminex.css">
+	<link rel="stylesheet" href="{$basePath}/css/roboto.css">
+	<link rel="stylesheet" media="print" href="{$basePath}/css/print.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<link rel="stylesheet" href="{$basePath}/css/font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<script type="application/javascript" src="{$basePath}/js/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="{$basePath}/js/jquery.ajaxform.js"></script>
+	<script src="{$basePath}/js/live-form-validation.js"></script>
+	{block head}{/block}
+</head>
+
+<body>
+	<script> document.documentElement.className+=' js' </script>
+
+	
+	{block header}
+	<header>
+	    <a class="fleft" n:href=":Homepage:default" id="backlink"><span class="symboled">&#xf112;</span> Zpět na {$sitename}</a>
+	    <a class="fright" n:href=":Sign:out"><span class="symboled">&#xf011;</span> Odhlásit</a>
+	    <div class="cl"></div>
+	<div class="web-width">
+	<div id="banner">
+	    <h1><a n:href="System:default" style="color: inherit; text-decoration: none">{$sitename} - Správa systému NESys</a></h1>
+	    <h3>Adminex control panel</h3>
+	</div>
+	</div>
+	    
+	</header>
+	{/block}
+	{block menu}
+	<menu>
+	<div id="menu" class="web-width">
+	   {control menu:tree}
+	</div>
+	</menu>
+	{/block}
+	{dump}
+	<div id="obsah" class="web-width">
+	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+	{include #content}
+	</div>
+	<div class="cl"></div>
+	<footer>Adminex control panel {=SystemModule\Adminex::VERSION} | PHP {=PHP_VERSION} |
+		NESys {=Nesys\NesysCore::VERSION} ({=Nesys\NesysCore::NICKNAME}) API-{=Nesys\NesysCore::API} |
+		Nette Framework {=Nette\Framework::VERSION}</footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+
+{block content}
+<div id="lside">
+    <h2>Prohlížeč logů</h2>
+    <div class="logarea">
+    {!$log}
+    </div>
+</div>
+<div id="rside">
+    <h2>Výběr logu</h2>
+   {form logSelect}
+    {input log}<br />
+    {label type}Typ logu:{/label} {input type}<br />
+    {input view}
+    {/form}
+</div>
+
+<script> $("#datepicker").datepicker({ dateFormat: "yy-mm-dd" }); </script>
+{/block}

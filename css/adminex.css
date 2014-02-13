@@ -1,0 +1,255 @@
+/* 
+    Document   : NESys-admin
+    Created on : 16.4.2013, 8:24:04
+    Author     : JDC
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    color: #0f111d;
+    background-color: #f8f8f8;
+}
+
+.web-width {
+    width: 1100px;
+    margin: 0px auto;
+    text-align: left;
+}
+
+header {
+    background-color: #40b2e4;
+    /*opacity: 0.9;*/
+    height: 95px;
+}
+header h1 {
+    margin-top: -5px;
+    position: relative;
+    color: white;
+}
+
+header h3 {
+    color: white;
+    margin-left: 7px;
+}
+
+header a {
+    color: white;
+    padding-left: 5px;
+    margin-top: 15px;
+    position: relative;
+    font-family: RobotoMedium;
+    text-decoration: none;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+#backlink {
+    margin-top: 15px;
+    position: absolute;
+}
+
+menu ul li {
+	overflow: hidden;
+	float: left;
+	padding: 0px;
+	display: inline-block;
+}
+
+menu ul li a {
+   width: 148px;
+   height: 37px;
+   position: relative;
+   top: 0px;
+   display: block;
+   vertical-align: middle;
+   text-align: center;
+   padding-top: 8px;
+   margin: 0px;
+   margin-top: -1px;
+   color: inherit;
+   text-decoration: none;
+   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+   box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+menu ul li:hover a {
+	text-decoration: none;
+	background-color: #de358d;
+}
+
+
+menu {
+	height: 36px;
+	width: 100%;
+	position: relative;
+	background-color: #171717;
+	color: #ffffff;
+	font-size: 15px;
+	font-family: RobotoLight;
+	font-weight: 300;
+	/*border-top: #40b2e4 3px solid*/;
+}
+
+menu .selected {
+	text-decoration: none;
+	background-color: #40b2e4;
+}
+
+#obsah {
+    padding-top: 15px;
+    font-family: RobotoLight;
+    color: #333333;
+    font-size: 14px;
+    position: relative;
+    min-height: 450px;
+}
+
+#lside {
+    float: left;
+    position: relative;
+    width: 820px;
+}
+
+#rside {
+    float: left;
+    position: relative;
+    width: 220px;
+    padding-left: 48px;
+}
+
+#rside ul li {
+    padding-top: 10px;
+    font-family: RobotoBold;
+    font-size: 15px;
+    color: #40b2e4;
+    line-height: 20px;
+    list-style: none;
+    padding-top: 3px;
+}
+
+.navi ul {
+    padding-top: 5px;
+    padding-left: 15px;
+}
+
+.navi ul li {
+    color: #333333;
+    font-family: RobotoBold;
+    list-style: none;
+    padding-top: 3px;
+    font-size: 18px;
+}
+
+#rside summary {
+    color: #40b2e4;
+    padding-top: 5px;
+    position: relative;
+    display: block;
+    font-size: 15px;
+}
+
+#obsah h2 {
+    font-family: RobotoLight;
+    font-size: 24px;
+    color: #de358d;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+#obsah a {
+    color: #333333;
+    text-decoration: none;
+}
+
+#obsah a:hover {
+    color: #de358d;
+}
+
+
+
+.usercounts {
+    padding-top: 5px;
+    margin-left: 160px;
+    position: relative;
+}
+
+.usercounts b {
+    color: #125EAE;
+}
+
+.fright {
+    float: right;
+    margin-top: 2px;
+    margin-right: 15px;
+}
+
+.fleft {
+    float: left;
+    position: relative;
+    top: -14px;
+    z-index: 16;
+}
+
+.cl {
+    clear: both;
+}
+
+.male {
+    color: #40b2e4;
+}
+
+.female {
+    color: #de358d;
+}
+
+footer {
+    font-family: RobotoLight;
+    font-size: 12px;
+    color: #666666;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.symboled64 {
+    font-family: FontAwesome;
+    font-size: 64px;
+}
+
+.message {
+    padding-left: 25px;
+    font-family: RobotoLight;
+    font-size: 14px;
+    position: relative;
+}
+
+#dialog {
+    top: 32px;
+    position: relative;
+}
+
+#buttons {
+    position: absolute;
+    top: 25px;
+    left: 200px;
+    z-index: 16;
+}
+
+.list-empty {
+    padding-top: 52px;
+    font-family: RobotoItalic;
+    font-size: 14px;
+    text-align: center;
+    color: #666666;
+}
+
+.logarea {
+    height: 420px;
+    word-break: keep-all;
+    word-wrap: normal;
+    text-wrap: none;
+    overflow: scroll;
+}

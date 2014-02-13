@@ -1,0 +1,20 @@
+
+{block content}
+<div id="lside">
+    <h2>Upravit stránku</h2>
+    {control editor}
+</div>
+<div id="rside">
+    <h2>Úkoly</h2>
+    <ul>
+	<li><a n:href="default"><span class="icon-list"></span>Seznam stránek</a></li>
+	<li><a n:href="system:content"><span class="icon-hdd"></span>Správa obsahu</a></li>
+    </ul>
+</div>
+{/block}
+
+{block head}
+	<script src="{$basePath}/js/datetimepicker.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/tinymce/tinymce.min.js"></script>
+	<script src="{$basePath}/js/editor.js"></script>
+{/block}

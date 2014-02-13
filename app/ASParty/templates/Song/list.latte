@@ -1,0 +1,93 @@
+{block title}Seznam songů{/block}
+{block content}
+<h2>Seznam žádaných songů na AsianStyle párty</h2>
+<div class="hledat">
+    {form search}
+    {input search} {input hledej}
+    {/form}
+</div>
+{if $user->isAllowed("system","view")}
+<p>{if !$wip}<a n:href="wipOn!">Zapnout WIP režim</a>{else}<a n:href="wipOff!">Vypnout WIP režim</a>{/if}</p>
+{/if}
+<p>Filtrovat: <a n:href="this status => null">Vše</a> | <a n:href="this status => 'approved'">Zařazené</a> | <a n:href="this status => 'waiting'">Čekající</a> | <a n:href="this status => 'rejected'">Vyřazené</a></p> 
+{form attrFilter}
+<p>Třídit dle atributů: {input pecka} <span class="icon-star pecka" title="Pecka song"></span> {input instro} <span class="icon-music instro" title="Song s instrem"></span> {input note} <span class="icon-info-sign dj-note" title="Poznámka DJe"></span> {input tridit}</p>
+{/form}
+{if $search && $navrhovany}
+{if $search != $navrhovany}
+<div id="matched" class="fs16">
+    <p>Měl(a) jsi na mysli <a n:href="this 'search' => $navrhovany">{$navrhovany}</a>?</p>
+</div>
+{/if}
+{/if}
+{if $songy->count() == 0}
+{if $search == null}
+<p>Playlist je prázdný</p>
+{else}
+<p>Výraz "{$search}" nebyl nalezen</p>
+{/if}
+{else}
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+<p>V seznamu se aktuálně nachází <b>{$songy->count()}</b> songů.</p>
+<table class="nesys-table" width="100%">
+	<thead>
+	    <tr>
+		{foreach $heads as $head}
+		{if $head->type == "ASC"}
+		{var $sort = $head->head." DESC"}
+		{else}
+		{var $sort = $head->head." ASC"}
+		{/if}
+		{if $head->matched}
+		<td><a class="lighted" href="{link this 'sort' => $sort}">{$head->caption} {if $head->type == "ASC"}<span class="icon-caret-down"></span>{else}<span class="icon-caret-up"></span>{/if}</a></td>
+		{else}
+		<td><a href="{link this 'sort' => $sort}">{$head->caption}</a></td>
+		{/if}
+		{/foreach}
+		<td><span class="icon-cog"></span></td>
+	    </tr>
+	</thead>
+	<tbody>
+	    {foreach $songy as $song}
+	    {var $interpret = $song->ref("podobne","interpret")}
+	    {var $revizor = $song->ref("users","revidedby")}
+	    <tr id="track{$song->id}" n:class="$iterator->isOdd() ? odd : even">
+		<td width="64">{$song->datum|date:'d.m.y'}</td>
+		<td width="150">{if $interpret}<span class="valid"><a n:href="interpreti:detail $interpret->valid" target="_blank">{$song->interpret}</a></span><span class="verified" title="Interpret je v našem registru"></span>{else}<i>{$song->interpret}</i>{/if}</td>
+		<td width="200">{$song->song} {if $song->pecka}<span class="icon-star pecka" title="Tenhle song je pecka!"></span>{/if}{if $song->instro}<span class="icon-music instro" title="K dispozici je instrumentálka"></span>{/if}{if $song->likes >= 10}<span class="icon-heart heart" title="Tento song je srdcovka!"></span>{/if}{if $song->note != null}<span class="icon-info-sign dj-note" title="Poznámka DJe: {$song->note}"></span>{/if}</td>
+		<td width="48">{$song->zanr}</td>
+		<td width="64">{$song->zadatel}</td>
+		<td width="40">
+		    {if $song->status == "waiting"}
+		    <span class="status waiting" title="Čeká na schválení">Čeká</span>
+		    {elseif $song->status == "approved"}
+		    <span class="status approved" title="Schválil(a): {$revizor->user}">Zařazen</span>
+		    {elseif $song->status == "rejected"}
+		    <span class="status rejected" title="Zamítl(a): {$revizor->user}">Vyřazen</span>
+		    {/if}
+		</td>
+		<td width="180">{$song->vzkaz|truncate:127}</td>
+		<td class="cmd" width="35">{if !in_array($song->id,$likez)}<a rel="nofollow" data-song="{link likeSong! $song->id}" data-token="{=md5($song->id)}" class="likeit" href="#like"><span class="icon-heart"></span>{$song->likes}</a>{else}<p class="heart" title="Tenhle song se ti líbí!"><span class="icon-heart"></span>{$song->likes}</p>{/if}</td>
+		<td class="cmd" width="72">
+		    <a n:href="view $song->id" title="Detail"><span class="icon-external-link"></span></a>
+		    {if $user->isAllowed("system","view")}
+		    <a n:href="approve! $song->id" title="Schválit" data-confirm="Schválit song?"><span class="icon-ok"></span></a>
+		    <a n:href="reject! $song->id" title="Zamítnout" data-confirm="Zamítnout song?"><span class="icon-remove"></span></a>
+		    {/if}
+		    {if $song->yt != null}<a href="{$song->yt}" target="_blank" title="Poslechnout"><span class="icon-play"></span></a>{/if}
+		</td>
+	    </tr>
+	    {/foreach}
+	</tbody>
+    </table>
+{/if}
+<script>
+$(".likeit").click(function(){
+	var song = $(this).attr("data-song");
+	var token = $(this).attr("data-token");
+			$.get(song, { confirm: token }, function(data){
+				window.location.href = data.redirect;
+			});
+	return false;
+});
+</script>

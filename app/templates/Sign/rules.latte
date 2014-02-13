@@ -1,0 +1,19 @@
+
+{block content}
+<div class="nadpis">
+    <h1>Pravidla portálu 2ne1.cz</h1>
+</div>
+<div class="page-obsah">
+{snippet flashes}
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+{/snippet}
+</div>
+{/block}
+
+{block downmenu}
+<ul>
+	<li><a n:href="sign:in" {if $smsel == 1}class="selected"{/if}><span class="icon-circle"></span>Přihlásit</a></li>
+	<li><a n:href="sign:up" {if $smsel == 2}class="selected"{/if}><span class="icon-circle"></span>Registrovat</a></li>
+	<li><a n:href="sign:rules" {if $smsel == 3}class="selected"{/if}><span class="icon-circle"></span>Podmínky služby</a></li>
+</ul>
+{/block}

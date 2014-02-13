@@ -1,0 +1,8 @@
+{* Latte template *}
+
+{block content}
+<div id="content">
+	<h1>{$page->nazev}</h1>
+	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+	{!$page->content}
+</div>

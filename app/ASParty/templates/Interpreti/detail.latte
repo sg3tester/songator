@@ -1,0 +1,28 @@
+{block content}
+<h2>{$interpret->valid}</h2>
+<p>{$interpret->aliases|replace:',',', '}</p>
+{if $interpret->asprofil}
+<a href="http://www.asianstyle.cz/profily/{$interpret->asprofil}"><img src="{$basePath}/img/aslogo_nano.png"> Profil na AsianStyle.cz</a>
+{/if}
+
+<h3>Songy tohoto interpreta v playlistu</h3>
+<div class="songy">
+    {foreach $songy as $song}
+    <div class="song">
+	<div class="song-status {$song->status}"></div>
+	<div class="song-info">
+	<h3>{$song->interpret} - {$song->song}</h3>
+	<div class="song-zanr">{$song->zanr}</div>
+	<div class="song-cell"><span class="icon-calendar" title="Přidán"></span>{$song->datum}</div>
+	<div class="song-cell"><span class="icon-user" title="Žadatel"></span>{$song->zadatel}</div>
+	{if $song->vzkaz}
+	<div class="song-cell"><span class="icon-comment" title="Vzkaz pro DJe"></span>{$song->vzkaz}</div>
+	{/if}
+	{if $song->note}
+	<div class="song-cell"><span class="icon-info-sign dj-note" title="Poznámka DJe"></span>{$song->note}</div>
+	{/if}
+	<div class="song-youtube"><a href="{$song->yt}" target="_blank"><span class="icon-play"></span>Play song</a></div>
+	</div>
+    </div>
+    {/foreach}
+</div>

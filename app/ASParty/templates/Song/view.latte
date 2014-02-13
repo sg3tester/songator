@@ -1,0 +1,41 @@
+{block title}Detail songu {$song->interpret} - {$song->song}{/block}
+{block content}
+{if $song == null}
+<p>Tento song není v našem playlistu</p>
+{else}
+<h2>Detail songu {$song->interpret} - {$song->song} <small><a n:href="list#track$song->id">Najít v seznamu</a></small></h2>
+<b>Interpret:</b> {$song->interpret}<br />
+<b>Název songu:</b> {$song->song}<br />
+<b>Žánr:</b> {$song->zanr}<br />
+<b>Status:</b> <div class="stav">{if $song->status == "waiting"}
+		    <span class="status waiting">Čeká</span>
+		    {elseif $song->status == "approved"}
+		    <span class="status approved">Zařazen</span>
+		    {elseif $song->status == "rejected"}
+		    <span class="status rejected">Vyřazen</span>
+		    {/if}</div><br />
+		    <b>Link k poslechnutí:</b> {if $song->yt != null}<a href="{$song->yt}" target="_blank">{$song->yt}</a>{else}<i>Není k dispozici</i>{/if}<br />
+		    <b>Vzkaz pro DJe:</b><br />
+{if $song->vzkaz == null}
+		    <i>Vzkaz není dostupný</i>
+		    {/if}
+		    <p>{$song->vzkaz}</p>
+		    <b>Poznámka DJe:</b><br />
+{if $song->note == null}
+		    <i>Není k dispozici</i>
+		    {/if}
+		    <p>{$song->note}</p>
+		    
+		    {if $song->instro}<span class="instro"><span class="icon-music"></span>K dispozici je také instrumentálka</span><br />{/if}
+		    {if $song->pecka}<span class="pecka"><span class="icon-star"></span>Tenhle song je pecka!</span><br />{/if}
+		    
+		    {if $user->isAllowed("system","view")}
+		    <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+		    <div class="adminbar">
+			<a n:href="approve! $song->id" data-confirm="Schválit song?"><span class="icon-ok"></span>Schválit</a>
+			<a n:href="reject! $song->id" data-confirm="Zamítnout song?"><span class="icon-remove"></span>Zamítnout</a>
+			<a n:href="edit! $song->id"><span class="icon-edit"></span>Upravit</a>
+			<a n:href="delete! $song->id" data-confirm="Smazat song?"><span class="icon-trash"></span>Smazat</a>
+		    </div>		    
+{/if}
+		    {/if}

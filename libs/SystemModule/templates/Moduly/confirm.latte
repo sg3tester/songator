@@ -1,0 +1,9 @@
+
+{block content}
+<h2>{$titulek}</h2>
+<div id="dialog">
+    <span class="symboled64 fleft">&#xf071;</span><p class="message fleft">{$zprava}</p>
+    <div id="buttons">
+	<a class="button-master" n:href="$action $param, confirm => 'ok'">{$oklabel}</a> <a class="button-normal" n:href="$zpet">Zrušit</a>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+
+
+{block content}
+<div id="lside">
+    <h2>Správa modulů</h2>
+    <p style="color: red; margin-bottom: 15px; margin-top: 5px;"><b>VAROVÁNÍ!</b> Správa modulů je POUZE PRO EXPERTY. Špatným zásahem do modulů můžete znefunkčnit celý portál.</p>
+    <table class="nesys-table" width="100%">
+	<thead>
+	    <tr>
+		<td>Modul</td>
+		<td>Autor</td>
+		<td>Verze</td>
+		<td><span class="symboled">&#xf013;</span> Akce</td>
+	    </tr>
+	</thead>
+	<tbody>
+	    <tr class="odd">
+		<td width="232">Nesys core<br /><i style="font-size: 12px">Jádro CMS Nesys</i></td>
+		<td width="150">JDC Entertainment<br /><i style="font-size: 12px">jdc@2ne1.cz</i></td>
+		<td width="88">{=Nesys\NesysCore::VERSION}</td>
+		<td width="64"></td>
+	    </tr>
+	    <tr class="even">
+		<td width="232">Adminex<br /><i style="font-size: 12px">Administration Extension</i></td>
+		<td width="150">JDC Entertainment<br /><i style="font-size: 12px">jdc@2ne1.cz</i></td>
+		<td width="88">1.0</td>
+		<td width="64"></td>
+	    </tr>
+	    {foreach $moduly as $modul}
+	    <tr n:class="$iterator->isOdd() ? odd : even">
+		{var $modinfo = json_decode($modul->info, true)}
+		<td width="232">{$modinfo["fullname"]}<br /><i style="font-size: 12px">{$modinfo["desc"]}</i></td>
+		<td width="150">{$modinfo["author"]}<br /><i style="font-size: 12px">{$modinfo["e-mail"]}</i></td>
+		<td width="88">{$modinfo["version"]}</td>
+		<td width="64"><a n:href="update! $modul['name']">Aktualizovat</a><br /><a n:href="uninstall! $modul['name']">Odinstalovat</a></td>
+	    </tr>
+	    {/foreach}
+	</tbody>
+    </table>
+</div>
+<div id="rside">
+    <h2>Úkoly</h2>
+	<ul>
+	    <li><a n:href="Moduly:check"><span class="symboled">&#xf01c;</span> Zkontrolovat nové moduly</a></li>
+	    <li><a n:href="Sluzby:default"><span class="symboled">&#xf0c2;</span> Služby</a></li>
+	    <li><a n:href="System:control"><span class="symboled">&#xf0fa;</span> Správa systému</a></li>
+	</ul>
+</div>

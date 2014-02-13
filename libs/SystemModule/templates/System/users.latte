@@ -1,0 +1,53 @@
+{block head}
+<script type="javascript">
+</script>
+{/block}
+{block content}
+<div id="lside">
+    {if $filter == 'ban'}
+    <h2>Zabanovaní uživatelé</h2>
+    {else}
+    <h2>Správa uživatelů</h2>
+    {/if}
+    <p>Barevné kódy pohlaví: <b><span class="male">Muž</span>&nbsp;&nbsp;&nbsp;<span class="female">Žena</span>&nbsp;&nbsp;&nbsp;Hermésfrodit</b>.</p><br />
+    <div class="tridic">
+	{control tridic:tree}
+    </div>
+    {if $usrcount == 0}
+    <p class="list-empty">Seznam uživatelů je prázdný.</p>
+    {else}
+    <table class="nesys-table" width="100%">
+	<thead>
+	    <tr>
+		<td><span class="symboled">&#xf007;</span> Uživatel</td>
+		<td><span class="symboled">&#xf0e0;</span> E-mail</td>
+		<td><span class="symboled">&#xf0c0;</span> Role</td>
+		<td><span class="symboled">&#xf013;</span> Akce</td>
+	    </tr>
+	</thead>
+	<tbody>
+	    {foreach $userList as $usr}
+	    <tr n:class="$iterator->isOdd() ? odd : even, $usr->banned ? redrow">
+		<td width="180" n:class="$usr->pohlavi == 'M' ? male, $usr->pohlavi == 'F' ? female, first">{$usr->user}</td>
+		<td width="232">{$usr->mail}</td>
+		<td width="88">{$perms->getRoleName($usr->role)}</td>
+		<td width="64" class="symboled spaced"><a n:href="editUser!  $usr->id" title="Upravit">&#xf040;</a> <a n:href="deleteUser! $usr->id" title="Smazat">&#xf014;</a> {if $usr->banned}<a n:href="unbanUser! $usr->id" title="Zrušit ban">&#xf05d;</a>{else}<a n:href="banUser! $usr->id" title="Udělit ban">&#xf05e;</a>{/if}</td>
+	    </tr>
+	    {/foreach}
+	</tbody>
+    </table>
+    {/if}
+</div>
+<div id="rside">
+    <h2>Úkoly</h2>
+	<ul>
+	    <li><a n:href="System:user"><span class="symboled">&#xf055;</span> Vytvořit uživatele</a></li>
+	    <li><a n:href="System:permissions"><span class="symboled">&#xf023;</span>&nbsp; Role&amp;Oprávnění</a></li>
+	    {if $filter == 'ban'}
+	    <li><a n:href="System:users"><span class="symboled">&#xf0c0;</span> Procházet uživatele</a></li>
+	    {else}
+	    <li><a n:href="System:users filter => 'ban'"><span class="symboled">&#xf05e;</span>&nbsp; Procházet bany</a></li>
+	    {/if}
+	</ul>
+</div>
+{/block}

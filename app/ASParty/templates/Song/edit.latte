@@ -1,0 +1,6 @@
+{block title}Editovat song{/block}
+{block content}
+<h2>Editovat song</h2>
+<p><a n:href="view $id">Zobrazit detail songu</a> | <a n:href="list#track$id">Najít v seznamu</a></p>
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+{control editSong}

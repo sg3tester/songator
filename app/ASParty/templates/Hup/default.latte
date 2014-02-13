@@ -1,0 +1,8 @@
+
+{block content}
+<h2>Hlavní uzávěr songátoru</h2>
+Status songátoru: {if $status}<span style="border-radius: 5px; background-color: green; padding-left: 5px; padding-right: 5px; color: white; font-family: RobotoMedium">Zapnut</span><br />{else}
+<span style="border-radius: 5px; background-color: red; padding-left: 5px; padding-right: 5px; color: white; font-family: RobotoMedium">Vypnut</span><br />{/if}
+<a n:href="switch!" class="button-master">Switch On/Off</a>
+<h2>Zpráva uživatelům</h2>
+{control frmZprava}

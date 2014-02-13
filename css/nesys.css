@@ -1,0 +1,540 @@
+/* 
+    Document   : nesys
+    Created on : 18.4.2013, 19:41:00
+    Author     : JDC
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+    padding-right: 3px;
+}
+
+a[href^="error:"] {
+    background: red;
+    color: white;
+    text-decoration: none;
+}
+
+a:hover [class^="icon-"],
+a:hover [class*=" icon-"] {
+    text-decoration: none;
+}
+
+body {
+    font-family: Roboto;
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+    /*text-align: center;*/
+}
+
+.nesys-table table {
+    border-spacing: 0 2px;
+}
+
+.nesys-table thead tr {
+    background-color: #e4f4fb;
+}
+
+.nesys-table thead td {
+    font-weight: bold !important;
+    font-family: RobotoLight;
+}
+
+.nesys-table tbody tr:hover {
+    background-color: #f9deec;
+}
+
+.nesys-table thead td:first-child {
+    font-weight: bold !important;
+    font-family: RobotoLight;
+}
+
+.nesys-table tbody td.first {
+    font-family: RobotoMedium;
+}
+
+.even {
+    background-color: #f3f3f3;
+}
+
+.symboled {
+    font-family: FontAwesome;
+}
+
+.spaced {
+    word-spacing: 5px;
+}
+
+.redrow {
+    background-color: #ffd3d3;
+    color: red;
+}
+
+.button-master {
+	background-color: #de358d;
+	width: 110px;
+	height: 34px;
+	position: relative;
+	color: white !important;
+	display: inline-block;
+	text-decoration: none;
+	font-size: 14px;
+	text-align: center;
+	margin-top: 38px;
+	font-family: arial;
+	font-weight: bold;
+	padding-top: 8px;
+	border: none;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+   box-sizing: border-box;         /* Opera/IE 8+ */
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+.button-submit {
+    display: block;
+    border: none;
+    background-color: #de358d;
+	min-width: 110px;
+	height: 34px;
+	position: relative;
+	color: white !important;
+	display: inline-block;
+	text-decoration: none;
+	font-size: 14px;
+	text-align: center;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-family: arial;
+	font-weight: bold;
+	font-size: 14px;
+	margin-top: 5px;
+}
+
+.button-normal {
+	background-color: #40b2e4;
+	width: 110px;
+	height: 34px;
+	position: relative;
+	color: white !important;
+	display: inline-block;
+	text-decoration: none;
+	font-size: 14px;
+	text-align: center;
+	margin-top: 38px;
+	font-family: arial;
+	font-weight: bold;
+	padding-top: 8px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;         /* Opera/IE 8+ */
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+.button-normal:hover {
+    background-color: #de358d;
+}
+
+.tridic {
+    text-align: center;
+}
+
+.tridic ul li {
+    overflow: hidden;
+    padding: 0px;
+    display: inline-block;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.tridic li a {
+    background-color: #40b2e4;
+    margin-right: 2px;
+    min-width: 110px;
+    height: 34px;
+    position: relative;
+    color: white !important;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    font-family: arial;
+    font-weight: bold;
+    font-size: 14px;
+    padding-top: 8px;
+    margin-right: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+/*.tridic li a {
+    color: white !important;
+    display: block;
+    width: 100%;
+    height: 100%;
+}*/
+.tridic li a:hover {
+    background-color: #de358d;
+}
+
+.tridic .selected {
+    background-color: #de358d !important;
+}
+
+/*** Forms ***/
+#obsah fieldset {
+background-color: #fbfbfb;
+margin: 1.5em 0;
+padding: 1em;
+border: none;
+border-radius: 15px;
+margin-top: 42px;
+}
+
+#obsah legend {
+font-family: RobotoLight;
+font-size: 18px;
+margin-left: 5px;
+text-transform: uppercase; 
+color: #de358d;
+margin-top: -20px;
+background-color: #fbfbfb;
+padding-left: 0.5em;
+padding-right: 0.5em;
+padding-top: 0.1em;
+-webkit-border-top-left-radius: 10px;
+-webkit-border-top-right-radius: 10px;
+-moz-border-radius-topleft: 10px;
+-moz-border-radius-topright: 10px;
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+}
+
+#obsah label {
+
+}
+
+#obsah form div.pair {
+margin-bottom: 1ex;
+}
+
+#obsah form div.pair label {
+display: block;
+width: 130px;
+text-align: right;
+float: left;
+line-height: 2;
+vertical-align: middle;
+}
+
+#obsah form div.pair div.input {
+margin-left: 150px;
+}
+
+#obsah form div.pair div.input label {
+width: auto;
+display: inline;
+float: none;
+line-height: normal;
+}
+
+
+
+form ul.error {
+display: block;
+padding: .8em;
+margin-bottom: 1em;
+border: 2px solid #FBC2C4;
+background: #FBE3E4;
+color: #8a1f11;
+}
+
+#obsah input[type=text], #obsah input[type=password], select {
+border-radius: 3px;
+border: 1px solid silver;
+padding: .3em;
+margin-right: .5em;
+}
+
+#obsah input[type=checkbox] {
+vertical-align: middle;
+}
+
+#obsah form {
+  margin: 0;  
+}
+
+/*** Forms in fancybox ***/
+#obsah-fancy fieldset {
+border: none;
+margin: 1.5em 0;
+padding: 1ex 0;
+}
+
+#obsah-fancy legend {
+font-weight: bold;
+margin-left: 0;
+}
+
+#obsah-fancy label {
+
+}
+
+#obsah-fancy form div.pair {
+margin-bottom: 1ex;
+}
+
+#obsah-fancy form div.pair label {
+display: block;
+width: 130px;
+text-align: right;
+float: left;
+line-height: 2;
+vertical-align: middle;
+}
+
+#obsah-fancy form div.pair div.input {
+margin-left: 150px;
+}
+
+#obsah-fancy form div.pair div.input label {
+width: auto;
+display: inline;
+float: none;
+line-height: normal;
+}
+
+#obsah-fancy input[type=text], #obsah-fancy input[type=password], #obsah-fancy select {
+border-radius: 3px;
+border: 1px solid silver;
+padding: .3em;
+margin-right: .5em;
+}
+
+#obsah-fancy input[type=checkbox] {
+vertical-align: middle;
+}
+
+#obsah-fancy form {
+    margin: .5em;
+}
+
+/*** Flash messages ***/
+div.flash {
+padding: .8em;
+margin: .5em;
+margin-bottom: 1em;
+border: 2px solid #ddd;
+}
+
+div.flash.success {
+background: #E6EFC2;;
+color: #264409;
+border-color: #C6D880;
+}
+
+div.flash.info {
+background: #FFF6BF;
+color: #514721;
+border-color: #FFD324;
+}
+
+div.flash.error {
+background: #FBE3E4;
+color: #8a1f11;
+border-color: #FBC2C4;
+}
+
+.form-control-error {
+    color: #ff0554;
+    background-color: #ffe5e5;
+}
+
+.form-error-message {
+    color: #ff0554;
+    font-weight: bold;   
+}
+
+.form-error-message:before {
+    font-family: FontAwesome;
+    content: '\f071';
+    padding-right: 5px;
+}
+
+form label {
+    padding-right: .5em;
+    font-weight: normal;
+}
+
+form label.required:before {
+    font-family: FontAwesome;
+    content: '\f069';
+    padding-right: .25em;
+    font-size: .65em;
+    vertical-align: top;
+    font-weight: normal;
+    line-height: 1.55em;
+    display: inline-block;
+    color: #de358d;
+}
+
+.akce a {
+    color: #333333 !important;
+    text-decoration: none;
+}
+
+.akce a:hover {
+    color: #de358d !important;
+    text-decoration: none;
+}
+
+#ajax-spinner {
+    position:fixed;
+    left: 45%;
+    top: 45%;
+    background: url('../img/ajax-loader.gif') no-repeat 50% 50%;
+    padding: 22px;
+    font-size: 0;
+}
+
+/* Paginator */
+.paginator {
+	/*margin: 1em 0;*/
+	padding-top: 15px;
+	padding-bottom: 35px;
+	font-size: 20px;
+	text-align: center;
+	position: relative;
+}
+
+.paginator a, .paginator span {
+	/*margin-right: 0.1em;*/
+	padding: 0.2em 0.5em;
+	color: inherit;
+}
+
+.paginator a {
+	background-color: #40b2e4;
+	text-decoration: none;
+	color: white;
+	border-radius: 15px;
+}
+
+.paginator a:hover {
+    background-color: #de358d;
+    text-decoration: none;
+}
+
+.paginator span.button {
+	background-color: #40b2e4;
+	border-radius: 15px;
+}
+
+.paginator .current {
+	background: #de358d;
+	color: white;
+	font-weight: bold;
+	border-radius: 15px;
+}
+
+.article-state-approved {
+    font-weight: bold;
+    color: #2add1e;
+}
+
+.article-state-public {
+    font-weight: bold;
+    color: #99dd1e;
+}
+
+.article-state-pending {
+    font-weight: bold;
+    color: #1e6edd;
+}
+
+.article-state-concept {
+    font-weight: bold;
+    color: #666666;
+}
+
+.article-portal-21 {
+    background-color: #de358d;
+    color: white;
+    border-radius: 5px;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
+.article-portal-as {
+    background-color: #e7734a; 
+    color: white;
+    border-radius: 5px;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
+.article-portal-both {
+    background-color: #40b2e4;
+    color: white;
+    border-radius: 5px;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
+.editor-nadpis {
+    width: 98%;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-family: RobotoLight;
+}
+
+.editor-popis {
+    font-family: RobotoLight;
+    font-size: 14px;
+    width: 99%;
+}
+
+.editor-long {
+    width: 100%;
+}
+
+.editor-select {
+    width: 150px;
+}
+
+.editor-sprava {
+    text-align: right;
+    font-family: RobotoMedium;
+    color: #40b2e4;
+}
+
+label {
+    font-family: RobotoMedium;
+}
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; z-index: 500; position: absolute;}
+.ui-timepicker-div dl { text-align: left; z-index: 500;}
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; z-index: 500;}
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; z-index: 500;}
+.ui-timepicker-div td { font-size: 90%; z-index: 500;}
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; z-index: 500;}
+
+.ui-timepicker-rtl{ direction: rtl; z-index: 500;}
+.ui-timepicker-rtl dl { text-align: right; z-index: 500;}
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; z-index: 500;}
