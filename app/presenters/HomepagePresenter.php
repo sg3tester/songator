@@ -12,9 +12,18 @@ use Nette,
 class HomepagePresenter extends BasePresenter
 {
 
-	public function renderDefault()
-	{
-		$this->template->anyVariable = 'any value';
+    /**
+     * @var \TwitterAuthenticator
+     * @inject
+     */
+    public $twitter;
+    
+	
+	public function actionDefault() {
+	   
+		dump($this->twitter->getAuthToken());
+		
+		
 	}
 
 }

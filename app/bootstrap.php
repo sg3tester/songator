@@ -6,7 +6,7 @@ $configurator = new Nette\Configurator;
 
 //$configurator->setDebugMode(TRUE);  // debug mode MUST NOT be enabled on production server
 $configurator->enableDebugger(__DIR__ . '/../log');
-
+\Nette\Diagnostics\Debugger::$strictMode = false;
 $configurator->setTempDirectory(__DIR__ . '/../temp');
 
 $configurator->createRobotLoader()

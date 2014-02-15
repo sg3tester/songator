@@ -20,9 +20,13 @@ nette:
 
 	session:
 		expiration: 14 days
+	debugger:
+		bar:
+			- Nette\Http\Diagnostics\SessionPanel
 
 
 services:
 	- App\UserManager
 	- App\RouterFactory
 	router: @App\RouterFactory::createRouter
+	twitter: TwitterAuthenticator(%twitter%)
