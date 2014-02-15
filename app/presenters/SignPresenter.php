@@ -14,6 +14,12 @@ class SignPresenter extends BasePresenter
 
 
 	/**
+	* @var \TwitterAuthenticator
+	* @inject
+	*/
+	public $twitter;
+    
+	/**
 	 * Sign-in form factory.
 	 * @return Nette\Application\UI\Form
 	 */
@@ -55,6 +61,12 @@ class SignPresenter extends BasePresenter
 		}
 	}
 
+	
+	public function actionTwitterLogin() {
+	    $identity = $this->twitter->authenticate();
+	    $this->user->login($identity);
+	    $this->redirect("homepage:");
+	}
 
 	public function actionOut()
 	{

@@ -16,7 +16,6 @@ class TwitterAuthenticator
 	}
 	
 	public function getAuthToken($oauth_verifier = null) {
-	    dump($this->request->query);
 	    if (\array_key_exists("denied", $this->request->query)) {
 		$this->resetToken();
 		throw new \Nette\Security\AuthenticationException("Access denied");
@@ -43,9 +42,12 @@ class TwitterAuthenticator
 	 * @param stdClass $twitterUser
 	 * @return \Nette\Security\Identity
 	 */
-	public function authenticate($authToken)
+	public function authenticate($authToken = null)
 	{
+		if (!$authToken)
+		    $authToken = $this->getAuthToken();
 		
+		return new \Nette\Security\Identity($authToken["user_id"], "user", $authToken);
 	}
 
 	public function register(stdClass $info)

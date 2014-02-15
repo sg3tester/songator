@@ -11,17 +11,11 @@ use Nette,
  */
 class HomepagePresenter extends BasePresenter
 {
-
-    /**
-     * @var \TwitterAuthenticator
-     * @inject
-     */
-    public $twitter;
     
 	
 	public function actionDefault() {
 	   
-		dump($this->twitter->getAuthToken());
+		
 		
 		
 	}
