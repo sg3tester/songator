@@ -1,23 +1,20 @@
 {
-	"name": "nette/sandbox",
-	"description": "The sandbox is a pre-packaged Nette Framework project, basic configured structure for your application.",
+	"name": "jdcofficial/songator",
+	"description": "DJ's open playlist",
 	"homepage": "http://nette.org",
 	"type": "project",
-	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"license": ["BSD-3-Clause"],
 	"authors": [
 		{
-			"name": "David Grudl",
-			"homepage": "http://davidgrudl.com"
+			"name": "JDC",
+			"homepage": "http://cwjp.2ne1.cz"
 		},
-		{
-			"name": "Nette Community",
-			"homepage": "http://nette.org/contributors"
-		}
 	],
 	"require": {
 		"php": ">= 5.3.7",
 		"nette/nette": "~2.1.0",
-		"dg/adminer-custom": "1.*"
+		"dg/adminer-custom": "1.*",
+		"leafo/lessphp": "0.4.0",
 	},
 	"require-dev": {
 		"nette/tester": "~1.0.0"
