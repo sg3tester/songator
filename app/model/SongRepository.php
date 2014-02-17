@@ -13,6 +13,6 @@ namespace App\Model;
  *
  * @author JDC
  */
-class Song extends Repository {
+class SongRepository extends Repository {
 	
 }

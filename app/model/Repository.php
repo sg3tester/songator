@@ -36,6 +36,7 @@ abstract class Repository extends \Nette\Object {
 	
 	protected function parseTableName() {
 		$reflection = $this->getReflection();
-		$this->tableName = \lcfirst($reflection->getShortName());
+		$prename = \lcfirst($reflection->getShortName());
+		$this->tableName = str_replace("Repository", "", $prename);
 	}
 }
