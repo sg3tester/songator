@@ -28,5 +28,6 @@ nette:
 services:
 	- App\UserManager
 	- App\RouterFactory
+	- App\Model\Song
 	router: @App\RouterFactory::createRouter
 	twitter: TwitterAuthenticator(%twitter%)

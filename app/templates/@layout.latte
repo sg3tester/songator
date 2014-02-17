@@ -21,6 +21,9 @@
     <!-- Bootstrap theme -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
     
+	
+	<link rel="stylesheet" href="{$basePath}/css/typehead.css">
+	
     <!-- The style -->
     <link rel="stylesheet" href="{$basePath}/css/style.css">
     {/block}
@@ -31,12 +34,7 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    {block scripts}
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>      
-    {/block}
+    
   </head>
   <body role="document">
 
@@ -114,8 +112,18 @@
          Powered by Kobliha. Used 3rd party components Nette framework, Twitter bootstrap</p>
       </div>
     </footer>
-
+	
+	{block scripts}
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>   
+	<script src="{$basePath}/js/jquery.hashchange.min.js"></script>
+	<script src="{$basePath}/js/jquery.maskedinput.min.js"></script>
+	<script src="{$basePath}/js/typeahead.min.js"></script>
 	<script src="{$basePath}/js/grido.js"></script>
+	<script src="{$basePath}/js/grido.ext.js"></script>
 	<script>$('.grido').grido(); </script>
+	{/block}
   </body>
 </html>
