@@ -29,6 +29,7 @@ services:
 	- App\UserManager
 	- App\RouterFactory
 	- App\Model\SongRepository
+	- App\Model\NavbarRepository
 	- FactoryCreator
 	- App\Controls\IPlaylistBarFactory
 	router: @App\RouterFactory::createRouter

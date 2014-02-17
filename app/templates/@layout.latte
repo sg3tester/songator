@@ -38,69 +38,7 @@
   </head>
   <body role="document">
 
-    <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="index.html">Songátor 3</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-music"></i> Playlist <span class="badge">16</span> <b class="caret"></b> </a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Přidat song</a></li>
-                <li><a href="playlist.html">Procházet playlist <span class="badge">16</span></a></li>
-                <li class="divider"></li>
-                <li><a href="#">Pravidla přidávání songů</a></li>
-                <li><a href="#">FAQ</a></li>
-              </ul>
-            </li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-star-empty"></i> Interpreti <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Seznam interpretů</a></li>
-                <li><a href="playlist.html">Přidat interpreta</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Pravidla přidávání interpretů</a></li>
-              </ul>
-            </li>
-            <li><a href="#contact"><i class="glyphicon glyphicon-book"></i> DJ's blog</a></li>
-            <li><a href="#contact"><i class="glyphicon glyphicon-envelope"></i> Kontakt</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li n:if="$user->isLoggedIn()" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> JDC <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#"><b>Administrace</b></a></li>
-                <li><a href="#">Spravovat interprety</a></li>
-                <li><a href="#">Zapnout WIP režim</a></li>
-                <li class="divider"></li>
-                <li><a n:href="sign:out">Odhlásit</a></li>
-              </ul>
-	    </li>
-	    <li n:if="!$user->isLoggedIn()">
-		<form class="navbar-form navbar-left" role="search">
-                  <a n:href="sign:in" class="btn btn-success">Přihlásit</a>
-		  <a n:href="sign:up" class="btn btn-primary">Registrovat</a>
-                </form>
-	    </li>
-            <li>
-                <form class="navbar-form navbar-left" role="search">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Hledáte něco?">
-                  </div>
-                  <button type="submit" class="btn btn-default">Hledej</button>
-                </form>
-            </li>
-        </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
+    {control navbar}
 
     {include content}
     
