@@ -11,5 +11,8 @@ use Nette,
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
-
+	protected function viewPage($page) {
+		$contentDir = "/../../../content";		
+		$this->setView($contentDir . "/$page");
+	}
 }

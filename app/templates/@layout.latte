@@ -13,7 +13,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{block title|striptags}DJ's open playlist{/block} - Songátor 3</title>
-
+	
+	{block css}
     <!-- Bootstrap -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
 
@@ -22,7 +23,8 @@
     
     <!-- The style -->
     <link rel="stylesheet" href="{$basePath}/css/style.css">
-    
+    {/block}
+	
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -113,5 +115,7 @@
       </div>
     </footer>
 
+	<script src="{$basePath}/js/grido.js"></script>
+	<script>$('.grido').grido(); </script>
   </body>
 </html>

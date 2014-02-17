@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "b487c87f9258808ede952f62568b1ea8",
+    "hash": "a9095699c10cfa22be32b117bc46a616",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -23,59 +23,6 @@
             "notification-url": "https://packagist.org/downloads/",
             "description": "Customization for the best database management tool written in PHP, Adminer",
             "time": "2014-02-01 21:30:36"
-        },
-        {
-            "name": "janmarek/webloader",
-            "version": "2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/janmarek/WebLoader.git",
-                "reference": "5e62831fe7ba5779b97ebd0c23439dbcef80d102"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/janmarek/WebLoader/zipball/5e62831fe7ba5779b97ebd0c23439dbcef80d102",
-                "reference": "5e62831fe7ba5779b97ebd0c23439dbcef80d102",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "~2.0@rc"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.7.*",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "suggest": {
-                "leafo/lessphp": "Lessphp is a composer for LESS written in PHP."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "WebLoader": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jan Marek",
-                    "email": "mail@janmarek.net",
-                    "homepage": "http://www.janmarek.net/",
-                    "role": "Author"
-                }
-            ],
-            "description": "Tool for loading or deploying CSS and JS files into web pages",
-            "homepage": "http://addons.nette.org/cs/webloader",
-            "keywords": [
-                "assets",
-                "css",
-                "javascript",
-                "nette",
-                "webloader"
-            ],
-            "time": "2014-01-01 16:54:25"
         },
         {
             "name": "leafo/lessphp",
@@ -183,9 +130,118 @@
                 "templating"
             ],
             "time": "2014-02-11 04:51:20"
+        },
+        {
+            "name": "o5/grido",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/o5/grido.git",
+                "reference": "2ec57c9a1801f16f7375fb6121582daa208dfb92"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/o5/grido/zipball/2ec57c9a1801f16f7375fb6121582daa208dfb92",
+                "reference": "2ec57c9a1801f16f7375fb6121582daa208dfb92",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "~2.0",
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "dibi/dibi": "@dev",
+                "mockery/mockery": "@dev",
+                "nella/doctrine": "@dev",
+                "nette/tester": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Grido": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Petr Bugyík",
+                    "homepage": "http://petr.bugyik.cz/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Grido - DataGrid for Nette Framework",
+            "homepage": "http://o5.github.io/grido-sandbox/",
+            "keywords": [
+                "datagrid",
+                "datalist",
+                "grid",
+                "list",
+                "nette",
+                "table",
+                "tablegrid"
+            ],
+            "time": "2014-02-05 14:56:27"
         }
     ],
     "packages-dev": [
+        {
+            "name": "janmarek/webloader",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janmarek/WebLoader.git",
+                "reference": "5e62831fe7ba5779b97ebd0c23439dbcef80d102"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janmarek/WebLoader/zipball/5e62831fe7ba5779b97ebd0c23439dbcef80d102",
+                "reference": "5e62831fe7ba5779b97ebd0c23439dbcef80d102",
+                "shasum": ""
+            },
+            "require": {
+                "nette/nette": "~2.0@rc"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.7.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "leafo/lessphp": "Lessphp is a composer for LESS written in PHP."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WebLoader": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Marek",
+                    "email": "mail@janmarek.net",
+                    "homepage": "http://www.janmarek.net/",
+                    "role": "Author"
+                }
+            ],
+            "description": "Tool for loading or deploying CSS and JS files into web pages",
+            "homepage": "http://addons.nette.org/cs/webloader",
+            "keywords": [
+                "assets",
+                "css",
+                "javascript",
+                "nette",
+                "webloader"
+            ],
+            "time": "2014-01-01 16:54:25"
+        },
         {
             "name": "nette/tester",
             "version": "v1.0.0",

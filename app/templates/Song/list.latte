@@ -1,0 +1,26 @@
+{* Latte template *}
+
+{block content}
+<div class="content">
+      <div class="sg-header">
+        <div class="container">
+          <h1>Seznam songů</h1>
+          <p class="lead">Online databáze playlistu na AsianStyle party</p>
+        </div>
+      </div>
+
+<div class="container">
+	<div class="table-responsive">
+	{control songList}
+	
+	</div>
+</div>
+{/block}
+{block css}
+{include #parent}
+<link rel="stylesheet" href="{$basePath}/css/grido.css">
+{/block}
+{block scripts}
+{include #parent}
+
+{/block}

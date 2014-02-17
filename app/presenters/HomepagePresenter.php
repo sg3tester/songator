@@ -11,13 +11,9 @@ use Nette,
  */
 class HomepagePresenter extends BasePresenter
 {
-    
-	
+
 	public function actionDefault() {
-	   
-		
-		
-		
+		$this->viewPage("home");
 	}
 
 }
