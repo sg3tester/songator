@@ -26,5 +26,12 @@ class PlaylistBar extends NavbarControl {
 		$this->template->waiting = $this->songList->findAll()->where("status", "waiting")->count();
 		$this->template->render();
 	}
-	
+
+	public function getInfo() {
+		$info = new Utils\NavbarControlInfo;
+		$info->name = "Playlist";
+		$info->desc = "Správa a organizace playlistu";
+		return $info;
+	}
+
 }

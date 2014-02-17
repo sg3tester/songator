@@ -20,6 +20,8 @@ abstract class NavbarControl extends \Nette\Application\UI\Control {
 
 	abstract public function render();
 	
+	abstract public function getInfo();
+
 	public function setup($config) {
 		$this->config = $config;
 	}
