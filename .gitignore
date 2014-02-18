@@ -5,6 +5,8 @@ vendor/*
 
 .DS_Store
 !.gitignore
+!.travis.yml
 !.htaccess
 !web.config
+!tests/*
 app/config/config.local.neon
