@@ -1,0 +1,13 @@
+parameters:
+	twitter:
+		key: "bDKKuB0r6wu3HMZaOLqzA"
+		secret: "iXSpYqljjvqMEhNxhp0iYNpfiF7p4FuiziKtBN6MN8"
+
+
+nette:
+	database:
+		dsn: 'mysql:host=localhost;dbname=songator'
+		user: root
+		password: chrochtavec
+		options:
+			lazy: yes
