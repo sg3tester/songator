@@ -26,11 +26,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	protected function createComponentNavbar() {
 		$navbar = new Navbar();
 		
-		foreach ($this->navbar->findAll() as $nav) {
-			$control = $this->factory->create($nav->factory);
-			$navbar->addControl(Navbar::SIDE_LEFT, $control, "nav_".$nav->id);
-			if ($nav->config)
-				$control->setup($nav->config);
+		foreach ($this->navbar->getAssocSides() as $side) {
+			foreach($side as $nav) {
+				$control = $this->factory->create($nav->factory);
+				$navbar->addControl($nav->dock, $control, "nav_".$nav->id);
+				if ($nav->config)
+					$control->setup($nav->config);
+			}
 		}
 		
 		return $navbar;

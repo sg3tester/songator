@@ -7,10 +7,21 @@
  */
 namespace App\Model;
 /**
- * Description of NavbarRepository
- *
+ * 
  * @author JDC
  */
 class NavbarRepository extends Repository {
-	//put your code here
+	
+	/**
+	 * Gets sides included bars as associated array
+	 * @return type
+	 */
+	public function getAssocSides() {
+		$navs = array();
+		foreach ($this->findAll() as $bar) {
+			$navs[$bar->dock][] = $bar;
+		}
+		return $navs;
+	}
+	
 }
