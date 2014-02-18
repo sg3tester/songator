@@ -3,16 +3,18 @@
 class TwitterAuthenticator
 {
 
-	/** @var UserModel */
+	/** @var \App\UserManager */
+	private $usermgr;
 	private $session;
 	private $access;
 	private $request;
 
-	public function __construct(array $twitter, \Nette\Http\Session $session, \Nette\Http\Request $request)
+	public function __construct(array $twitter, \Nette\Http\Session $session, \Nette\Http\Request $request, \App\UserManager $usermgr)
 	{
 		$this->session = $session;
 		$this->access = $twitter;
 		$this->request = $request;
+		$this->usermgr = $usermgr;
 	}
 	
 	public function getAuthToken($oauth_verifier = null) {
@@ -47,12 +49,17 @@ class TwitterAuthenticator
 		if (!$authToken)
 		    $authToken = $this->getAuthToken();
 		
-		return new \Nette\Security\Identity($authToken["user_id"], "user", $authToken);
+		$user = $this->usermgr->getByServiceToken("twitter", $authToken["user_id"]);
+		
+		if (!$user)
+			$user = $this->register($authToken);
+		
+		return new \Nette\Security\Identity($user->id, "user", $user);
 	}
 
-	public function register(stdClass $info)
+	public function register($info)
 	{
-		
+		return $this->usermgr->addViaTwitter($info["screen_name"], $info["user_id"]);
 	}
 
 	public function updateMissingData($user, stdClass $info)

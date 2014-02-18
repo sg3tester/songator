@@ -12,11 +12,14 @@ use Nette,
 class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 {
 	const
-		TABLE_NAME = 'users',
+		TABLE_NAME = 'user',
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
-		COLUMN_ROLE = 'role';
+		COLUMN_ROLE = 'role',
+		COLUMN_IP = "ip",
+		AUTH_SERVICE = "auth_service",
+		AUTH_TOKEN = "auth_token";
 
 
 	/** @var Nette\Database\Context */
@@ -39,7 +42,10 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		list($username, $password) = $credentials;
 		$password = self::removeCapsLock($password);
 
-		$row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_NAME, $username)->fetch();
+		$row = $this->database->table(self::TABLE_NAME)
+				->where(self::AUTH_SERVICE, "songator")
+				->where(self::COLUMN_NAME, $username)
+				->fetch();
 
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
@@ -70,9 +76,38 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		$this->database->table(self::TABLE_NAME)->insert(array(
 			self::COLUMN_NAME => $username,
 			self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
+			self::COLUMN_ROLE => "user",
+			self::AUTH_SERVICE => "songator"
 		));
 	}
-
+	
+	/**
+	 * Adds new user via Twitter service
+	 * @param string
+	 * @param string
+	 * @return \Nette\Database\Table\ActiveRow
+	 */
+	public function addViaTwitter($username, $token) {
+		return $this->database->table(self::TABLE_NAME)->insert(array(
+				self::AUTH_SERVICE => "twitter",
+				self::COLUMN_NAME => $username,
+				self::AUTH_TOKEN => $token,
+				self::COLUMN_ROLE => "user",
+			));
+	}
+	
+	/**
+	 * Gets user by service and auth token
+	 * @param string
+	 * @param string
+	 * @return \Nette\Database\Table\ActiveRow
+	 */
+	public function getByServiceToken($service, $token) {
+		return $this->database->table(self::TABLE_NAME)
+			->where(self::AUTH_SERVICE, $service)
+			->where(self::AUTH_TOKEN, $token)
+			->fetch();
+	}
 
 	/**
 	 * Fixes caps lock accidentally turned on.
