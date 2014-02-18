@@ -18,3 +18,5 @@ services:
 before_script:
     # Install Nette Tester
     - composer install --no-interaction --dev --prefer-source
+    #Allow run run-tests.sh
+    - chmod 777 ./tests/run-tests.sh
