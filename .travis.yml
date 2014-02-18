@@ -8,9 +8,7 @@ php:
 
 matrix:
     allow_failures:
-        - php: 
-            - hhvm
-            - 5.3
+        - php: 5.3, hhvm
 
 script: VERBOSE=true ./tests/run-tests.sh -s tests/
 
