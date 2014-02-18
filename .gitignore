@@ -10,3 +10,4 @@ vendor/*
 !web.config
 !tests/*
 app/config/config.local.neon
+/tests/test.log
