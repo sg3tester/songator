@@ -12,15 +12,22 @@ use Nette,
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
+	const CONTENT_DIR = "/../../../content";
+	
 	/** @var \FactoryCreator @inject */
 	public $factory;
 	
 	/** @var \App\Model\NavbarRepository @inject */
 	public $navbar;
 
-	protected function viewPage($page) {
-		$contentDir = "/../../../content";		
-		$this->setView($contentDir . "/$page");
+	protected function getPage($page) {
+		$template = $this->createTemplate();
+		$template->setFile(__DIR__ . "/../../content/" . $page . ".latte");
+		return $template;
+	}
+
+	protected function viewPage($page) {		
+		$this->setView(self::CONTENT_DIR . "/$page");
 	}
 	
 	protected function createComponentNavbar() {
