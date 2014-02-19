@@ -13,7 +13,7 @@ use Nette,
  */
 class SongPresenter extends BasePresenter
 {
-	/** @var \App\Model\Song @inject */
+	/** @var \App\Model\SongRepository @inject */
 	public $songList;
 
 	public function actionDefault() {
