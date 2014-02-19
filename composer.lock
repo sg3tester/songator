@@ -190,59 +190,6 @@
     ],
     "packages-dev": [
         {
-            "name": "janmarek/webloader",
-            "version": "2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/janmarek/WebLoader.git",
-                "reference": "5e62831fe7ba5779b97ebd0c23439dbcef80d102"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/janmarek/WebLoader/zipball/5e62831fe7ba5779b97ebd0c23439dbcef80d102",
-                "reference": "5e62831fe7ba5779b97ebd0c23439dbcef80d102",
-                "shasum": ""
-            },
-            "require": {
-                "nette/nette": "~2.0@rc"
-            },
-            "require-dev": {
-                "mockery/mockery": "0.7.*",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "suggest": {
-                "leafo/lessphp": "Lessphp is a composer for LESS written in PHP."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "WebLoader": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jan Marek",
-                    "email": "mail@janmarek.net",
-                    "homepage": "http://www.janmarek.net/",
-                    "role": "Author"
-                }
-            ],
-            "description": "Tool for loading or deploying CSS and JS files into web pages",
-            "homepage": "http://addons.nette.org/cs/webloader",
-            "keywords": [
-                "assets",
-                "css",
-                "javascript",
-                "nette",
-                "webloader"
-            ],
-            "time": "2014-01-01 16:54:25"
-        },
-        {
             "name": "nette/tester",
             "version": "v1.0.0",
             "source": {

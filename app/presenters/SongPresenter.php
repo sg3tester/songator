@@ -5,6 +5,7 @@ namespace App\Presenters;
 use Nette,
 	Grido,
 	\Nette\Utils\Html,
+	\Nette\Application\UI\Form,
 	App\Model;
 
 
@@ -16,10 +17,30 @@ class SongPresenter extends BasePresenter
 	/** @var \App\Model\SongRepository @inject */
 	public $songList;
 
-	public function actionDefault() {
+	public function actionAdd() {
 		
 	}
 	
+	protected function createComponentAddSong() {
+		$form = new Form();
+		
+		$form->addText("interpret", "Interpret")
+				->setRequired();
+		$form->addText("song", "Song");
+		$form->addSelect("zanr", "Žánr", array("lol","sdfgd","erter"));
+		$form->addText("link", "Link k poslechnutí");
+		$form->addText("zadatel", "Žadatel");
+		
+		$form->addCheckbox("remix","Tento song je remix!");
+		$form->addCheckbox("terms","Souhlasím s podmínkami");
+		
+		$form->addSubmit("add");
+		
+		$form->setRenderer(new \Nextras\Forms\Rendering\Bs3FormRenderer());
+		
+		return $form;
+	}
+
 	protected function createComponentSongList($name)
 	{
 		$grid = new Grido\Grid($this, $name);

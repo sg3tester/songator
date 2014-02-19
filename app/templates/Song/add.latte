@@ -12,44 +12,58 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
-				<form name="addSong" role="form">
-					<div class="form-group">
-						<label>Interpret</label>
-						<input type="email" class="form-control" placeholder="Zadejte jméno interpreta">
+				<form n:name="addSong" role="form">
+					<div n:foreach="$form->ownErrors as $error" class="alert alert-danger">{$error}</div>
+					{var $input = "interpret"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Interpret</label>
+						<input n:name="$input" class="form-control" placeholder="Zadejte jméno interpreta">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
-					<div class="form-group">
-						<label>Song</label>
-						<input class="form-control" id="exampleInputPassword1" placeholder="Zadejte název songu">
+					{var $input = "song"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Song</label>
+						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
-					<div class="form-group">
-						<label>Žánr</label>
-						<select class="form-control">
-							<option>K-POP</option>
-							<option>J-POP</option>
-							<option>J-Rock</option>
-							<option>C-POP</option>
-							<option>ThaiPop</option>
-						</select>
+					{var $input = "zanr"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Žánr</label>
+						<select n:name="$input" class="form-control"></select>
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
-					<div class="form-group">
-						<label>Link k poslechnutí</label>
-						<input class="form-control" id="exampleInputPassword1" placeholder="http://">
-						<p class="help-block">např. Youtube, Dailymotion, Soundcloud atp.</p>
+					{var $input = "link"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Link k poslechnutí</label>
+						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+						<p class="help-block">Např. Youtube, Dailymotion, Soundcloud atp.</p>
 					</div>
-					<div class="form-group">
-						<label>Váš nick</label>
-						<input class="form-control" id="exampleInputPassword1" placeholder="Zadejte Vaši přezdívku">
+					{var $input = "zadatel"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Váš nick</label>
+						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox"> Souhlasím s podmínkami
+					{var $input = "remix"}
+					<div class="checkbox {if $form[$input]->error}has-error{/if}">
+						<label n:name="$input">
+							<input n:name="$input" type="checkbox"> Tento song je remix!
 						</label>
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
-					<button type="submit" class="btn btn-default">Přidat</button>
+					{var $input = "remix"}
+					<div class="checkbox {if $form[$input]->error}has-error{/if}">
+						<label n:name="$input">
+							<input n:name="$input" type="checkbox"> Souhlasím s podmínkami!
+						</label>
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+					</div>
+					<button n:name="add" type="submit" class="btn btn-default">Přidat</button>
 				</form>
 			</div>
 			<div class="col-md-5">
-				other
+				...
 			</div>
 		</div>
 	</div>
