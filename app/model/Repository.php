@@ -29,7 +29,7 @@ abstract class Repository extends \Nette\Object {
 	/**
 	 * Fetch one record by id
 	 * @param int $id
-	 * @return \Nette\Database\Table\Selection
+	 * @return \Nette\Database\Table\ActiveRow
 	 */
 	public function find($id) {
 		return $this->getTable()->get($id);
