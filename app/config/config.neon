@@ -32,6 +32,7 @@ services:
 
 	# Models
 	- App\Model\SongRepository
+	- App\Model\InterpretRepository
 	- App\Model\NavbarRepository
 	- App\Model\ContentRepository
 	
