@@ -9,12 +9,18 @@ namespace App\Model;
 use Nette\Database\Table\ActiveRow;
 
 /**
- * Description of InterpretRepository
+ * Interpret manager
  *
  * @author JDC
  */
 class InterpretRepository extends Repository {
 	
+	/**
+	 * Gets interpret by name or by alias
+	 * @param string $name
+	 * @param string $follow Follow aliases?
+	 * @return \Nette\Database\Table\ActiveRow|false|null
+	 */
 	public function getByName($name, $follow = true) {
 		$r = $this->getTable()->where("nazev",$name)->fetch();
 		
@@ -23,6 +29,11 @@ class InterpretRepository extends Repository {
 		return $r;
 	}
 	
+	/**
+	 * Follow alias to real interpret
+	 * @param \Nette\Database\Table\ActiveRow $row
+	 * @return \Nette\Database\Table\ActiveRow
+	 */
 	protected function follow(ActiveRow $row) {
 		if ($row->interpret_id)
 			return $this->follow($row->interpret);
