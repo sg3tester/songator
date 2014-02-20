@@ -18,16 +18,30 @@ abstract class Repository extends \Nette\Object {
 		$this->parseTableName();
 	}
 	
+	/**
+	 * Returns all records from table
+	 * @return \Nette\Database\Table\Selection
+	 */
 	public function findAll() {
 		return $this->getTable();
 	}
 	
+	/**
+	 * Fetch one record by id
+	 * @param int $id
+	 * @return \Nette\Database\Table\Selection
+	 */
 	public function find($id) {
-		
+		return $this->getTable()->get($id);
 	}
 	
+	/**
+	 * Returns a records by specified arguments
+	 * @param array $by
+	 * @return \Nette\Database\Table\Selection
+	 */
 	public function findBy(array $by) {
-		
+		return $this->getTable()->where($by);
 	}
 	
 	protected function getTable() {
