@@ -7,6 +7,7 @@
  */
 
 namespace App\Model;
+use Nette\Utils\Arrays;
 
 /**
  * Description of Song
@@ -58,6 +59,32 @@ class SongRepository extends Repository {
 	
 		throw new \Nette\InvalidArgumentException(603, "Interpret must be name (string) or ID (integer)");
 	}
+	
+	/**
+	 * Gets songs by status
+	 * (allowed: approved, waiting, rejected)
+	 * @param string $status
+	 * @return \Nette\Database\Table\Selection
+	 */
+	public function findByStatus($status) {
+		$allowed = array("approved","waiting","rejected");
+		if ($status && in_array($status, $allowed)) 
+			return $this->findBy(array("status" => $status));
+		return $status;
+	}
+	
+	/**
+	 * Returns count statistics of playlist
+	 * @return array
+	 */
+	public function getSummary() {
+		$summary = array("all" => 0, "approved" => 0, "waiting" => 0, "rejected" => 0,); //Inital
+		$summary = Arrays::mergeTree($this->getTable()->select("status, COUNT(status) AS score")->group("status")->fetchPairs("status", "score"), $summary);
+		$summary["all"] = $this->findAll()->count(); //All
+		return $summary;
+	}
+
+	////////////////////////////////////////////////////////////////////////////
 	
 	private function setInterpret($songId, $interpret) {
 		return $this->getTable()->get($songId)->update(array("interpret_id" => $interpret));

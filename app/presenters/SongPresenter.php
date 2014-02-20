@@ -19,9 +19,18 @@ class SongPresenter extends BasePresenter
 	
 	/** @var \App\Model\ZanrRepository @inject */
 	public $zanry;
+	
+	protected $songy;
 
-	public function actionAdd() {
+	public function actionList($status) {
+	
+		if ($status) 
+			$this->songy = $this->songList->findByStatus($status);
+		else
+			$this->songy = $this->songList->findAll();
 		
+		$this->template->summary = $this->songList->getSummary();
+		$this->template->status = $status;
 	}
 	
 	/****************************** Add song **********************************/
@@ -82,7 +91,7 @@ class SongPresenter extends BasePresenter
 	protected function createComponentSongList($name)
 	{
 		$grid = new Grido\Grid($this, $name);
-		$grid->setModel($this->songList->findAll());
+		$grid->setModel($this->songy);
 		
 		$grid->addColumnDate("datum", "Datum", "d.m.y")
 				->setSortable();

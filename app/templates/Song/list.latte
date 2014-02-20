@@ -10,6 +10,13 @@
 	</div>
 
 	<div class="container">
+		<ul class="nav nav-tabs">
+          <li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
+          <li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
+          <li n:class="$status == 'waiting' ? active"><a n:href="this status => 'waiting'">Čekající <span n:if="$summary['waiting']" class="badge">{$summary['waiting']}</span></a></li>
+          <li n:class="$status == 'rejected' ? active"><a n:href="this status => 'rejected'">Vyřazené</a></li>
+        </ul>
+
 		<div class="table-responsive">
 		{control songList}
 
