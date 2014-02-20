@@ -142,7 +142,10 @@ class SongPresenter extends BasePresenter
 		
 		$grid->setFilterRenderType(\Grido\Components\Filters\Filter::RENDER_OUTER);
 		
-		$grid->setTemplateFile(__DIR__ . "/../templates/components/Grid.latte");
+		//Set face for grid
+		$gridTemplate = __DIR__ . "/../templates/components/Grid.latte";
+		if (file_exists($gridTemplate))
+			$grid->setTemplateFile($gridTemplate);
 		
 		return $grid;
 	}
