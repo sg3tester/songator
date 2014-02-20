@@ -20,12 +20,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var \App\Model\NavbarRepository @inject */
 	public $navbar;
 	
-	/** @var App\Model\ContentRepository @inject */
+	/** @var \App\Model\ContentRepository @inject */
 	public $pages;
 
 	protected function getPage($page, $xray = false) {
 		$source = $this->pages->getPage($page, $xray);
-		Nette\Diagnostics\Debugger::barDump($source);
+		
 		if (!$page) {
 			throw new Nette\Application\BadRequestException(404, "Page '$page' not found");
 		}
