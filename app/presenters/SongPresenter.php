@@ -16,10 +16,15 @@ class SongPresenter extends BasePresenter
 {
 	/** @var \App\Model\SongRepository @inject */
 	public $songList;
+	
+	/** @var \App\Model\ZanrRepository @inject */
+	public $zanry;
 
 	public function actionAdd() {
 		
 	}
+	
+	/****************************** Add song **********************************/
 	
 	protected function createComponentAddSong() {
 		$form = new Form();
@@ -27,7 +32,7 @@ class SongPresenter extends BasePresenter
 		$form->addText("interpret", "Interpret")
 				->setRequired();
 		$form->addText("name", "Song");
-		$form->addSelect("zanr", "Žánr", array("lol","sdfgd","erter"));
+		$form->addSelect("zanr", "Žánr", $this->zanry->getList());
 		$form->addText("link", "Link k poslechnutí");
 		$form->addText("zadatel", "Žadatel");
 		
@@ -69,6 +74,10 @@ class SongPresenter extends BasePresenter
 		$msg->title = "Yeah!";
 		$this->redirect("this");
 	}
+	
+	////////////////////////////////////////////////////////////////////////////
+	
+	/****************************** Song list *********************************/
 
 	protected function createComponentSongList($name)
 	{
