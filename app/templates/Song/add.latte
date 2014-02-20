@@ -13,6 +13,10 @@
 		<div class="row">
 			<div class="col-md-7">
 				<form n:name="addSong" role="form">
+					<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<strong n:ifset="$flash->title">{$flash->title} </strong>{$flash->message}
+					</div>
 					<div n:foreach="$form->ownErrors as $error" class="alert alert-danger">{$error}</div>
 					
 					{******* Interpret *******}
@@ -24,7 +28,7 @@
 					</div>
 					
 					{******* Song *******}
-					{var $input = "song"}
+					{var $input = "name"}
 					<div class="form-group {if $form[$input]->error}has-error{/if}">
 						<label class="control-label" n:name="$input">Song</label>
 						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">

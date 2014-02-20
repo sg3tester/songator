@@ -26,7 +26,7 @@ class SongPresenter extends BasePresenter
 		
 		$form->addText("interpret", "Interpret")
 				->setRequired();
-		$form->addText("song", "Song");
+		$form->addText("name", "Song");
 		$form->addSelect("zanr", "Žánr", array("lol","sdfgd","erter"));
 		$form->addText("link", "Link k poslechnutí");
 		$form->addText("zadatel", "Žadatel");
@@ -38,7 +38,35 @@ class SongPresenter extends BasePresenter
 		
 		$form->setRenderer(new \Nextras\Forms\Rendering\Bs3FormRenderer());
 		
+		$form->onSuccess[] = $this->addSongSuccess;
+		
 		return $form;
+	}
+	
+	public function addSongSuccess(Form $form) {
+		$val = $form->getValues();
+		
+		//Fill main data
+		$data = array(
+			"name" => $val->name,
+			"interpret" => $val->interpret,
+			"zanr_id" => $val->zanr,
+			"link" => $val->link,
+			"remix" => $val->remix
+		);
+		
+		//Add user information
+		if ($this->user->isLoggedIn()) {
+			$data["zadatel"] = $this->user->getIdentity()->username;
+			$data["user_id"] = $this->user->getId();
+		}
+		else 
+			$data["zadatel"] = $val->zadatel;
+		
+		$this->songList->add($data);
+		
+		$this->flashMessage("Song byl přidán", "success");
+		$this->redirect("this");
 	}
 
 	protected function createComponentSongList($name)
