@@ -15,10 +15,10 @@ use Nette\Database\Table\ActiveRow;
  */
 class InterpretRepository extends Repository {
 	
-	public function getByName($name, $skipalias = true) {
+	public function getByName($name, $follow = true) {
 		$r = $this->getTable()->where("nazev",$name)->fetch();
 		
-		if ($r && $skipalias) 
+		if ($r && $follow) 
 			return $this->follow($r);	
 		return $r;
 	}
