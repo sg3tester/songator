@@ -13,7 +13,8 @@ class HomepagePresenter extends BasePresenter
 {
 
 	public function actionDefault() {
-		$this->viewPage("home");
+		
+		$this->template->page = $this->getPage("home", true);
 	}
 
 }

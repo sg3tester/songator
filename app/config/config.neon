@@ -26,12 +26,20 @@ nette:
 
 
 services:
+	# Base
 	- App\UserManager
 	- App\RouterFactory
+
+	# Models
 	- App\Model\SongRepository
 	- App\Model\NavbarRepository
+	- App\Model\ContentRepository
+	
+	# Navbars
 	- FactoryCreator
 	- App\Controls\IPlaylistBarFactory
 	- App\Controls\ILoginBarFactory
+
+	# Other
 	router: @App\RouterFactory::createRouter
 	twitter: TwitterAuthenticator(%twitter%)
