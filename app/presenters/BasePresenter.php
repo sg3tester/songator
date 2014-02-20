@@ -29,8 +29,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		if (!$page) {
 			throw new Nette\Application\BadRequestException(404, "Page '$page' not found");
 		}
+		if ($source->data)
+			$data = \Nette\Utils\Json::decode($source->data);
+		else 
+			$data = null;
 		$template = $this->createTemplate("\Nette\Templating\Template");
 		$template->heading = $source->heading;
+		$template->data = $data;
 		$template->setSource($source->body);
 		return $template;
 	}
