@@ -7,12 +7,16 @@
  */
 namespace App\Model;
 /**
- * Description of ZanrRepository
+ * Genres
  *
  * @author JDC
  */
 class ZanrRepository extends Repository {
 	
+	/**
+	 * Get a genre list
+	 * @return array
+	 */
 	public function getList() {
 		return $this->findAll()->fetchPairs("id", "name");
 	}
