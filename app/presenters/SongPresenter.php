@@ -65,7 +65,8 @@ class SongPresenter extends BasePresenter
 		
 		$this->songList->add($data);
 		
-		$this->flashMessage("Song byl přidán", "success");
+		$msg = $this->flashMessage("Song byl přidán", "success");
+		$msg->title = "Yeah!";
 		$this->redirect("this");
 	}
 
