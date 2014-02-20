@@ -12,6 +12,8 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-7">
+				<h3>Přidejte svůj tip do playlistu</h3>
+				<p>Vyplněním formuláře níže můžete poslat svůj tip do playlistu. Pokud ji DJ schválí, pravděpodobně ji uslyšíte na akcích, na kterých DJ bude hrát.</p>
 				<form n:name="addSong" role="form">
 					{include '../components/flashes.latte'}
 					<div n:foreach="$form->ownErrors as $error" class="alert alert-danger">{$error}</div>
