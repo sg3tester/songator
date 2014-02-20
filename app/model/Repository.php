@@ -15,7 +15,7 @@ abstract class Repository extends \Nette\Object {
 
 	public function __construct(\Nette\Database\Context $db) {
 		$this->database = $db;
-		$this->parseTableName();
+		$this->tableName = $this->parseTableName();
 	}
 	
 	/**
@@ -51,6 +51,6 @@ abstract class Repository extends \Nette\Object {
 	protected function parseTableName() {
 		$reflection = $this->getReflection();
 		$prename = \lcfirst($reflection->getShortName());
-		$this->tableName = str_replace("Repository", "", $prename);
+		return str_replace("Repository", "", $prename);
 	}
 }
