@@ -10,12 +10,26 @@
 	</div>
 
 	<div class="container">
+		<div class="progress">
+			{var $procento = $summary["all"] / 100}
+			{dump $summary["all"]}
+			<div class="progress-bar progress-bar-success" style="width: {=round($summary["approved"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["approved"]} Schválených">
+				<span class="sr-only">{$summary["approved"]} Schválených</span>
+			</div>
+			<div class="progress-bar progress-bar-warning" style="width: {=round($summary["waiting"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["waiting"]} Čekajících ke schválení">
+				<span class="sr-only">{$summary["waiting"]} Čekajících ve frontě ke schválení</span>
+			</div>
+			<div class="progress-bar progress-bar-danger" style="width: {=round($summary["rejected"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["rejected"]} Zamítnutých">
+				<span class="sr-only">{$summary["rejected"]} Zamítnutých</span>
+			</div>
+		</div>
+		
 		<ul class="nav nav-tabs">
-          <li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
-          <li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
-          <li n:class="$status == 'waiting' ? active"><a n:href="this status => 'waiting'">Čekající <span n:if="$summary['waiting']" class="badge">{$summary['waiting']}</span></a></li>
-          <li n:class="$status == 'rejected' ? active"><a n:href="this status => 'rejected'">Vyřazené</a></li>
-        </ul>
+			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
+			<li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
+			<li n:class="$status == 'waiting' ? active"><a n:href="this status => 'waiting'">Čekající <span n:if="$summary['waiting']" class="badge">{$summary['waiting']}</span></a></li>
+			<li n:class="$status == 'rejected' ? active"><a n:href="this status => 'rejected'">Vyřazené</a></li>
+		</ul>
 
 		<div class="table-responsive">
 		{control songList}
