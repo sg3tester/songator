@@ -46,7 +46,8 @@ class SongPresenter extends BasePresenter
 		$form->addText("zadatel", "Žadatel");
 		
 		$form->addCheckbox("remix","Tento song je remix!");
-		$form->addCheckbox("terms","Souhlasím s podmínkami");
+		$form->addCheckbox("terms","Souhlasím s podmínkami")
+				->setRequired("Musíte souhlasit s podmínkami");
 		
 		$form->addSubmit("add");
 		
