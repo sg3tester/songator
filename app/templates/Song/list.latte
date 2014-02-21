@@ -14,7 +14,6 @@
 			<div class="col-md-9">...</div>
 			<div class="col-md-3"><a href="#" id="advanced-search">Pokročilé vyhledávání</a></div>
 		</div>
-		<p>V databázi se nachází <strong>{$summary["all"]}</strong> songů</p>
 		<div class="progress">
 			{var $procento = $summary["all"] / 100}
 			{dump $summary["all"]}
@@ -28,6 +27,7 @@
 				<span class="sr-only">{$summary["rejected"]} Zamítnutých</span>
 			</div>
 		</div>
+		<p>V databázi se nachází <strong>{$summary["all"]}</strong> songů</p>
 		
 		<ul class="nav nav-tabs">
 			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
