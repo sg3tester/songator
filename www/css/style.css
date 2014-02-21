@@ -110,3 +110,7 @@ footer {
 .reason {
 	line-height: 2.3;
 }
+
+.filter-header {
+	margin-top: 1em;
+}
