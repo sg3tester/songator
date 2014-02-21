@@ -105,17 +105,22 @@ class SongPresenter extends BasePresenter
 				->setSortable()
 				->setFilterText()
 				->setSuggestion();
-		
-		$grid->addColumnText("zanr", "Žánr")
-				->setColumn(function($item){
+	
+		$filter = array('' => 'Vše');
+		$filter = \Nette\Utils\Arrays::mergeTree($filter, $this->zanry->getList());
+		$grid->addColumnText("zanr_id", "Žánr")
+				->setCustomRender(function($item){
 					return $item->zanr ? $item->zanr->name : null;
-				});
+				})
+				->setFilterSelect($filter);
 		
 		$grid->addColumnText("zadatel", "Přidal(a)")
 				->setSortable()
 				->setFilterText()
 				->setSuggestion();
 		
+		$filter = array('' => 'Vše');
+		$filter = \Nette\Utils\Arrays::mergeTree($filter, $this->zanry->getList());
 		$grid->addColumnText("status", "Status")
 				->setCustomRender(function($item){
 					$status = $item->status;
@@ -134,7 +139,9 @@ class SongPresenter extends BasePresenter
 							return Html::el("i")
 								->setText("Neznámý");
 					}
-				});
+				})
+				->setSortable()
+				->setFilterSelect($filter);
 		
 		$grid->addColumnText("vzkaz", "Vzkaz DJovi");
 		
@@ -151,6 +158,7 @@ class SongPresenter extends BasePresenter
 				->setElementPrototype(Html::el("a",array("class" => "btn btn-info", "target" => "blank")));
 		
 		$grid->setFilterRenderType(\Grido\Components\Filters\Filter::RENDER_OUTER);
+		$grid->setDefaultSort(array("datum" => "DESC"));
 		
 		//Set face for grid
 		$gridTemplate = __DIR__ . "/../templates/components/Grid.latte";

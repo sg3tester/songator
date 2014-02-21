@@ -53,7 +53,8 @@
 {form form}
 {if $filterRenderType == Grido\Components\Filters\Filter::RENDER_OUTER}
     <div n:block="outerFilter" class="filter outer">
-        <div class="items">
+        <h4>Pokročilé vyhledávání</h4>
+		<div class="items">
             <span n:foreach="$filters as $filter" class="grid-filter-{$filter->getName()}">
                 {$filter->getLabel()}
                 {$filter->getControl()}
@@ -83,7 +84,8 @@
                         <a n:if="!$column->getSort()" n:href="sort! [$column->getName() => Grido\Components\Columns\Column::ORDER_ASC]" class="ajax">{_$column->getLabel()}</a>
                         <a n:if="$column->getSort() == Grido\Components\Columns\Column::ORDER_ASC" n:href="sort! [$column->getName() => Grido\Components\Columns\Column::ORDER_DESC]" class="sort ajax">{_$column->getLabel()}</a>
                         <a n:if="$column->getSort() == Grido\Components\Columns\Column::ORDER_DESC" n:href="sort! [$column->getName() => Grido\Components\Columns\Column::ORDER_ASC]" class="sort ajax">{_$column->getLabel()}</a>
-                        <span></span>
+                        <span n:if="$column->getSort() == Grido\Components\Columns\Column::ORDER_ASC" class="glyphicon glyphicon-arrow-up"></span>
+						<span n:if="$column->getSort() == Grido\Components\Columns\Column::ORDER_DESC" class="glyphicon glyphicon-arrow-down"></span>
                     {else}
                         {_$column->getLabel()}
                     {/if}

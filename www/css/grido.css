@@ -43,11 +43,6 @@
     margin: 1.4em 1em 0;
 }
 
-/******************** SORTING ********************/
-
-.grido th.column.asc span:before {content: "a"}
-.grido th.column.desc span:before {content: "d"}
-
 /******************** OTHERS ********************/
 
 .grido th.actions {
