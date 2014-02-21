@@ -7,7 +7,8 @@
 	</div>
 	<form role="form">
 		<div class="modal-body">
-			<p class="lead">Zamítnout '{$song->interpret_name} - {$song->name}'</p>
+			<p class="lead">Zamítnout '{$song->interpret_name} - {$song->name}' <small class="text-muted">{$song->zadatel}</small></p>
+			<p n:ifcontent>{$song->vzkaz}</p>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Důvod zamítnutí</label>
 				<textarea id="reason" class="form-control" rows="3" placeholder="Zadejte důvod zamítnutí"></textarea>
