@@ -36,7 +36,7 @@ class SongPresenter extends BasePresenter
 	public function actionReject($id) {
 		if ($this->isAjax())
 			$this->setLayout(false);
-		$this->template->id = $id;
+		$this->template->song = $this->songList->find($id);
 	}
 
 
@@ -147,7 +147,7 @@ class SongPresenter extends BasePresenter
 					switch ($status) {
 						case "approved":
 							return Html::el("span",array("class" => "label label-success"))
-								->setText("Schválen");
+								->setText("Zařazen");
 						case "waiting":
 							return Html::el("span",array("class" => "label label-warning"))
 								->setText("Čeká");
