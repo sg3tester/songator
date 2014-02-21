@@ -131,7 +131,7 @@ class SongPresenter extends BasePresenter
 				->setFilterText()
 				->setSuggestion();
 	
-		$filter = array('' => 'Vše');
+		$filter = array('' => 'Všechny');
 		$filter = \Nette\Utils\Arrays::mergeTree($filter, $this->zanry->getList());
 		$grid->addColumnText("zanr_id", "Žánr")
 				->setCustomRender(function($item){
@@ -145,7 +145,7 @@ class SongPresenter extends BasePresenter
 				->setSuggestion();
 		
 		$statuses = array(
-			'' => 'Vše',
+			'' => 'Všechny',
 			'approved' => 'Zařazené',
 			'rejected' => 'Vyřazené',
 			'waiting' => 'Čekající'
