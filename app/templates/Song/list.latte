@@ -56,7 +56,9 @@
 <div class="modal modal-small draggable" id="myModal" role="alertdialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog">
     <div class="modal-content">
-      
+		<div class="text-center">
+			<img src="{$basePath}/images/295.gif" />
+		</div>
     </div>
   </div>
 </div>
@@ -74,7 +76,7 @@
 	});
 	$(document).on('hidden.bs.modal', function (e) {
     $(e.target).removeData('bs.modal');
-			$(".modal-content").text("");
+			$(".modal-content").html('<div class="text-center"><img src="'+{$basePath}+'/images/295.gif" /></div>');
 });
 </script>
 {/block}
