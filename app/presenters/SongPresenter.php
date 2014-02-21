@@ -38,6 +38,12 @@ class SongPresenter extends BasePresenter
 			$this->setLayout(false);
 		$this->template->song = $this->songList->find($id);
 	}
+	
+	public function actionApprove($id) {
+		if ($this->isAjax())
+			$this->setLayout(false);
+		$this->template->song = $this->songList->find($id);
+	}
 
 
 	/****************************** Add song **********************************/
