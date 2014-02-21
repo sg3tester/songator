@@ -102,6 +102,12 @@ class SongPresenter extends BasePresenter
 				->setSuggestion();
 		
 		$grid->addColumnText("name", "Song")
+				->setCustomRender(function($item){
+					$template = $this->createTemplate();
+					$template->setFile(__DIR__ . "/../templates/components/Grid/song.latte");
+					$template->song = $item;
+					return $template;
+				})
 				->setSortable()
 				->setFilterText()
 				->setSuggestion();
