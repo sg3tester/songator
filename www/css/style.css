@@ -74,6 +74,26 @@ body {
 	margin-top: 50px;
 }
 
+.pecka {
+	color: #FFD700;
+	cursor: default;
+}
+
+.instro {
+	color: #146C93;
+	cursor: default;
+}
+
+.note {
+	color: #7F007F;
+	cursor: default;
+}
+
+.remix {
+	color: #b02a26;
+	cursor: default;
+}
+
 footer {
 	background: #111;
 	color: #fff;
