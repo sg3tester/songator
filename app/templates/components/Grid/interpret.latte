@@ -1,0 +1,5 @@
+{if $song->interpret_id}
+	<a n:href="interpret:view $song->interpret->id" class="interpret-valid">{$song->interpret_name}</a>
+{else}
+	{$song->interpret_name}
+{/if}

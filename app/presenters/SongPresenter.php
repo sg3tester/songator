@@ -64,7 +64,7 @@ class SongPresenter extends BasePresenter
 		//Fill main data
 		$data = array(
 			"name" => $val->name,
-			"interpret" => $val->interpret,
+			"interpret_name" => $val->interpret,
 			"zanr_id" => $val->zanr,
 			"link" => $val->link,
 			"remix" => $val->remix
@@ -96,7 +96,13 @@ class SongPresenter extends BasePresenter
 		
 		$grid->addColumnDate("datum", "Datum", "d.m.y")
 				->setSortable();
-		$grid->addColumnText("interpret", "Interpret")
+		$grid->addColumnText("interpret_name", "Interpret")
+				->setCustomRender(function($item){
+					$template = $this->createTemplate();
+					$template->setFile(__DIR__ . "/../templates/components/Grid/interpret.latte");
+					$template->song = $item;
+					return $template;
+				})
 				->setSortable()
 				->setFilterText()
 				->setSuggestion();

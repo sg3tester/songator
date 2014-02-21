@@ -94,6 +94,11 @@ body {
 	cursor: default;
 }
 
+a.interpret-valid {
+	color: inherit;
+	font-weight: bold;
+}
+
 footer {
 	background: #111;
 	color: #fff;

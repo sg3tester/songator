@@ -30,7 +30,7 @@ class SongRepository extends Repository {
 	 * @return \Nette\Database\Table\ActiveRow
 	 */
 	public function add(array $song) {
-		$interpret = isset($song["interpret"]) ? $song["interpret"] : null;
+		$interpret = isset($song["interpret_name"]) ? $song["interpret_name"] : null;
 		
 		//Assign interpret (if registered)
 		$ri = $this->interpreti->getByName($interpret);
