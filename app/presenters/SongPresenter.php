@@ -144,8 +144,12 @@ class SongPresenter extends BasePresenter
 				->setFilterText()
 				->setSuggestion();
 		
-		$filter = array('' => 'Vše');
-		$filter = \Nette\Utils\Arrays::mergeTree($filter, $this->zanry->getList());
+		$statuses = array(
+			'' => 'Vše',
+			'approved' => 'Zařazené',
+			'rejected' => 'Vyřazené',
+			'waiting' => 'Čekající'
+			);
 		$grid->addColumnText("status", "Status")
 				->setCustomRender(function($item){
 					$status = $item->status;
@@ -166,7 +170,7 @@ class SongPresenter extends BasePresenter
 					}
 				})
 				->setSortable()
-				->setFilterSelect($filter);
+				->setFilterSelect($statuses);
 		
 		$grid->addColumnText("vzkaz", "Vzkaz DJovi");
 		
