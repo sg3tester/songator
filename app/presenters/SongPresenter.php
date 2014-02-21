@@ -33,6 +33,13 @@ class SongPresenter extends BasePresenter
 		$this->template->status = $status;
 	}
 	
+	public function actionReject($id) {
+		if ($this->isAjax())
+			$this->setLayout(false);
+		$this->template->id = $id;
+	}
+
+
 	/****************************** Add song **********************************/
 	
 	protected function createComponentAddSong() {
@@ -159,11 +166,19 @@ class SongPresenter extends BasePresenter
 		
 		$grid->addActionHref("approve", "")
 				->setIcon("ok")
-				->setElementPrototype(Html::el("a",array("class" => "btn btn-success")));
+				->setElementPrototype(Html::el("a",array(
+					"class" => "btn btn-success",
+					"data-toggle" => "modal",
+					"data-target" => ".modal"
+					)));
 		
 		$grid->addActionHref("reject", "")
 				->setIcon("remove")
-				->setElementPrototype(Html::el("a",array("class" => "btn btn-danger")));
+				->setElementPrototype(Html::el("a",array(
+					"class" => "btn btn-danger",
+					"data-toggle" => "modal",
+					"data-target" => ".modal"
+					)));
 		
 		$grid->addActionHref("play", "")
 				->setIcon("play")

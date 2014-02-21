@@ -51,6 +51,15 @@
 		</div>
 	</div>
 </div>
+		
+<!-- Modal -->
+<div class="modal modal-small draggable" id="myModal" role="alertdialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+    </div>
+  </div>
+</div>
 {/block}
 {block css}
 {include #parent}
@@ -63,5 +72,9 @@
 	$("#advanced-search").click(function(){
 		$(".filter").toggle();
 	});
+	$(document).on('hidden.bs.modal', function (e) {
+    $(e.target).removeData('bs.modal');
+			$(".modal-content").text("");
+});
 </script>
 {/block}
