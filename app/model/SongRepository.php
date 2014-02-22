@@ -96,7 +96,7 @@ class SongRepository extends Repository {
 		$data["note"] = $note;
 		$data["status"] = "approved"; //This is important
 		
-		$this->getTable()->get($song)->update($data); //Updte song
+		$this->getTable()->get($song)->update($data); //Update song
 		
 	}
 	////////////////////////////////////////////////////////////////////////////
