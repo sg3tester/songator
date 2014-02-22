@@ -107,6 +107,21 @@ class SongRepository extends Repository {
 		
 	}
 	
+	public function reject($song, $revizor, $reason, $additional = null) {
+		
+		//Mapping
+		if ($additional)
+			$data = $additional;
+		else 
+			$data = array();
+		
+		$data["revisor"] = $revizor;
+		$data["note"] = $reason;
+		$data["status"] = "rejected"; //This is important
+		
+		$this->getTable()->get($song)->update($data); //Update song
+	}
+	
 	////////////////////////////////////////////////////////////////////////////
 	
 	private function setInterpret($songId, $interpret) {

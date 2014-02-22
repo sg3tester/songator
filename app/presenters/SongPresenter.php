@@ -36,7 +36,9 @@ class SongPresenter extends BasePresenter
 	public function actionReject($id) {
 		if ($this->isAjax())
 			$this->setLayout(false);
-		$this->template->song = $this->songList->find($id);
+		$song = $this->songList->find($id);
+		$this["reject"]->SetDefaults($song);
+		$this->template->song = $song;
 	}
 	
 	public function actionApprove($id) {
@@ -240,6 +242,33 @@ class SongPresenter extends BasePresenter
 		
 		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
 		$msg->title = "A je tam!";
+		$this->redirect("list");
+	}
+	
+	////////////////////////////////////////////////////////////////////////////
+	/************************* Song reject ***********************************/
+	
+	protected function createComponentReject() {
+		$form = new Form();
+		
+		$form->addTextArea("note")
+				->setRequired("Musíte udat důvod zamítnutí!");
+		$form->addHidden("id");
+		
+		$form->addSubmit("reject");
+		
+		$form->onSuccess[] = $this->rejectSuccess;
+		
+		return $form;
+	}
+	
+	public function rejectSuccess(Form $form) {
+		$val = $form->getValues();
+		
+		$this->songList->reject($val->id, $this->user->getId(), $val->note);
+		
+		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
+		$msg->title = "A je ze hry!";
 		$this->redirect("list");
 	}
 
