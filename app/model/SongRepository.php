@@ -16,6 +16,10 @@ use Nette\Utils\Arrays;
  */
 class SongRepository extends Repository {
 	
+	const STATUS_APPROVED = "approved",
+			STATUS_REJECTED = "rejected",
+			STATUS_WAITING = "waiting";
+	
 	/** @var \App\Model\InterpretRepository */
 	protected $interpreti;
 
@@ -93,39 +97,39 @@ class SongRepository extends Repository {
 	 */
 	public function approve($song, $revizor, $note = "", $additional = null) {
 		
-		//Mapping
-		if ($additional)
-			$data = $additional;
-		else 
-			$data = array();
-		
-		$data["revisor"] = $revizor;
-		$data["note"] = $note;
-		$data["status"] = "approved"; //This is important
-		
-		$this->getTable()->get($song)->update($data); //Update song
+		$this->setStatus($song, self::STATUS_APPROVED, $revizor, $note, $additional);
 		
 	}
 	
 	public function reject($song, $revizor, $reason, $additional = null) {
 		
-		//Mapping
-		if ($additional)
-			$data = $additional;
-		else 
-			$data = array();
+		$this->setStatus($song, self::STATUS_REJECTED, $revizor, $reason, $additional);
 		
-		$data["revisor"] = $revizor;
-		$data["note"] = $reason;
-		$data["status"] = "rejected"; //This is important
-		
-		$this->getTable()->get($song)->update($data); //Update song
 	}
 	
 	////////////////////////////////////////////////////////////////////////////
 	
 	private function setInterpret($songId, $interpret) {
 		return $this->getTable()->get($songId)->update(array("interpret_id" => $interpret));
+	}
+	
+	private function setStatus($song, $status, $revizor, $note, $additional) {
+		//Mapping
+		if ($additional)
+			$data = $additional;
+		else 
+			$data = array();
+		
+		//Check status validity
+		$allowed = array ("approved","rejected","waiting");
+		if (!in_array($status, $allowed))
+			throw new \Nette\InvalidArgumentException(72, "Invalid status. '$status' is unknown");
+
+		$data["revisor"] = $revizor;
+		$data["note"] = $note;
+		$data["status"] = $status; //This is important
+		
+		$this->getTable()->get($song)->update($data); //Update song
 	}
 	
 }
