@@ -84,6 +84,13 @@ class SongRepository extends Repository {
 		return $summary;
 	}
 
+	/**
+	 * Approve song
+	 * @param int $song
+	 * @param int $revizor
+	 * @param string $note
+	 * @param array|null $additional
+	 */
 	public function approve($song, $revizor, $note = "", $additional = null) {
 		
 		//Mapping
@@ -99,6 +106,7 @@ class SongRepository extends Repository {
 		$this->getTable()->get($song)->update($data); //Update song
 		
 	}
+	
 	////////////////////////////////////////////////////////////////////////////
 	
 	private function setInterpret($songId, $interpret) {
