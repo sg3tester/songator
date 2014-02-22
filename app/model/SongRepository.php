@@ -84,6 +84,21 @@ class SongRepository extends Repository {
 		return $summary;
 	}
 
+	public function approve($song, $revizor, $note = "", $additional = null) {
+		
+		//Mapping
+		if ($additional)
+			$data = $additional;
+		else 
+			$data = array();
+		
+		$data["revisor"] = $revizor;
+		$data["note"] = $note;
+		$data["status"] = "approved"; //This is important
+		
+		$this->getTable()->get($song)->update($data); //Updte song
+		
+	}
 	////////////////////////////////////////////////////////////////////////////
 	
 	private function setInterpret($songId, $interpret) {

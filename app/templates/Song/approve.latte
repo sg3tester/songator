@@ -5,24 +5,25 @@
 		<button n:if="$presenter->isAjax()" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h4 class="modal-title" id="myModalLabel">Schválit song</h4>
 	</div>
-	<form role="form">
+	<form n:name="approve" role="form">
 		<div class="modal-body">
 			<p class="lead">Schválit '{$song->interpret_name} - {$song->name}' <small class="text-muted">{$song->zadatel}</small></p>
 				<p n:ifcontent>{$song->vzkaz}</p>
 			<div class="form-group">
 				<label>Flagy songu </label><br /> 
-				<input type="checkbox"> <i class="glyphicon glyphicon-star pecka" title="Tenhle song je pecka!"></i>
-				<input type="checkbox"> <i class="glyphicon glyphicon-music instro" title="K dispozici je instrumentálka"></i>
-				<input type="checkbox"> <i class="glyphicon glyphicon-headphones remix" title="Remix"></i>
+				<input n:name="pecka" type="checkbox"> <i class="glyphicon glyphicon-star pecka" title="Tenhle song je pecka!"></i>
+				<input n:name="instro" type="checkbox"> <i class="glyphicon glyphicon-music instro" title="K dispozici je instrumentálka"></i>
+				<input n:name="remix" type="checkbox"> <i class="glyphicon glyphicon-headphones remix" title="Remix"></i>
 			</div>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Poznámka DJe</label>
-				<textarea id="reason" class="form-control" rows="3" placeholder="Tady můžete zadat svůj komentář k tracku"></textarea>
+				<textarea n:name="note" id="reason" class="form-control" rows="3" placeholder="Tady můžete zadat svůj komentář k tracku"></textarea>
+				<input type="hidden" n:name="id">
 			</div>
 		</div>
 		<div class="modal-footer">
 			<button n:if="$presenter->isAjax()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="submit" class="btn btn-success">Schválit</button>
+			<button n:name="approve" type="submit" class="btn btn-success">Schválit</button>
 		</div>
 	</form>
 </div>

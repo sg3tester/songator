@@ -42,7 +42,9 @@ class SongPresenter extends BasePresenter
 	public function actionApprove($id) {
 		if ($this->isAjax())
 			$this->setLayout(false);
-		$this->template->song = $this->songList->find($id);
+		$song = $this->songList->find($id);
+		$this["approve"]->SetDefaults($song);
+		$this->template->song = $song;
 	}
 
 
@@ -203,6 +205,42 @@ class SongPresenter extends BasePresenter
 			$grid->setTemplateFile($gridTemplate);
 		
 		return $grid;
+	}
+	
+	////////////////////////////////////////////////////////////////////////////
+	/************************* Song approve ***********************************/
+	
+	protected function createComponentApprove() {
+		$form = new Form();
+		
+		$form->addCheckbox("remix");
+		$form->addCheckbox("pecka");
+		$form->addCheckbox("instro");
+		$form->addTextArea("note");
+		$form->addHidden("id");
+		
+		$form->addSubmit("approve");
+		
+		$form->onSuccess[] = $this->approveSuccess;
+		
+		return $form;
+	}
+	
+	public function approveSuccess(Form $form) {
+		$val = $form->getValues();
+		
+		//Mapping additional data
+		$additional = array(
+			"remix" => $val->remix,
+			"instro" => $val->instro,
+			"pecka" => $val->pecka
+		);
+		
+		$this->songList->approve($val->id, $this->user->getId(), $val->note, $additional);
+		
+		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
+		$msg->title = "A je tam!";
+		$this->redirect("list");
 	}
 
 }
