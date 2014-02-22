@@ -22,7 +22,7 @@
 					{var $input = "interpret"}
 					<div class="form-group {if $form[$input]->error}has-error{/if}">
 						<label class="control-label" n:name="$input">Interpret</label>
-						<input n:name="$input" class="form-control" placeholder="Zadejte jméno interpreta">
+						<input id="interpret" n:name="$input" class="form-control example-numbers typeahead" placeholder="Zadejte jméno interpreta">
 						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
 					
@@ -90,3 +90,14 @@
 		</div>
 	</div>
 </div>
+{/block}
+{block scripts}
+{include #parent}
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+ <script>
+$( "#interpret" ).autocomplete({
+	    source: {plink song:bindInterpret},
+	    minLength: 1
+	});
+</script>
+{/block}

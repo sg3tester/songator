@@ -17,6 +17,9 @@ class SongPresenter extends BasePresenter
 	/** @var \App\Model\SongRepository @inject */
 	public $songList;
 	
+	/** @var \App\Model\InterpretRepository @inject */
+	public $interpreti;
+
 	/** @var \App\Model\ZanrRepository @inject */
 	public $zanry;
 	
@@ -47,6 +50,14 @@ class SongPresenter extends BasePresenter
 		$song = $this->songList->find($id);
 		$this["approve"]->SetDefaults($song);
 		$this->template->song = $song;
+	}
+	
+	/***************************** Bindings ***********************************/
+	
+	public function actionBindInterpret($term) {
+		$complete = $this->interpreti->bind($term, false);
+		
+		$this->sendJson($complete);
 	}
 
 

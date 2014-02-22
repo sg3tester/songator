@@ -30,6 +30,27 @@ class InterpretRepository extends Repository {
 	}
 	
 	/**
+	 * Bind interpret by name
+	 * @param string $interpret
+	 * @param bool $noaliases
+	 * @return array
+	 */
+	public function bind($interpret, $noaliases = true) {
+		$s = $this->findAll()->where("nazev LIKE ?",$interpret."%");
+		
+		if ($noaliases)
+			$s->where("interpret_id", null);
+		
+		//Make array list
+		$complete = array();
+		foreach ($s as $row) {
+			$complete[] = $row->nazev;
+		}
+		
+		return $complete;
+	}
+
+	/**
 	 * Follow alias to real interpret
 	 * @param \Nette\Database\Table\ActiveRow $row
 	 * @return \Nette\Database\Table\ActiveRow
@@ -39,5 +60,4 @@ class InterpretRepository extends Repository {
 			return $this->follow($row->interpret);
 		return $row;
 	}
-	
 }
