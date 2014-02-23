@@ -35,6 +35,9 @@ class SongPresenter extends BasePresenter
 		$this->template->summary = $this->songList->getSummary();
 		$this->template->status = $status;
 	}
+
+
+	/************************** Approve/Reject ********************************/
 	
 	public function actionReject($id) {
 		if ($this->isAjax())
@@ -71,7 +74,11 @@ class SongPresenter extends BasePresenter
 		$form->addText("name", "Song");
 		$form->addSelect("zanr", "Žánr", $this->zanry->getList());
 		$form->addText("link", "Link k poslechnutí");
-		$form->addText("zadatel", "Žadatel");
+		
+		//This field only if user is NOT logged in
+		if (!$this->user->isLoggedIn())
+			$form->addText("zadatel", "Žadatel")
+				->setRequired("Musíte zadat svou přezdívku!");
 		
 		$form->addCheckbox("remix","Tento song je remix!");
 		$form->addCheckbox("terms","Souhlasím s podmínkami")
