@@ -165,6 +165,12 @@ class SongPresenter extends BasePresenter
 				->setFilterSelect($filter);
 		
 		$grid->addColumnText("zadatel", "Přidal(a)")
+				->setCustomRender(function($item){
+					$template = $this->createTemplate();
+					$template->setFile(__DIR__ . "/../templates/components/Grid/zadatel.latte");
+					$template->song = $item;
+					return $template;
+				})
 				->setSortable()
 				->setFilterText()
 				->setSuggestion();
