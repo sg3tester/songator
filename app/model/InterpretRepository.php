@@ -50,8 +50,15 @@ class InterpretRepository extends Repository {
 		return $complete;
 	}
 	
-	public function match($interpret) {
-		$matches = $this->levenshtein($interpret, 10); //distance is 10
+	/**
+	 * Match interpret by name
+	 * @param string $interpret
+	 * @param int $distance Distance ceiling
+	 * @param int $limit Iteration limit
+	 * @return array
+	 */
+	public function match($interpret, $distance = 10, $limit = 10) {
+		$matches = $this->levenshtein($interpret, $distance); //distance is 10
 		
 		$result = array();
 		$result["matching"] = $interpret;
@@ -62,7 +69,7 @@ class InterpretRepository extends Repository {
 			$result["matched"] = $match->nazev;
 			$alias = $this->follow($match);
 			$result["alias"] = $alias->nazev != $match->nazev ? $alias->nazev : false;
-			$result["other"] = $this->iterateMatches($matches, 10);
+			$result["other"] = $this->iterateMatches($matches, $limit);
 		}
 		else 
 			$result["match"] = false;
@@ -96,9 +103,12 @@ class InterpretRepository extends Repository {
 		$iterator = 0;
 		$result = array();
 		foreach ($matches as $row) {
-				if ($iterator > 0)
-					$result[] = $row->nazev;
-				if ($iterator > $max)
+				if ($iterator > 0) {
+					$m["interpret"] = $row->nazev;
+					$m["distance"] = $row->distance;
+					$result[] = $m;
+				}
+				if ($iterator == $max)
 					break;
 				$iterator++;
 			}
