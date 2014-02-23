@@ -62,7 +62,7 @@ class InterpretRepository extends Repository {
 			$result["matched"] = $match->nazev;
 			$alias = $this->follow($match);
 			$result["alias"] = $alias->nazev != $match->nazev ? $alias->nazev : false;
-			$result["other"] = $this->iterateMatches($matches);
+			$result["other"] = $this->iterateMatches($matches, 10);
 		}
 		else 
 			$result["match"] = false;
@@ -92,13 +92,13 @@ class InterpretRepository extends Repository {
 		->order("distance ASC");
     }
 	
-	private function iterateMatches($matches) {
+	private function iterateMatches($matches, $max) {
 		$iterator = 0;
 		$result = array();
 		foreach ($matches as $row) {
 				if ($iterator > 0)
 					$result[] = $row->nazev;
-				if ($iterator > 10)
+				if ($iterator > $max)
 					break;
 				$iterator++;
 			}
