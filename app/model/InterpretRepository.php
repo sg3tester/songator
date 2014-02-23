@@ -98,7 +98,7 @@ class InterpretRepository extends Repository {
 		foreach ($matches as $row) {
 				if ($iterator > 0)
 					$result[] = $row->nazev;
-				if ($iterator == 10)
+				if ($iterator > 10)
 					break;
 				$iterator++;
 			}
