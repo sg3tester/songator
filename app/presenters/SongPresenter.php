@@ -185,15 +185,25 @@ class SongPresenter extends BasePresenter
 				->setCustomRender(function($item){
 					$status = $item->status;
 					
+					$revizor = $item->revisor ? $item->ref("user","revisor")->username : "neznámý";
 					switch ($status) {
 						case "approved":
-							return Html::el("span",array("class" => "label label-success"))
+							return Html::el("span",array(
+								"class" => "label label-success",
+								"title" => "Schválil(a) ". $revizor
+								))
 								->setText("Zařazen");
 						case "waiting":
-							return Html::el("span",array("class" => "label label-warning"))
+							return Html::el("span",array(
+								"class" => "label label-warning",
+								"title" => "Čeká ve frontě ke schválení"
+								))
 								->setText("Čeká");
 						case "rejected":
-							return Html::el("span",array("class" => "label label-danger"))
+							return Html::el("span",array(
+								"class" => "label label-danger",
+								"title" => "Zamítl(a) ". $revizor
+								))
 								->setText("Vyřazen");
 						default:
 							return Html::el("i")
