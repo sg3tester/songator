@@ -96,8 +96,11 @@ class InterpretRepository extends Repository {
 		$iterator = 0;
 		$result = array();
 		foreach ($matches as $row) {
-				if ($iterator > 0)
-					$result[] = $row->nazev;
+				if ($iterator > 0) {
+					$m["interpret"] = $row->nazev;
+					$m["distance"] = $row->distance;
+					$result[] = $m;
+				}
 				if ($iterator > $max)
 					break;
 				$iterator++;
