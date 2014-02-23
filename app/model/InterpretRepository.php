@@ -108,7 +108,7 @@ class InterpretRepository extends Repository {
 					$m["distance"] = $row->distance;
 					$result[] = $m;
 				}
-				if ($iterator > $max)
+				if ($iterator == $max)
 					break;
 				$iterator++;
 			}
