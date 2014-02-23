@@ -61,7 +61,7 @@ class SongPresenter extends BasePresenter
 	}
 
 	public function actionMatchInterpret($match) {
-		$this->sendJson($this->interpreti->match($match));
+		$this->sendJson($this->interpreti->match($match,10,0));
 	}
 
 	/****************************** Add song **********************************/
