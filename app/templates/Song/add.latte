@@ -46,7 +46,7 @@
 					{var $input = "link"}
 					<div class="form-group {if $form[$input]->error}has-error{/if}">
 						<label class="control-label" n:name="$input">Link k poslechnutí</label>
-						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">
+						<input n:name="$input" class="form-control" placeholder="http://">
 						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 						<p class="help-block">Např. Youtube, Dailymotion, Soundcloud atp.</p>
 					</div>
@@ -55,7 +55,7 @@
 					{var $input = "zadatel"}
 					<div class="form-group {if $form[$input]->error}has-error{/if}">
 						<label class="control-label" n:name="$input">Váš nick</label>
-						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">
+						<input n:name="$input" class="form-control" placeholder="Zadejte Vaší přezdívku">
 						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
 					
