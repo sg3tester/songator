@@ -35,6 +35,9 @@ class SongPresenter extends BasePresenter
 		$this->template->summary = $this->songList->getSummary();
 		$this->template->status = $status;
 	}
+
+
+	/************************** Approve/Reject ********************************/
 	
 	public function actionReject($id) {
 		if ($this->isAjax())
@@ -74,7 +77,11 @@ class SongPresenter extends BasePresenter
 		$form->addText("name", "Song");
 		$form->addSelect("zanr", "Žánr", $this->zanry->getList());
 		$form->addText("link", "Link k poslechnutí");
-		$form->addText("zadatel", "Žadatel");
+		
+		//This field only if user is NOT logged in
+		if (!$this->user->isLoggedIn())
+			$form->addText("zadatel", "Žadatel")
+				->setRequired("Musíte zadat svou přezdívku!");
 		
 		$form->addCheckbox("remix","Tento song je remix!");
 		$form->addCheckbox("terms","Souhlasím s podmínkami")
@@ -158,6 +165,12 @@ class SongPresenter extends BasePresenter
 				->setFilterSelect($filter);
 		
 		$grid->addColumnText("zadatel", "Přidal(a)")
+				->setCustomRender(function($item){
+					$template = $this->createTemplate();
+					$template->setFile(__DIR__ . "/../templates/components/Grid/zadatel.latte");
+					$template->song = $item;
+					return $template;
+				})
 				->setSortable()
 				->setFilterText()
 				->setSuggestion();
@@ -172,15 +185,25 @@ class SongPresenter extends BasePresenter
 				->setCustomRender(function($item){
 					$status = $item->status;
 					
+					$revizor = $item->revisor ? $item->ref("user","revisor")->username : "neznámý";
 					switch ($status) {
 						case "approved":
-							return Html::el("span",array("class" => "label label-success"))
+							return Html::el("span",array(
+								"class" => "label label-success",
+								"title" => "Schválil(a) ". $revizor
+								))
 								->setText("Zařazen");
 						case "waiting":
-							return Html::el("span",array("class" => "label label-warning"))
+							return Html::el("span",array(
+								"class" => "label label-warning",
+								"title" => "Čeká ve frontě ke schválení"
+								))
 								->setText("Čeká");
 						case "rejected":
-							return Html::el("span",array("class" => "label label-danger"))
+							return Html::el("span",array(
+								"class" => "label label-danger",
+								"title" => "Zamítl(a) ". $revizor
+								))
 								->setText("Vyřazen");
 						default:
 							return Html::el("i")

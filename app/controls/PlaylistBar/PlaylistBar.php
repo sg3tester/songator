@@ -24,6 +24,8 @@ class PlaylistBar extends NavbarControl {
 	public function render() {
 		$this->template->setFile(__DIR__ . "/PlaylistBar.latte");
 		$this->template->waiting = $this->songList->findAll()->where("status", "waiting")->count();
+		if (isset($this->config->pages))
+			$this->template->pages = $this->config->pages;
 		$this->template->render();
 	}
 
