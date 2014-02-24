@@ -24,6 +24,7 @@
 						<label class="control-label" n:name="$input">Interpret</label>
 						<input id="interpret" n:name="$input" class="form-control example-numbers typeahead" placeholder="Zadejte jméno interpreta">
 						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+						<div id="interpret-match"></div>
 					</div>
 					
 					{******* Song *******}
@@ -96,10 +97,17 @@
 {block scripts}
 {include #parent}
 <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
- <script>
-$( "#interpret" ).autocomplete({
+<script>
+	$( "#interpret" ).autocomplete({
 	    source: {plink song:bindInterpret},
 	    minLength: 1
+	});
+	$("#interpret").change(function(){
+		$(this).addClass("ui-autocomplete-loading");
+		$.get({plink matchInterpret},{ match: $("#interpret").val()}).done(function(data){
+				matchInterpret(data, "#interpret-match");
+				$("#interpret").removeClass("ui-autocomplete-loading");
+		 });
 	});
 </script>
 {/block}

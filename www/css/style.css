@@ -114,3 +114,11 @@ footer {
 .filter-header {
 	margin-top: 1em;
 }
+
+.sg-mi {
+	margin-top: .5em;
+}
+
+.ui-autocomplete-loading {
+	background: white url('../images/712.gif') right 5px center no-repeat;
+}
