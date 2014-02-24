@@ -5,16 +5,16 @@ function matchInterpret(json, selector) {
 	if (json.match) {
 		if (json.distance === 0) {
 			if (json.alias === false) {
-				$(selector).addClass("sg-matched");
+				$(selector).addClass("sg-mi-matched");
 				$(selector).html("Interpret <strong>"+json.matched+"</strong> je v našem registru");
 			}
 			else {
-				$(selector).addClass("sg-alias");
+				$(selector).addClass("sg-mi-alias");
 				$(selector).html("Interpret <strong>"+json.matched+"</strong> je aliasem pro <strong>"+json.alias+"</strong>");
 			}
 		}
 		else {
-			$(selector).addClass("sg-youmean");
+			$(selector).addClass("sg-mi-youmean");
 			$(selector).html("Měli jste na mysli <strong>"+json.matched+"</strong>?");
 		}
 	}
