@@ -23,6 +23,8 @@ abstract class NavbarControl extends \Nette\Application\UI\Control {
 	abstract public function getInfo();
 
 	public function setup($config) {
+		if (is_string($config))
+			$config = json_decode($config);
 		$this->config = $config;
 	}
 	
