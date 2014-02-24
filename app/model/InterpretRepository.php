@@ -94,7 +94,7 @@ class InterpretRepository extends Repository {
 	 * @return \Nette\Database\Table\Selection
 	 */
 	protected function levenshtein($keyword, $distance) {
-	return $this->getTable()->select("*,levenshtein(nazev,'$keyword') AS distance")
+	return $this->getTable()->select("*,levenshtein(nazev, ?) AS distance", $keyword)
 		->where("levenshtein(nazev, ?) < $distance",$keyword)
 		->order("distance ASC");
     }
