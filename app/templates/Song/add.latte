@@ -100,15 +100,12 @@
 <script>
 	$( "#interpret" ).autocomplete({
 	    source: {plink song:bindInterpret},
-		change: function(event, ui){
-			$.get({plink matchInterpret},{ match: $("#interpret").val()}).done(function(data){
-				matchInterpret(data, "#interpret-match");
-		 });
-		}, 
 	    minLength: 1
 	});
 	$("#interpret").change(function(){
-		
+		$.get({plink matchInterpret},{ match: $("#interpret").val()}).done(function(data){
+				matchInterpret(data, "#interpret-match");
+		 });
 	});
 </script>
 {/block}
