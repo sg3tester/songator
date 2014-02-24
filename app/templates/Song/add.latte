@@ -102,7 +102,7 @@
 	    source: {plink song:bindInterpret},
 		change: function(event, ui){
 			$.get({plink matchInterpret},{ match: $("#interpret").val()}).done(function(data){
-				$("#interpret-match").html(matchInterpret(data));
+				matchInterpret(data, "#interpret-match");
 		 });
 		}, 
 	    minLength: 1
