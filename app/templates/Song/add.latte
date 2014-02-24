@@ -103,8 +103,10 @@
 	    minLength: 1
 	});
 	$("#interpret").change(function(){
+		$(this).addClass("ui-autocomplete-loading");
 		$.get({plink matchInterpret},{ match: $("#interpret").val()}).done(function(data){
 				matchInterpret(data, "#interpret-match");
+				$("#interpret").removeClass("ui-autocomplete-loading");
 		 });
 	});
 </script>
