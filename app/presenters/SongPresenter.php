@@ -335,7 +335,7 @@ class SongPresenter extends BasePresenter
 
 	public function createComponentPlayer() {
 		$host = explode(".",$this->playUrl->getHost());
-		$provider = $host[count($host) - 2];
+		$provider = Nette\Utils\Strings::lower($host[count($host) - 2]);
 		$handler = "\\App\\Controls\\".ucfirst($provider)."Player";
 		
 		if(class_exists($handler))
