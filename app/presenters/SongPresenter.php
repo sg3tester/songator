@@ -334,8 +334,14 @@ class SongPresenter extends BasePresenter
 	/************************* Song player ************************************/
 
 	public function createComponentPlayer() {
-
-		$player = new \App\Controls\YoutubePlayer($this->playUrl);
+		$host = explode(".",$this->playUrl->getHost());
+		$provider = $host[count($host) - 2];
+		$handler = "\\App\\Controls\\".ucfirst($provider)."Player";
+		
+		if(class_exists($handler))
+			$player = new $handler($this->playUrl);
+		else
+			$player = new \App\Controls\NoPlayer($this->playUrl);
 
 		return $player;
 	}
