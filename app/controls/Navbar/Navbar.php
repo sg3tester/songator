@@ -14,13 +14,13 @@ namespace App\Controls;
  * @author JDC
  */
 class Navbar extends \Nette\Application\UI\Control {
-	
+
 	protected $sideLeft;
 	protected $sideRight;
-	
+
 	const SIDE_LEFT = "left",
 			SIDE_RIGHT = "right";
-	
+
 	public function __construct(\Nette\ComponentModel\IContainer $parent = NULL, $name = NULL) {
 		parent::__construct($parent, $name);
 		$this->sideLeft = $this->sideRight = array();
@@ -32,13 +32,13 @@ class Navbar extends \Nette\Application\UI\Control {
 		$this->template->sideRight = $this->sideRight;
 		$this->template->render();
 	}
-	
+
 	public function addControl($side, NavbarControl $control, $name) {
-		
+
 		$this->addComponent($control, $name);
-		
+
 		switch ($side) {
-			case "left": 
+			case "left":
 				return $this->sideLeft[] = $name;
 			case "right":
 				return $this->sideRight[] = $name;
@@ -46,5 +46,5 @@ class Navbar extends \Nette\Application\UI\Control {
 				throw new \Nette\InvalidArgumentException("Side name '$side' is invalid");
 		}
 	}
-	
+
 }

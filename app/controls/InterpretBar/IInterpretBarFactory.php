@@ -11,7 +11,7 @@ namespace App\Controls;
  * @author JDC
  */
 interface IInterpretBarFactory {
-	
+
 	/**
 	 * @return \App\Controls\InterpretBar
 	 */

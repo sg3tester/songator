@@ -10,7 +10,7 @@ use Nette,
  */
 class PagePresenter extends BasePresenter
 {
-	
+
 	public function beforeRender() {
 		$this->template->page = $this->getPage($this->getAction());
 		$this->setView("../Homepage/default");

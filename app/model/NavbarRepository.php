@@ -7,11 +7,11 @@
  */
 namespace App\Model;
 /**
- * 
+ *
  * @author JDC
  */
 class NavbarRepository extends Repository {
-	
+
 	/**
 	 * Gets sides included bars as associated array
 	 * @return type
@@ -23,5 +23,5 @@ class NavbarRepository extends Repository {
 		}
 		return $navs;
 	}
-	
+
 }

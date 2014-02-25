@@ -16,7 +16,7 @@ class InterpretBar extends NavbarControl {
 	public function __construct() {
 		parent::__construct();
 	}
-	
+
 	public function render() {
 		$this->template->setFile(__DIR__ . "/InterpretBar.latte");
 		if (isset($this->config->pages))

@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{block title|striptags}DJ's open playlist{/block} - Songátor 3</title>
-	
+
 	{block css}
     <!-- Bootstrap -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
@@ -21,28 +21,28 @@
     <!-- Bootstrap theme -->
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
      <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-	
+
 	<link rel="stylesheet" href="{$basePath}/css/typehead.css">
 	<link rel="stylesheet" href="{$basePath}/zocial/zocial.css">
-	
+
     <!-- The style -->
     <link rel="stylesheet" href="{$basePath}/css/style.css">
     {/block}
-	
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+
   </head>
   <body role="document">
 
     {control navbar}
 
     {include content}
-    
+
     <footer>
       <div class="container text-center">
       <iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; height:35px;" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FofficialJDC&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35"></iframe>
@@ -51,7 +51,7 @@
          Powered by Kobliha. Used 3rd party components Nette framework, Twitter bootstrap</p>
       </div>
     </footer>
-	
+
 	{block scripts}
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{$basePath}/js/jquery.js"></script>
@@ -65,7 +65,7 @@
 	<script src="{$basePath}/js/grido.ext.js"></script>
 	<script src="{$basePath}/js/main.js"></script>
 	<script>
-		$('.grido').grido(); 
+		$('.grido').grido();
 	</script>
 	{/block}
   </body>

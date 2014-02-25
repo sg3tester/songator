@@ -14,7 +14,7 @@ use Nette\Database\Table\ActiveRow;
  * @author JDC
  */
 class InterpretRepository extends Repository {
-	
+
 	/**
 	 * Gets interpret by name or by alias
 	 * @param string $name
@@ -23,12 +23,12 @@ class InterpretRepository extends Repository {
 	 */
 	public function getByName($name, $follow = true) {
 		$r = $this->getTable()->where("nazev",$name)->fetch();
-		
-		if ($r && $follow) 
-			return $this->follow($r);	
+
+		if ($r && $follow)
+			return $this->follow($r);
 		return $r;
 	}
-	
+
 	/**
 	 * Bind interpret by name
 	 * @param string $interpret
@@ -37,19 +37,19 @@ class InterpretRepository extends Repository {
 	 */
 	public function bind($interpret, $noaliases = true) {
 		$s = $this->findAll()->where("nazev LIKE ?",$interpret."%");
-		
+
 		if ($noaliases)
 			$s->where("interpret_id", null);
-		
+
 		//Make array list
 		$complete = array();
 		foreach ($s as $row) {
 			$complete[] = $row->nazev;
 		}
-		
+
 		return $complete;
 	}
-	
+
 	/**
 	 * Match interpret by name
 	 * @param string $interpret
@@ -59,7 +59,7 @@ class InterpretRepository extends Repository {
 	 */
 	public function match($interpret, $distance = 10, $limit = 10) {
 		$matches = $this->levenshtein($interpret, $distance); //distance is 10
-		
+
 		$result = array();
 		$result["matching"] = $interpret;
 		if (count($matches) > 0) {
@@ -71,9 +71,9 @@ class InterpretRepository extends Repository {
 			$result["alias"] = $alias->nazev != $match->nazev ? $alias->nazev : false;
 			$result["other"] = $this->iterateMatches($matches, $limit);
 		}
-		else 
+		else
 			$result["match"] = false;
-		
+
 		return $result;
 	}
 
@@ -87,7 +87,7 @@ class InterpretRepository extends Repository {
 			return $this->follow($row->interpret);
 		return $row;
 	}
-	
+
 	/**
 	 * Mysql levenshtein query
 	 * @param string $keyword
@@ -98,7 +98,7 @@ class InterpretRepository extends Repository {
 		->where("levenshtein(nazev, ?) < $distance",$keyword)
 		->order("distance ASC");
     }
-	
+
 	private function iterateMatches($matches, $max) {
 		$iterator = 0;
 		$result = array();

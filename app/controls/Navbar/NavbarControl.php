@@ -14,12 +14,12 @@ namespace App\Controls;
  * @author JDC
  */
 abstract class NavbarControl extends \Nette\Application\UI\Control {
-	
+
 	/** @var array */
 	protected $config;
 
 	abstract public function render();
-	
+
 	abstract public function getInfo();
 
 	public function setup($config) {
@@ -27,5 +27,5 @@ abstract class NavbarControl extends \Nette\Application\UI\Control {
 			$config = json_decode($config);
 		$this->config = $config;
 	}
-	
+
 }

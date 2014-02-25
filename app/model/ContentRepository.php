@@ -12,7 +12,7 @@ namespace App\Model;
  * @author JDC
  */
 class ContentRepository extends Repository {
-	
+
 	/**
 	 * Gets a page
 	 * @param string $name
@@ -25,5 +25,5 @@ class ContentRepository extends Repository {
 			$page->where ("hidden", false);
 		return $page->fetch();
 	}
-	
+
 }

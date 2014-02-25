@@ -11,7 +11,7 @@ namespace App\Controls;
  * @author JDC
  */
 interface IPlaylistBarFactory {
-	
+
 	/**
 	 * @return \App\Controls\PlaylistBar
 	 */

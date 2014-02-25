@@ -12,7 +12,7 @@ namespace App\Controls;
  * @author JDC
  */
 class PlaylistBar extends NavbarControl {
-	
+
 	/** @var \App\Model\Song */
 	protected $songList;
 
@@ -20,7 +20,7 @@ class PlaylistBar extends NavbarControl {
 		parent::__construct();
 		$this->songList = $songList;
 	}
-	
+
 	public function render() {
 		$this->template->setFile(__DIR__ . "/PlaylistBar.latte");
 		$this->template->waiting = $this->songList->findAll()->where("status", "waiting")->count();

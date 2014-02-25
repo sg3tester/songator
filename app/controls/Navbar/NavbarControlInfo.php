@@ -14,10 +14,10 @@ namespace App\Controls\Utils;
  * @author JDC
  */
 class NavbarControlInfo {
-	
+
 	/** @var string */
 	public $name;
-	
+
 	/** @var string */
 	public $desc;
 }

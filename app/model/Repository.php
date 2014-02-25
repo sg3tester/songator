@@ -8,7 +8,7 @@ namespace App\Model;
  * @author JDC
  */
 abstract class Repository extends \Nette\Object {
-	
+
 	/** @var \Nette\Database\Context */
 	protected $database;
 	protected $tableName;
@@ -17,7 +17,7 @@ abstract class Repository extends \Nette\Object {
 		$this->database = $db;
 		$this->tableName = $this->parseTableName();
 	}
-	
+
 	/**
 	 * Returns all records from table
 	 * @return \Nette\Database\Table\Selection
@@ -25,7 +25,7 @@ abstract class Repository extends \Nette\Object {
 	public function findAll() {
 		return $this->getTable();
 	}
-	
+
 	/**
 	 * Fetch one record by id
 	 * @param int $id
@@ -34,7 +34,7 @@ abstract class Repository extends \Nette\Object {
 	public function find($id) {
 		return $this->getTable()->get($id);
 	}
-	
+
 	/**
 	 * Returns a records by specified arguments
 	 * @param array $by
@@ -43,11 +43,11 @@ abstract class Repository extends \Nette\Object {
 	public function findBy(array $by) {
 		return $this->getTable()->where($by);
 	}
-	
+
 	protected function getTable() {
 		return $this->database->table($this->tableName);
 	}
-	
+
 	protected function parseTableName() {
 		$reflection = $this->getReflection();
 		$prename = \lcfirst($reflection->getShortName());

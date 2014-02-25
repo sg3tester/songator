@@ -19,6 +19,7 @@ nette:
 			*: App\*Module\Presenters\*Presenter
 
 	session:
+		autoStart: true
 		expiration: 14 days
 	debugger:
 		bar:
@@ -36,7 +37,7 @@ services:
 	- App\Model\ZanrRepository
 	- App\Model\NavbarRepository
 	- App\Model\ContentRepository
-	
+
 	# Navbars
 	- FactoryCreator
 	- App\Controls\IPlaylistBarFactory

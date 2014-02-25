@@ -11,7 +11,7 @@ namespace App\Controls;
  * @author JDC
  */
 interface ILoginBarFactory {
-	
+
 	/**
 	 * @return \App\Controls\LoginBar
 	 */

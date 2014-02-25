@@ -16,13 +16,13 @@ class TwitterAuthenticator
 		$this->request = $request;
 		$this->usermgr = $usermgr;
 	}
-	
+
 	public function getAuthToken($oauth_verifier = null) {
 	    if (\array_key_exists("denied", $this->request->query)) {
 		$this->resetToken();
 		throw new \Nette\Security\AuthenticationException("Access denied");
 	    }
-	    
+
 	    $sess = $this->session->getSection("twitter");
 	    if (isset($sess->token) && isset($sess->secret)) {
 		if (!$oauth_verifier)
@@ -31,7 +31,7 @@ class TwitterAuthenticator
 		unset($sess->token, $sess->secret);
 		return $oauth->getAccessToken($oauth_verifier);
 	    }
-	    else 
+	    else
 		$this->authorize();
 	}
 
@@ -48,12 +48,12 @@ class TwitterAuthenticator
 	{
 		if (!$authToken)
 		    $authToken = $this->getAuthToken();
-		
+
 		$user = $this->usermgr->getByServiceToken("twitter", $authToken["user_id"]);
-		
+
 		if (!$user)
 			$user = $this->register($authToken);
-		
+
 		return new \Nette\Security\Identity($user->id, "user", $user);
 	}
 
@@ -64,15 +64,15 @@ class TwitterAuthenticator
 
 	public function updateMissingData($user, stdClass $info)
 	{
-		
+
 	}
-	
+
 	private function authorize() {
 	    $oauth = new \TwitterOAuth($this->access["key"], $this->access["secret"]);
-		
+
 		// vyžádáme si request token
 		$requestToken = $oauth->getRequestToken();
-		
+
 		$sess = $this->session->getSection("twitter");
 		// uložíme request token do sessions
 		$sess->token = $requestToken['oauth_token'];
@@ -80,7 +80,7 @@ class TwitterAuthenticator
 
 		// získáme URL autentizačního serveru
 		$url = $oauth->getAuthorizeURL($requestToken['oauth_token']);
-		
+
 		header('Location: ' . $url,  TRUE, 301);
 		exit;
 	}

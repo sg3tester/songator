@@ -12,7 +12,7 @@
  * @author JDC
  */
 class Songator {
-	
+
 	const NAME = "Songator",
 			VERSION = "3.0-dev",
 			VERSION_ID = 30000,

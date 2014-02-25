@@ -14,7 +14,7 @@
 		<div class="row">
 			<div class="col-md-9">
 				<form>
-				<strong>Filtrovat: </strong> 
+				<strong>Filtrovat: </strong>
 					<input type="checkbox"> <i class="glyphicon glyphicon-star pecka" title="Pecka"></i>
 					<input type="checkbox"> <i class="glyphicon glyphicon-music instro" title="S instrumentálkou"></i>
 					<input type="checkbox"> <i class="glyphicon glyphicon-info-sign note" title="S poznámkou DJe"></i>
@@ -27,7 +27,6 @@
 		</div>
 		<div class="progress">
 			{var $procento = $summary["all"] / 100}
-			{dump $summary["all"]}
 			<div class="progress-bar progress-bar-success" style="width: {=round($summary["approved"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["approved"]} Schválených">
 				<span class="sr-only">{$summary["approved"]} Schválených</span>
 			</div>
@@ -39,7 +38,7 @@
 			</div>
 		</div>
 		<p class="text-right">V databázi se nachází <strong>{$summary["all"]}</strong> songů</p>
-		
+
 		<ul class="nav nav-tabs">
 			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
 			<li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
@@ -52,7 +51,7 @@
 		</div>
 	</div>
 </div>
-		
+
 <!-- Modal -->
 <div class="modal modal-small draggable" id="myModal" role="alertdialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog">
@@ -77,7 +76,7 @@
 	});
 	$(document).on('hidden.bs.modal', function (e) {
 		$(e.target).removeData('bs.modal');
-		$(".modal-content").html('<div class="text-center"><img src="'+{$basePath}+'/images/295.gif" /></div>');			
+		$(".modal-content").html('<div class="text-center"><img src="'+{$basePath}+'/images/295.gif" /></div>');
 	});
 </script>
 {/block}

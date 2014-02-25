@@ -80,7 +80,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 			self::AUTH_SERVICE => "songator"
 		));
 	}
-	
+
 	/**
 	 * Adds new user via Twitter service
 	 * @param string
@@ -95,7 +95,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 				self::COLUMN_ROLE => "user",
 			));
 	}
-	
+
 	/**
 	 * Gets user by service and auth token
 	 * @param string
