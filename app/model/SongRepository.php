@@ -15,11 +15,11 @@ use Nette\Utils\Arrays;
  * @author JDC
  */
 class SongRepository extends Repository {
-	
+
 	const STATUS_APPROVED = "approved",
 			STATUS_REJECTED = "rejected",
 			STATUS_WAITING = "waiting";
-	
+
 	/** @var \App\Model\InterpretRepository */
 	protected $interpreti;
 
@@ -27,7 +27,7 @@ class SongRepository extends Repository {
 		parent::__construct($db);
 		$this->interpreti = $interpreti;
 	}
-	
+
 	/**
 	 * Adds a song to playlist
 	 * @param array $song
@@ -35,35 +35,35 @@ class SongRepository extends Repository {
 	 */
 	public function add(array $song) {
 		$interpret = isset($song["interpret_name"]) ? $song["interpret_name"] : null;
-		
+
 		//Assign interpret (if registered)
 		$ri = $this->interpreti->getByName($interpret);
 		if($ri)
 			$song["interpret_id"] = $ri->id;
-		
+
 		return $this->getTable()->insert($song);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param int $songId
 	 * @param string|int $interpret name or ID
 	 * @return \Nette\Database\Table\ActiveRow|false
 	 */
 	public function assignInterpret($songId, $interpret) {
-		
+
 		if (is_string($interpret)) {
 			$ri = $this->interpreti->getByName($interpret);
 			if ($ri)
 				return $this->setInterpret ($songId, $ri->id);
 			return false;
 		}
-		elseif (is_integer($interpret)) 
+		elseif (is_integer($interpret))
 			return $this->setInterpret($songId, $interpret);
-	
+
 		throw new \Nette\InvalidArgumentException(603, "Interpret must be name (string) or ID (integer)");
 	}
-	
+
 	/**
 	 * Gets songs by status
 	 * (allowed: approved, waiting, rejected)
@@ -72,11 +72,11 @@ class SongRepository extends Repository {
 	 */
 	public function findByStatus($status) {
 		$allowed = array("approved","waiting","rejected");
-		if ($status && in_array($status, $allowed)) 
+		if ($status && in_array($status, $allowed))
 			return $this->findBy(array("status" => $status));
 		return $status;
 	}
-	
+
 	/**
 	 * Returns count statistics of playlist
 	 * @return array
@@ -96,30 +96,30 @@ class SongRepository extends Repository {
 	 * @param array|null $additional
 	 */
 	public function approve($song, $revizor, $note = "", $additional = null) {
-		
+
 		$this->setStatus($song, self::STATUS_APPROVED, $revizor, $note, $additional);
-		
+
 	}
-	
+
 	public function reject($song, $revizor, $reason, $additional = null) {
-		
+
 		$this->setStatus($song, self::STATUS_REJECTED, $revizor, $reason, $additional);
-		
+
 	}
-	
+
 	////////////////////////////////////////////////////////////////////////////
-	
+
 	private function setInterpret($songId, $interpret) {
 		return $this->getTable()->get($songId)->update(array("interpret_id" => $interpret));
 	}
-	
+
 	private function setStatus($song, $status, $revizor, $note, $additional) {
 		//Mapping
 		if ($additional)
 			$data = $additional;
-		else 
+		else
 			$data = array();
-		
+
 		//Check status validity
 		$allowed = array ("approved","rejected","waiting");
 		if (!in_array($status, $allowed))
@@ -128,8 +128,8 @@ class SongRepository extends Repository {
 		$data["revisor"] = $revizor;
 		$data["note"] = $note;
 		$data["status"] = $status; //This is important
-		
+
 		$this->getTable()->get($song)->update($data); //Update song
 	}
-	
+
 }
