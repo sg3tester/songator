@@ -26,7 +26,7 @@ You need a `composer`
 1. Clone this git repository `git clone https://github.com/JDCofficial/songator.git`
 2. Remove `composer.lock` file
 3. From command promt: `composer update` in directory with sources (downloads dependencies)
-4. Download latest SQL database dump
+4. Download latest [SQL database dump](http://repo.2ne1.cz/songator/songator.sql)
 5. Create new database and import SQL file
 6. Create file `config.local.neon` in dorecotry `app/config` and paste this:
 
