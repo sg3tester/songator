@@ -1,0 +1,25 @@
+{* Latte template *}
+
+{block content}
+<div class="container content">
+	<h1>
+		{$song->interpret_name} - {$song->name}
+		<small>
+			<div n:if="$song->status == 'approved'" class="label label-success">Zařazen</div>
+			<div n:if="$song->status == 'waiting'" class="label label-warning">Čeká</div>
+			<div n:if="$song->status == 'rejected'" class="label label-success">Vyřazen</div>
+			{$song->zadatel}
+		</small>
+	</h1>
+	<div class="row">
+		<div class="col-md-7">
+			<p n:ifcontent>{$song->vzkaz}</p>
+			<p n:ifcontent class="well">{$song->note}</p>
+		</div>
+		<div class="col-md-5">
+			{if $song->link}
+			{control player}
+			{/if}
+		</div>
+	</div>
+</div>

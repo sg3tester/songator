@@ -62,6 +62,14 @@
 					</div>
 					{/if}
 
+					{******* Vzkaz pro DJe *******}
+					{var $input = "vzkaz"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Vzkaz pro DJe</label>
+						<textarea rows="3" n:name="$input" class="form-control" placeholder="Můžete také napsat DJovi vzkaz"></textarea>
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+					</div>
+					
 					{******* Je song remix? *******}
 					{var $input = "remix"}
 					<div class="checkbox {if $form[$input]->error}has-error{/if}">

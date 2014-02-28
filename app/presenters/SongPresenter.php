@@ -56,6 +56,14 @@ class SongPresenter extends BasePresenter
 	}
 
 
+	public function actionView($id) {
+		$song = $this->songList->find($id);
+		$this->playUrl = new \Nette\Http\Url($song->link);
+		
+		$this->template->song = $song;
+	}
+
+
 	/*********************** Approve/Reject & play ****************************/
 
 	public function actionReject($id) {
@@ -114,6 +122,8 @@ class SongPresenter extends BasePresenter
 		$form->addCheckbox("remix","Tento song je remix!");
 		$form->addCheckbox("terms","Souhlasím s podmínkami")
 				->setRequired("Musíte souhlasit s podmínkami");
+		
+		$form->addTextArea("vzkaz");
 
 		$form->addSubmit("add");
 
@@ -133,7 +143,8 @@ class SongPresenter extends BasePresenter
 			"interpret_name" => $val->interpret,
 			"zanr_id" => $val->zanr,
 			"link" => $val->link,
-			"remix" => $val->remix
+			"remix" => $val->remix,
+			"vzkaz" => $val->vzkaz
 		);
 
 		//Add user information
