@@ -28,12 +28,27 @@ class SongPresenter extends BasePresenter
 	/** @var \Nette\Http\Url */
 	private $playUrl;
 
-	public function actionList($status) {
+	public function actionList($status, $flags) {
 
 		if ($status)
 			$this->songy = $this->songList->findByStatus($status);
 		else
 			$this->songy = $this->songList->findAll();
+		
+		if ($flags) {
+			$filter = new \FlagFilter();
+			$filter->setModel($this->songy);
+			$filter->setFlags(array(
+				"r" => "remix",
+				"i" => "instro",
+				"p" => "pecka",
+				"n" => array(
+					"column" => "note",
+					"by" => " != ''"
+				)
+			));
+			$filter->filter($flags);
+		}
 
 		$this->template->summary = $this->songList->getSummary();
 		$this->template->status = $status;
