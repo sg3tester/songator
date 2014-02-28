@@ -27,13 +27,13 @@
 		</div>
 		<div class="progress">
 			{var $procento = $summary["all"] / 100}
-			<div class="progress-bar progress-bar-success" style="width: {=round($summary["approved"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["approved"]} Schválených">
+			<div class="progress-bar progress-bar-success" style="width: {=round($summary["approved"] / $procento, 2)-0.01|noescape}%" data-toggle="tooltip" title="{$summary["approved"]} Schválených">
 				<span class="sr-only">{$summary["approved"]} Schválených</span>
 			</div>
-			<div class="progress-bar progress-bar-warning" style="width: {=round($summary["waiting"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["waiting"]} Čekajících ke schválení">
+			<div class="progress-bar progress-bar-warning" style="width: {=round($summary["waiting"] / $procento, 2)-0.01|noescape}%" data-toggle="tooltip" title="{$summary["waiting"]} Čekajících ke schválení">
 				<span class="sr-only">{$summary["waiting"]} Čekajících ve frontě ke schválení</span>
 			</div>
-			<div class="progress-bar progress-bar-danger" style="width: {=round($summary["rejected"] / $procento, 2)|noescape}%" data-toggle="tooltip" title="{$summary["rejected"]} Zamítnutých">
+			<div class="progress-bar progress-bar-danger" style="width: {=round($summary["rejected"] / $procento, 2)-0.01|noescape}%" data-toggle="tooltip" title="{$summary["rejected"]} Zamítnutých">
 				<span class="sr-only">{$summary["rejected"]} Zamítnutých</span>
 			</div>
 		</div>
