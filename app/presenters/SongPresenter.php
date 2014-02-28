@@ -36,6 +36,7 @@ class SongPresenter extends BasePresenter
 			$this->songy = $this->songList->findAll();
 		
 		if ($flags) {
+			$this->setFilterDefaults($flags);
 			$filter = new \FlagFilter();
 			$filter->setModel($this->songy);
 			$filter->setFlags(array(
@@ -361,5 +362,49 @@ class SongPresenter extends BasePresenter
 
 		return $player;
 	}
+	
+	////////////////////////////////////////////////////////////////////////////
+	/************************* Song player ************************************/
+	
+	protected function createComponentFilter() {
+		$form = new Form();
+		
+		$form->addCheckbox("remix");
+		$form->addCheckbox("instro");
+		$form->addCheckbox("pecka");
+		$form->addCheckbox("note");
+		
+		$form->addSubmit("filtruj");
+		
+		$form->onSuccess[] = function($form) {
+			$val = $form->getValues();
+			
+			$flags = "";
+			
+			//Mapping
+			$val->remix ? $flags .= "r" : null;
+			$val->instro ? $flags .= "i" : null;
+			$val->pecka ? $flags .= "p" : null;
+			$val->note ? $flags .= "n" : null;
+			
+			$this->redirect("this",array("flags" => $flags));
+		};
+		
+		return $form;
+	}
 
+	protected function setFilterDefaults($flags) {
+		$form = $this["filter"];
+		
+		$defaults = array();
+		foreach(str_split($flags) as $flag) {
+			//Backmapping
+			$flag == "r" ? $defaults["remix"] = true : null;
+			$flag == "i" ? $defaults["instro"] = true : null;
+			$flag == "p" ? $defaults["pecka"] = true : null;
+			$flag == "n" ? $defaults["note"] = true : null;
+		}
+		
+		$form->setDefaults($defaults);
+	}
 }

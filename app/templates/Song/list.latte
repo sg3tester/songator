@@ -13,13 +13,13 @@
 		{include '../components/flashes.latte'}
 		<div class="row">
 			<div class="col-md-9">
-				<form>
+				<form n:name="filter">
 				<strong>Filtrovat: </strong>
-					<input type="checkbox"> <i class="glyphicon glyphicon-star pecka" title="Pecka"></i>
-					<input type="checkbox"> <i class="glyphicon glyphicon-music instro" title="S instrumentálkou"></i>
-					<input type="checkbox"> <i class="glyphicon glyphicon-info-sign note" title="S poznámkou DJe"></i>
-					<input type="checkbox"> <i class="glyphicon glyphicon-headphones remix" title="Remix"></i>
-					<input type="submit" class="btn btn-default btn-sm" value="Třídit">
+					<input n:name="pecka" type="checkbox"> <i class="glyphicon glyphicon-star pecka" title="Pecka"></i>
+					<input n:name="instro" type="checkbox"> <i class="glyphicon glyphicon-music instro" title="S instrumentálkou"></i>
+					<input n:name="note" type="checkbox"> <i class="glyphicon glyphicon-info-sign note" title="S poznámkou DJe"></i>
+					<input n:name="remix" type="checkbox"> <i class="glyphicon glyphicon-headphones remix" title="Remix"></i>
+					<input n:name="filtruj" type="submit" class="btn btn-default btn-sm" value="Třídit">
 				</form>
 				<br />
 			</div>
