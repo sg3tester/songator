@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col-md-7">
 			<p n:ifcontent>{$song->vzkaz}</p>
-			<p n:ifcontent class="well">{$song->note}</p>
+			<p n:if="$song->note" class="well"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
 			<table class="table">
 				<tr>
 					<td width="332">Interpret</td>
@@ -45,7 +45,12 @@
 				</tr>
 				<tr>
 					<td>Flagy</td>
-					<td><strong></strong></td>
+					<td>
+						<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
+						<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
+						<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
+						<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
+					</td>
 				</tr>
 				<tr>
 					<td>Revidoval(a)</td>
@@ -56,6 +61,8 @@
 		<div class="col-md-5">
 			{if $song->link}
 			{control player}
+			{else}
+				<div class="noplayer">Přehrávač není k dispozici</div>
 			{/if}
 		</div>
 	</div>
