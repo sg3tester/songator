@@ -133,3 +133,23 @@ footer {
 .modal.in .modal-dialog {
 
 }
+
+.stripe {
+	border-left: #fff solid 3px;
+}
+
+h1.stripe {
+	padding-left: 0.2em;
+}
+
+.stripe-success {
+	border-left-color: #5CB85C;
+}
+
+.stripe-warning {
+	border-left-color: #F0AD4E;
+}
+
+.stripe-danger {
+	border-left-color: #D9534F;
+}

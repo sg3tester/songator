@@ -2,19 +2,56 @@
 
 {block content}
 <div class="container content">
-	<h1>
+	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-waiting{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 		{$song->interpret_name} - {$song->name}
-		<small>
-			<div n:if="$song->status == 'approved'" class="label label-success">Zařazen</div>
-			<div n:if="$song->status == 'waiting'" class="label label-warning">Čeká</div>
-			<div n:if="$song->status == 'rejected'" class="label label-success">Vyřazen</div>
-			{$song->zadatel}
-		</small>
+		<small>{$song->zadatel}</small>
 	</h1>
 	<div class="row">
 		<div class="col-md-7">
 			<p n:ifcontent>{$song->vzkaz}</p>
 			<p n:ifcontent class="well">{$song->note}</p>
+			<table class="table">
+				<tr>
+					<td width="332">Interpret</td>
+					<td><strong>{$song->interpret_name}</strong></td>
+				</tr>
+				<tr>
+					<td>Song</td>
+					<td><strong>{$song->name}</strong></td>
+				</tr>
+				<tr>
+					<td>Žánr</td>
+					<td><strong>{$song->zanr->name}</strong></td>
+				</tr>
+				<tr>
+					<td>Přidán</td>
+					<td><strong>{$song->datum}</strong></td>
+				</tr>
+				<tr>
+					<td>Link poslechnutí</td>
+					<td><a href="{$song->link}" target="_blank">{$song->link|truncate:42}</a></td>
+				</tr>
+				<tr>
+					<td>Žadatel</td>
+					<td><strong>{$song->zadatel}</strong></td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td>
+						<div n:if="$song->status == 'approved'" class="label label-success">Zařazen</div>
+						<div n:if="$song->status == 'waiting'" class="label label-warning">Čeká</div>
+						<div n:if="$song->status == 'rejected'" class="label label-success">Vyřazen</div>
+					</td>
+				</tr>
+				<tr>
+					<td>Flagy</td>
+					<td><strong></strong></td>
+				</tr>
+				<tr>
+					<td>Revidoval(a)</td>
+					<td><strong>{if $song->revisor}{$song->ref("user","revisor")->username}{else}-{/if}</strong></td>
+				</tr>
+			</table>
 		</div>
 		<div class="col-md-5">
 			{if $song->link}
