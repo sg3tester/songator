@@ -73,6 +73,7 @@
 	$(".filter").hide();
 	$("#advanced-search").click(function(){
 		$(".filter").toggle();
+		return false;
 	});
 	$(document).on('hidden.bs.modal', function (e) {
 		$(e.target).removeData('bs.modal');
