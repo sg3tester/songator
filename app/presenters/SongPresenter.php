@@ -31,12 +31,20 @@ class SongPresenter extends BasePresenter
 	/** @persistent */
 	public $back;
 
-	public function actionList($status, $flags) {
+	public function actionList($status, $flags, $q) {
 
 		if ($status)
 			$this->songy = $this->songList->findByStatus($status);
 		else
 			$this->songy = $this->songList->findAll();
+		
+		if($q) {
+			$searcher = new \Searcher();
+			$searcher->setModel($this->songy);
+			$searcher->setColumns(array("name","interpret_name"));
+			$searcher->search($q);
+			$this->template->q = $q;
+		}
 		
 		if ($flags) {
 			$this->setFilterDefaults($flags);

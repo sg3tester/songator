@@ -161,3 +161,7 @@ h1.stripe {
 	color: #bbb;
 	font-weight: bold;
 }
+
+#filter {
+	margin-bottom: 1em;
+}
