@@ -27,6 +27,9 @@ class SongPresenter extends BasePresenter
 
 	/** @var \Nette\Http\Url */
 	private $playUrl;
+	
+	/** @persistent */
+	public $back;
 
 	public function actionList($status, $flags) {
 
@@ -327,6 +330,12 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
 		$msg->title = "A je tam!";
+		
+		if($this->back) {
+			$back = $this->back;
+			$this->back = null;
+			$this->redirect($back, array("id" => $val->id));
+		}
 		$this->redirect("list");
 	}
 
@@ -354,6 +363,12 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
 		$msg->title = "A je ze hry!";
+		
+		if($this->back) {
+			$back = $this->back;
+			$this->back = null;
+			$this->redirect($back, array("id" => $val->id));
+		}
 		$this->redirect("list");
 	}
 

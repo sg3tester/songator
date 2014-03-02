@@ -57,6 +57,9 @@
 					<td><strong>{if $song->revisor}{$song->ref("user","revisor")->username}{else}-{/if}</strong></td>
 				</tr>
 			</table>
+				<div class="row">
+					<a n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success">Schválit</a>
+				</div>
 		</div>
 		<div class="col-md-5">
 			{if $song->link}
