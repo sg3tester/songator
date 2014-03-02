@@ -57,8 +57,11 @@
 					<td><strong>{if $song->revisor}{$song->ref("user","revisor")->username}{else}-{/if}</strong></td>
 				</tr>
 			</table>
-				<div class="row">
-					<a n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success">Schválit</a>
+				<div>
+					<a n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
+					<a n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
+					<a n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Upravit</a>
+					<a n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Smazat</a>
 				</div>
 		</div>
 		<div class="col-md-5">
