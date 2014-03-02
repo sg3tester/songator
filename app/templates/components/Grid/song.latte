@@ -1,4 +1,4 @@
-{$song->name}
+<a n:href="song:view $song->id" target="_blank">{$song->name}</a>
 <i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Tenhle song je pecka!"></i>
 <i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici instrumentálka"></i>
 <i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Remix"></i>
