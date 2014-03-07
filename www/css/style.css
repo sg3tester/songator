@@ -63,11 +63,47 @@ body {
 }
 
 .sg-header {
-	background: #660033;
-	color: #fff;
 	margin-bottom: 3em;
 	padding-top: 2em;
 	padding-bottom: 1.5em;
+	-webkit-box-shadow: 0px 1px 5px 0px rgba(50, 50, 50, 0.5);
+	-moz-box-shadow:    0px 1px 5px 0px rgba(50, 50, 50, 0.5);
+	box-shadow:         0px 1px 5px 0px rgba(50, 50, 50, 0.5);
+}
+
+.sg-header-purple {
+	color: #fff;
+	background: #660033;
+}
+
+.sg-header-green {
+	color: #fff;
+	background: #5CB85C;
+}
+
+.sg-header-yellow {
+	color: #fff;
+	background: #FFD700;
+}
+
+.sg-header-maroon {
+	color: #fff;
+	background: #b02a26;
+}
+
+.sg-header-orange {
+	color: #fff;
+	background: #bd4419;
+}
+
+.sg-header-red {
+	color: #fff;
+	background: #D9534F;
+}
+
+.sg-header-blue {
+	color: #fff;
+	background: #146C93;
 }
 
 .content {
