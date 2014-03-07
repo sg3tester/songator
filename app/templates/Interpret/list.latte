@@ -10,6 +10,7 @@
 	</div>
 
 	<div class="container">
+		{if count($interpreti)}
 		{var $startLetter = ""}
 			<div class="row">
 			{foreach $interpreti as $interpret}
@@ -23,6 +24,9 @@
 				<li><i n:if="$interpret->interpret" class="glyphicon glyphicon-flash" title="Alias pro {$interpret->interpret->nazev}"></i><a n:href="interpret:view $interpret->id">{$interpret->nazev}</a></li>
 			{if $iterator->isLast()}</ul></div>{/if}
 			{/foreach}
+		{else}
+			<p>Nenalezen žádný interpret.</p>
+		{/if}
 		</div>
 	</div>
 </div>
