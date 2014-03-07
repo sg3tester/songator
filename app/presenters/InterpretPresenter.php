@@ -15,9 +15,15 @@ class InterpretPresenter extends BasePresenter
 	/** @var \App\Model\InterpretRepository @inject */
 	public $interpreti;
 	
-	public function actionList() {
+	public function actionList($q) {
 
-		$this->template->interpreti = $this->interpreti->findAll()->order("nazev ASC");
+		$interpreti = $this->interpreti->findAll()->order("nazev ASC");
+		
+		if($q) {
+			$interpreti->where("nazev LIKE ",$q."%");
+		}
+		
+		$this->template->interpreti = $interpreti;
 	}
 
 }
