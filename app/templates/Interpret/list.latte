@@ -1,0 +1,28 @@
+{* Latte template *}
+
+{block content}
+<div class="content">
+	<div class="sg-header">
+		<div class="container">
+			<h1>Seznam interpretů</h1>
+			<p class="lead">Seznam registrovaných interpretů</p>
+		</div>
+	</div>
+
+	<div class="container">
+		{var $startLetter = ""}
+			<div class="row">
+			{foreach $interpreti as $interpret}
+			{if $startLetter != Nette\Utils\Strings::upper($interpret->nazev[0])}
+			{var $startLetter = Nette\Utils\Strings::upper($interpret->nazev[0])}
+				{if !$iterator->isFirst()}</div></div>{/if}
+			<div>
+				<div class="col-md-2"><h3>{$startLetter}</h3></li>
+				<ul>
+			{/if}
+				<li><a n:href="interpret:view $interpret->id">{$interpret->nazev}</a> <i n:if="$interpret->interpret" class="glyphicon glyphicon-share-alt" title="Alias pro {$interpret->interpret->nazev}"></i></li>
+			{if $iterator->isLast()}</ul></div>{/if}
+			{/foreach}
+		</div>
+	</div>
+</div>
