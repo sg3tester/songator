@@ -10,6 +10,21 @@
 	</div>
 
 	<div class="container">
+		<div id="filter" class="row">
+			<div class="col-md-8">
+				<a n:if="!$noaliases" n:href="this noaliases => true" class="btn btn-default btn-xs">Skrýt aliasy</a>
+				<a n:if="$noaliases" n:href="this noaliases => false" class="btn btn-default btn-xs">Zobrazit aliasy</a>
+				<br />
+			</div>
+			<div class="col-md-4 text-right">
+				<form class="form-inline" action="{plink this}">
+					<div class="form-group">
+						<input name="q" type="text" class="form-control" {ifset $q}value="{$q}"{/ifset} placeholder="Hledáte něco?">
+					</div>
+					<button type="submit" class="btn btn-default">Hledej</button>
+				</form>
+			</div>
+		</div>
 		{if count($interpreti)}
 		{var $startLetter = ""}
 			<div class="row">

@@ -29,6 +29,7 @@ class InterpretPresenter extends BasePresenter
 		
 		$this->template->interpreti = $interpreti;
 		$this->template->noaliases = $noaliases;
+		$this->template->q = $q;
 	}
 
 }
