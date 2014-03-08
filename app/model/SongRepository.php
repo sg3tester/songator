@@ -106,9 +106,64 @@ class SongRepository extends Repository {
 		$this->setStatus($song, self::STATUS_REJECTED, $revizor, $reason, $additional);
 
 	}
+	
+	/**
+	 * 
+	 * @param string $interpret
+	 * @param string $song
+	 * @return \Nette\Database\Table\Selection
+	 */
+	public function match($interpret, $song) {
+		
+		$matching = array();
+		$matching["matching"]["interpret"] = $interpret;
+		$matching["matching"]["song"] = $song;
+		$matching["match"] = false;
+		
+		if (!$song)
+			return $matching;
+		
+		$matches = $this->levenshtein($song, 10);
+		
+		if ($interpret)
+			$matches->where ("interpret_name LIKE ?",$interpret."%");
+		$result = array();
+		
+		
+		
+		foreach ($matches as $match) {
+			$song = array();
+			$song["id"] = $match->id;
+			$song["interpret"] = $match->interpret_name;
+			$song["name"] = $match->name;
+			$song["distance"] = $match->distance;
+			$result[] = $song;
+		}
+		if (count($result)) {
+			$matching["match"] = true;
+			if ($result[0]["distance"] == 0)
+				$matching["matched"] = $result[0];
+			$matching["similar"] = $result;
+		}
+
+		
+		return $matching;
+	}
+	
 
 	////////////////////////////////////////////////////////////////////////////
 
+	/**
+	 * Mysql levenshtein query
+	 * @param string $keyword
+	 * @return \Nette\Database\Table\Selection
+	 */
+	protected function levenshtein($keyword, $distance = 10) {
+	return $this->getTable()->select("*,levenshtein(name, ?) AS distance", $keyword)
+		->where("levenshtein(name, ?) < $distance",$keyword)
+		->order("distance ASC");
+    }
+	
 	private function setInterpret($songId, $interpret) {
 		return $this->getTable()->get($songId)->update(array("interpret_id" => $interpret));
 	}
