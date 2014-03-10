@@ -31,8 +31,9 @@
 					{var $input = "name"}
 					<div class="form-group {if $form[$input]->error}has-error{/if}">
 						<label class="control-label" n:name="$input">Song</label>
-						<input n:name="$input" class="form-control" placeholder="Zadejte název songu">
+						<input id="song" n:name="$input" class="form-control" placeholder="Zadejte název songu">
 						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+						<div id="song-match"></div>
 					</div>
 
 					{******* Žánr *******}
@@ -115,6 +116,15 @@
 		$.get({plink matchInterpret},{ match: $("#interpret").val()}).done(function(data){
 				matchInterpret(data, "#interpret-match");
 				$("#interpret").removeClass("ui-autocomplete-loading");
+				if ($("#song").val())
+					$("#song").change();
+		 });
+	});
+	$("#song").change(function(){
+		$(this).addClass("ui-autocomplete-loading");
+		$.get({plink matchSong},{ song: $("#song").val(), interpret: $("#interpret").val()}).done(function(data){
+				matchSong(data, "#song-match");
+				$("#song").removeClass("ui-autocomplete-loading");
 		 });
 	});
 </script>
