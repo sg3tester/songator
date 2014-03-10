@@ -63,7 +63,7 @@ function matchSong(json, selector) {
 		}
 	}
 	else {
-		$(selector).html(null); //hide
+		$(selector).html('<p class="text-muted">Žádný podobný song není v playlistu</i>');
 	}
 }
 
