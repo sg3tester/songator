@@ -2,7 +2,7 @@
 
 {block content}
 <div class="container content">
-	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-waiting{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
+	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 		{$song->interpret_name} - {$song->name}
 		<small>{$song->zadatel}</small>
 	</h1>
