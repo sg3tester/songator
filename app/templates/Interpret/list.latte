@@ -14,6 +14,10 @@
 			<div class="col-md-8">
 				<a n:if="!$noaliases" n:href="this noaliases => true" class="btn btn-default btn-xs">Skrýt aliasy</a>
 				<a n:if="$noaliases" n:href="this noaliases => false" class="btn btn-default btn-xs">Zobrazit aliasy</a>
+				{foreach range('a','z') as $ch}
+					<a n:href="this q => $ch" class="btn btn-default btn-xs">{$ch}</a>
+				{/foreach}
+				<br /><br />
 			</div>
 			<div class="col-md-4 text-right">
 				<form class="form-inline" action="{plink this}">
