@@ -55,6 +55,10 @@ final class Lessify extends Nette\Object {
 		@mkdir($tempDir);
 		$cacheFile = $tempDir.basename($inputFile).".cache";
 
+		//Regenerate
+		if (!file_exists($outputFile) && file_exists($cacheFile))
+			unlink($cacheFile);
+		
 		if (file_exists($cacheFile)) {
 			$cache = unserialize(file_get_contents($cacheFile));
 		} else {
