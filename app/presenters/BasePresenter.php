@@ -22,6 +22,22 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	/** @var \App\Model\ContentRepository @inject */
 	public $pages;
+	
+	protected $conf;
+	
+	protected function startup() {
+		parent::startup();
+		
+		//Compiling less theme
+		
+		$appDir = $this->conf["appDir"];
+		$wwwDir = $this->conf["wwwDir"];
+		$theme = $this->conf["theme"];
+		
+		$less = new \Lessify();
+		$less->cacheDir = $this->conf["tempDir"]."/less/";
+		$less->compile($appDir . "/templates/themes/$theme/$theme.less", $wwwDir . "/css/style.css");
+	}
 
 	protected function getPage($page, $xray = false) {
 		$source = $this->pages->getPage($page, $xray);
@@ -42,6 +58,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	protected function viewPage($page) {
 		$this->setView(self::CONTENT_DIR . "/$page");
+	}
+
+	public function injectParameters(\Nette\DI\Container $di) {
+		$this->conf = $di->getParameters();
 	}
 
 	protected function createComponentNavbar() {
