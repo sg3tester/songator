@@ -48,11 +48,13 @@ function matchSong(json, selector) {
 	$(selector).removeClass("sg-mi sg-mi-matched sg-mi-alias sg-mi-youmean text-success text-info text-danger text-primary text-warning"); //reset
 	$(selector).parent().removeClass("has-success has-warning has-error has-feedback"); //reset parent
 	$(selector).addClass("sg-mi"); //base class
+	$("#song-add").removeAttr("disabled");
 	if (json.match) {
 		if (json.matched && json.matching.interpret) {
 				$(selector).addClass("text-danger sg-mi-matched");
 				$(selector).parent().addClass("has-error");
 				$(selector).html("<i class='glyphicon glyphicon-warning-sign'></i> Song <strong>"+json.matched.interpret+" - "+json.matched.name+"</strong> je již v playlistu");
+				$("#song-add").attr("disabled","disabled");
 			}
 			
 		else {
