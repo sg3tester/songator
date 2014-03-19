@@ -1,0 +1,52 @@
+{* Latte template *}
+
+{block content}
+<div class="container content">
+	<h1>Ještě pár údajů...</h1>
+	<p>Tyto údaje nemusíte zadávat. Stačí jen dole kliknout na <strong>Uložit a pokračovat</strong> a je to. Přesto však doporučujeme údaje alespoň zkontrolovat.</p>
+	<form n:name="profileCreate" role="form">
+					{include '../components/flashes.latte'}
+					<div n:foreach="$form->ownErrors as $error" class="alert alert-danger">{$error}</div>
+
+					{******* Skutečné jméno *******}
+					{var $input = "realname"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Vaše jméno</label>
+						<input id="interpret" n:name="$input" class="form-control example-numbers typeahead" placeholder="Zadejte své jméno">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+						<div id="interpret-match"></div>
+					</div>
+						
+					{******* Twitter *******}
+					{var $input = "twitter"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">Twitter</label>
+						<input id="interpret" n:name="$input" class="form-control example-numbers typeahead" placeholder="Váš Twitter účet">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+						<div id="interpret-match"></div>
+					</div>
+						
+					{******* WWW *******}
+					{var $input = "www"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">WWW</label>
+						<input id="interpret" n:name="$input" class="form-control example-numbers typeahead" placeholder="Vaše WWW stránky">
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+						<div id="interpret-match"></div>
+					</div>
+
+					{******* Něco o Vás *******}
+					{var $input = "about"}
+					<div class="form-group {if $form[$input]->error}has-error{/if}">
+						<label class="control-label" n:name="$input">O mně</label>
+						<textarea rows="3" n:name="$input" class="form-control" placeholder="Tady můžete říct něco osobě. Například co máte rádi, oblíbené činnosti, kdo jste atp."></textarea>
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+					</div>
+
+					{******* ODESLAT! *******}
+					<button n:name="create" type="submit" class="btn btn-primary">Uložit a pokračovat</button>
+
+					{* /////////////////////////////////////////////////////////////////// *}
+
+				</form>
+</div>

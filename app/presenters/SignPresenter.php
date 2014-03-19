@@ -18,6 +18,9 @@ class SignPresenter extends BasePresenter
 	* @inject
 	*/
 	public $twitterAuth;
+	
+	/** @var \App\UserManager @inject */
+	public $usrmgr;
 
 	/**
 	 * Sign-in form factory.
@@ -55,7 +58,7 @@ class SignPresenter extends BasePresenter
 		try {
 			$this->getUser()->login($values->username, $values->password);
 			$this->logger->log("auth", "login", array("service" => "songator"));
-			$this->redirect('Homepage:');
+			$this->redirectAfterLogin();
 
 		} catch (Nette\Security\AuthenticationException $e) {
 			$form->addError($e->getMessage());
@@ -67,7 +70,7 @@ class SignPresenter extends BasePresenter
 	    $identity = $this->twitterAuth->authenticate();
 	    $this->user->login($identity);
 		$this->logger->log("auth", "login", array("service" => "twitter"));
-	    $this->redirect("homepage:");
+	    $this->redirectAfterLogin();
 	}
 
 	public function actionOut()
@@ -76,6 +79,12 @@ class SignPresenter extends BasePresenter
 		$this->getUser()->logout();
 		$this->flashMessage('You have been signed out.');
 		$this->redirect('in');
+	}
+	
+	private function redirectAfterLogin() {
+		if ($this->usrmgr->hasProfile($this->user->id))
+			$this->redirect('Homepage:');
+		$this->redirect("Profile:create");
 	}
 
 }

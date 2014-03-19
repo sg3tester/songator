@@ -13,6 +13,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 {
 	const
 		TABLE_NAME = 'user',
+		PROFILE_TABLE = 'profile',
 		COLUMN_ID = 'id',
 		COLUMN_NAME = 'username',
 		COLUMN_PASSWORD_HASH = 'password',
@@ -107,6 +108,19 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 			->where(self::AUTH_SERVICE, $service)
 			->where(self::AUTH_TOKEN, $token)
 			->fetch();
+	}
+	
+	public function hasProfile($id) {
+		$r = $this->database->table(self::TABLE_NAME)->get($id);
+		if ($r && $r->profile_id)
+			return true;
+		return false;
+	}
+	
+	public function createProfile($id, $data) {
+		$profile = $this->database->table(self::PROFILE_TABLE)->insert($data);
+		$this->database->table(self::TABLE_NAME)->get($id)->update(array("profile_id" => $profile->id));
+		return $profile;
 	}
 
 	/**
