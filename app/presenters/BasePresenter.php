@@ -23,6 +23,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var \App\Model\ContentRepository @inject */
 	public $pages;
 	
+	/** @var \App\Model\Logging\Logger @inject */
+	public $logger;
+	
 	protected $conf;
 	
 	protected function startup() {
