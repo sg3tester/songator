@@ -43,11 +43,21 @@ class Logger extends \Nette\Object {
 			$who = self::USR_ANONYMOUS;
 		}
 		
+		//Prepare resource
+		if ($resource)
+			$resource = \Nette\Utils\Json::encode($resource);
+		
 		//Add a record
 		$this->storage->addRecord($media, $event, $who, $user_id, $resource);
 	}
 	
 	public function systemLog($media, $event, $resource = null) {
+		
+		//Prepare resource
+		if ($resource)
+			$resource = \Nette\Utils\Json::encode($resource);
+		
+		//Add a record
 		$this->storage->addRecord($media, $event, self::USR_SYSTEM, null, $resource);
 	}
 	
