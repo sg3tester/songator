@@ -402,7 +402,7 @@ class SongPresenter extends BasePresenter
 	}
 	
 	////////////////////////////////////////////////////////////////////////////
-	/************************* Song player ************************************/
+	/************************* Song filter ************************************/
 	
 	protected function createComponentFilter() {
 		$form = new Form();
