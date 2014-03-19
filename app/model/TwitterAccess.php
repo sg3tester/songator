@@ -24,6 +24,7 @@ class TwitterAccess extends \Nette\Object {
 		if ($user->isLoggedIn() && isset($user->getIdentity()->twitter)) {
 			$oauth_token = $user->getIdentity()->twitter["oauth_token"];
 			$oauth_token_secret = $user->getIdentity()->twitter["oauth_token_secret"];
+			$this->isTwitterUser = true;
 		}
 		$this->oauth = new TwitterOAuth($twitter["key"], $twitter["secret"], $oauth_token, $oauth_token_secret);
 	}
