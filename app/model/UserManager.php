@@ -110,6 +110,11 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 			->fetch();
 	}
 	
+	/**
+	 * Has user a own profile?
+	 * @param int $id
+	 * @return boolean
+	 */
 	public function hasProfile($id) {
 		$r = $this->database->table(self::TABLE_NAME)->get($id);
 		if ($r && $r->profile_id)
@@ -117,6 +122,12 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		return false;
 	}
 	
+	/**
+	 * Create a user profile
+	 * @param int $id
+	 * @param array $data
+	 * @return Nette\Database\Table\ActiveRow
+	 */
 	public function createProfile($id, $data) {
 		$profile = $this->database->table(self::PROFILE_TABLE)->insert($data);
 		$this->database->table(self::TABLE_NAME)->get($id)->update(array("profile_id" => $profile->id));
