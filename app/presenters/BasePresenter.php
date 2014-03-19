@@ -35,7 +35,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		parent::startup();
 		
 		//Compiling less theme
-
 		$appDir = $this->conf["appDir"];
 		$wwwDir = $this->conf["wwwDir"];
 		$theme = $this->conf["theme"];
