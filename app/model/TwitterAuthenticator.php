@@ -50,16 +50,22 @@ class TwitterAuthenticator
 		    $authToken = $this->getAuthToken();
 
 		$user = $this->usermgr->getByServiceToken("twitter", $authToken["user_id"]);
-
+		
 		if (!$user)
 			$user = $this->register($authToken);
+		
+		$user = $user->toArray();
+		$oauth = new TwitterOAuth($this->access["key"], $this->access["secret"], $authToken["oauth_token"], $authToken["oauth_token_secret"]);
+		$user["twitter"]["oauth_token"] = $authToken["oauth_token"];
+		$user["twitter"]["oauth_token_secret"] = $authToken["oauth_token_secret"];
 
-		return new \Nette\Security\Identity($user->id, "user", $user);
+		return new \Nette\Security\Identity($user["id"], "user", $user);
 	}
 
 	public function register($info)
 	{
-		return $this->usermgr->addViaTwitter($info["screen_name"], $info["user_id"]);
+		$user =  $this->usermgr->addViaTwitter($info["screen_name"], $info["user_id"]);
+		return $user;
 	}
 
 	public function updateMissingData($user, stdClass $info)

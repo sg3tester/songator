@@ -17,7 +17,7 @@ class SignPresenter extends BasePresenter
 	* @var \TwitterAuthenticator
 	* @inject
 	*/
-	public $twitter;
+	public $twitterAuth;
 
 	/**
 	 * Sign-in form factory.
@@ -64,7 +64,7 @@ class SignPresenter extends BasePresenter
 
 
 	public function actionTwitterLogin() {
-	    $identity = $this->twitter->authenticate();
+	    $identity = $this->twitterAuth->authenticate();
 	    $this->user->login($identity);
 		$this->logger->log("auth", "login", array("service" => "twitter"));
 	    $this->redirect("homepage:");

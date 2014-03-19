@@ -26,13 +26,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var \App\Model\Logging\Logger @inject */
 	public $logger;
 	
+	/** @var \TwitterAccess @inject */
+	public $twitter;
+	
 	protected $conf;
 	
 	protected function startup() {
 		parent::startup();
 		
 		//Compiling less theme
-		
+
 		$appDir = $this->conf["appDir"];
 		$wwwDir = $this->conf["wwwDir"];
 		$theme = $this->conf["theme"];

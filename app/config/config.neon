@@ -48,4 +48,5 @@ services:
 	# Other
 	router: @App\RouterFactory::createRouter
 	twitter: TwitterAuthenticator(%twitter%)
+	twitterAccess: TwitterAccess(%twitter%)
 	logger: App\Model\Logging\Logger
