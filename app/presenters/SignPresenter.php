@@ -54,6 +54,7 @@ class SignPresenter extends BasePresenter
 
 		try {
 			$this->getUser()->login($values->username, $values->password);
+			$this->logger->log("auth", "login", array("service" => "songator"));
 			$this->redirect('Homepage:');
 
 		} catch (Nette\Security\AuthenticationException $e) {
@@ -65,11 +66,13 @@ class SignPresenter extends BasePresenter
 	public function actionTwitterLogin() {
 	    $identity = $this->twitter->authenticate();
 	    $this->user->login($identity);
+		$this->logger->log("auth", "login", array("service" => "twitter"));
 	    $this->redirect("homepage:");
 	}
 
 	public function actionOut()
 	{
+		$this->logger->log("auth", "logout");
 		$this->getUser()->logout();
 		$this->flashMessage('You have been signed out.');
 		$this->redirect('in');

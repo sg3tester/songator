@@ -170,10 +170,19 @@ class SongPresenter extends BasePresenter
 		else
 			$data["zadatel"] = $val->zadatel;
 
-		$this->songList->add($data);
+		$song = $this->songList->add($data);
 
 		$msg = $this->flashMessage("Song byl úspěšně přidán", "success");
 		$msg->title = "Yeah!";
+		
+		$zadatel = isset($val->zadatel) ? $val->zadatel : null;
+		$this->logger->log("song", "add", array(
+			"id" => $song->id,
+			"interpret" => $val->interpret,
+			"song" => $val->name,
+			"vzkaz" => $val->vzkaz
+				), $zadatel);
+		
 		$this->redirect("this");
 	}
 
@@ -342,6 +351,7 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
 		$msg->title = "A je tam!";
+		$this->logger->log("song", "approve", array("id" => $val->id));
 		
 		if($this->back) {
 			$back = $this->back;
@@ -375,6 +385,7 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
 		$msg->title = "A je ze hry!";
+		$this->logger->log("song", "reject", array("id" => $val->id, "reason" => $val->note));
 		
 		if($this->back) {
 			$back = $this->back;
