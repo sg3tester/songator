@@ -5,7 +5,7 @@
 # http://nette.org/security-warning
 #
 parameters:
-
+	theme: default
 
 php:
 	date.timezone: Europe/Prague
