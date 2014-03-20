@@ -31,5 +31,12 @@ class InterpretPresenter extends BasePresenter
 		$this->template->noaliases = $noaliases;
 		$this->template->q = $q;
 	}
+	
+	public function actionView($id) {
+		$interpret = $this->interpreti->find($id);
+		if(!$interpret)
+			throw new Nette\Application\BadRequestException("Interpret does not exists!", 404);
+		$this->template->interpret = $interpret;
+	}
 
 }

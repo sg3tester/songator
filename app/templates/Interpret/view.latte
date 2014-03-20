@@ -1,0 +1,42 @@
+{* Latte template *}
+
+{block content}
+<div class="container content">
+	<h1>{$interpret->nazev} <small n:if="$interpret->interpret_id" title="Alias pro {$interpret->interpret->nazev}"><a n:href="this $interpret->interpret->id"><i class="glyphicon glyphicon-flash"></i>{$interpret->interpret->nazev}</a></small></h1>
+	<p n:ifcontent>{$interpret->desc}</p>
+	<br />
+	<div class="row">
+		<div class="col-md-8">
+			<h2>Songy interpreta</h2>
+			{foreach $interpret->related("song") as $song}
+				<div class="stripe stripe-warning">
+					<div class="page-header">
+						<h4>{$song->interpret_name} - {$song->name} 
+							<small>
+								{$song->zadatel}
+								<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
+								<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
+								<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
+								<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
+							</small>
+							<small class="float-right">{$song->zanr->name}</small>
+						</h4>
+					</div>
+					<p n:ifcontent>{$song->vzkaz}</p>
+					<p n:if="$song->note" class="well well-sm"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
+				</div>
+			{/foreach}
+		</div>
+		<div class="col-md-3">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">Aliasy</div>
+				<ul class="list-group">
+				{foreach $interpret->related("interpret") as $alias}
+					<li class="list-group-item"><a n:href="this $alias->id">{$alias->nazev}</a></li>
+				{/foreach}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
