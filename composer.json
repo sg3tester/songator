@@ -12,7 +12,7 @@
 	],
 	"require": {
 		"php": ">= 5.3.7",
-		"nette/nette": "~2.1.0",
+		"nette/nette": "2.1.*",
 		"dg/adminer-custom": "1.*",
 		"leafo/lessphp": "0.4.0",
 		"o5/grido": "1.0.5"
