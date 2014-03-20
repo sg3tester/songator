@@ -6,34 +6,35 @@
 		{$song->interpret_name} - {$song->name}
 		<small>{$song->zadatel}</small>
 	</h1>
+	<br />
 	<div class="row">
 		<div class="col-md-7">
 			<p n:ifcontent>{$song->vzkaz}</p>
 			<p n:if="$song->note" class="well"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
-			<table class="table">
+			<table class="table table-hover">
 				<tr>
 					<td width="332">Interpret</td>
-					<td><strong>{$song->interpret_name}</strong></td>
+					<td><strong>{$song->interpret_name|field}</strong></td>
 				</tr>
 				<tr>
 					<td>Song</td>
-					<td><strong>{$song->name}</strong></td>
+					<td><strong>{$song->name|field}</strong></td>
 				</tr>
 				<tr>
 					<td>Žánr</td>
-					<td><strong>{$song->zanr->name}</strong></td>
+					<td><strong>{$song->zanr->name|field}</strong></td>
 				</tr>
 				<tr>
 					<td>Přidán</td>
-					<td><strong>{$song->datum}</strong></td>
+					<td><strong>{$song->datum|field}</strong></td>
 				</tr>
 				<tr>
 					<td>Link poslechnutí</td>
-					<td><a href="{$song->link}" target="_blank">{$song->link|truncate:42}</a></td>
+					<td><a n:tag-if="$song->link" href="{$song->link}" target="_blank">{$song->link|truncate:42|field}</a></td>
 				</tr>
 				<tr>
 					<td>Žadatel</td>
-					<td><strong>{$song->zadatel}</strong></td>
+					<td><strong>{$song->zadatel|field}</strong></td>
 				</tr>
 				<tr>
 					<td>Status</td>
@@ -50,6 +51,7 @@
 						<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
 						<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
 						<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
+						<span n:if="!$song->pecka && !$song->instro && !$song->remix && !$song->note" class="text-muted">Žádné flagy</span>
 					</td>
 				</tr>
 				<tr>
@@ -68,7 +70,7 @@
 			{if $song->link}
 			{control player}
 			{else}
-				<div class="noplayer">Přehrávač není k dispozici</div>
+				<div class="noplayer">Přehrát song není k dispozici</div>
 			{/if}
 		</div>
 	</div>
