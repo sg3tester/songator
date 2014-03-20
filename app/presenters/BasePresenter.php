@@ -29,6 +29,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	/** @var \TwitterAccess @inject */
 	public $twitter;
 	
+	/** @var \Settings @inject */
+	public $settings;
+	
 	protected $conf;
 	
 	protected function startup() {

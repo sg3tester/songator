@@ -50,3 +50,4 @@ services:
 	twitter: TwitterAuthenticator(%twitter%)
 	twitterAccess: TwitterAccess(%twitter%)
 	logger: App\Model\Logging\Logger
+	settings: Settings
