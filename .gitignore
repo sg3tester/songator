@@ -12,3 +12,4 @@ vendor/*
 app/config/config.local.neon
 /tests/test.log
 /www/css/style.css
+composer.lock
