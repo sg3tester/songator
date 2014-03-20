@@ -86,4 +86,15 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 		return $navbar;
 	}
+	
+	public function createTemplate($class = NULL)
+    {
+		$helpers = new \App\Helpers\Helpers();
+        $template = parent::createTemplate($class);
+        $template->registerHelperLoader(callback(
+            $helpers,
+            'loader'
+        ));
+        return $template;
+    }
 }
