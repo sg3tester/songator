@@ -6,10 +6,10 @@
 		{$song->interpret_name} - {$song->name}
 		<small>{$song->zadatel}</small>
 	</h1>
+	<p n:ifcontent>{$song->vzkaz}</p>
 	<br />
 	<div class="row">
 		<div class="col-md-7">
-			<p n:ifcontent>{$song->vzkaz}</p>
 			<p n:if="$song->note" class="well"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
 			<table class="table table-hover">
 				<tr>
