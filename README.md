@@ -27,7 +27,7 @@ You need a `composer`
 2. From command promt: `composer update` in directory with sources (downloads dependencies)
 3. Download latest [SQL database dump](http://repo.2ne1.cz/songator/songator.sql)
 4. Create new database and import SQL file
-5. Create file `config.local.neon` in dorecotry `app/config` and paste this:
+5. Create file `config.local.neon` in direcotry `app/config` and paste this:
 
 ``` neon
 parameters:
