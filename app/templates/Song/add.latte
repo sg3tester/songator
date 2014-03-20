@@ -97,7 +97,11 @@
 				</form>
 			</div>
 			<div class="col-md-5">
-				...
+				{ifset $rules}
+					{$rules}
+				{else}
+					<p>Není nastavena žádná stránka s pravidly</p>
+				{/ifset}
 			</div>
 		</div>
 	</div>

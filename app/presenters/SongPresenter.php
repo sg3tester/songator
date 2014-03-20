@@ -74,6 +74,15 @@ class SongPresenter extends BasePresenter
 		$this->template->song = $song;
 	}
 
+	public function renderAdd() {
+		$rules = $this->settings->get("page_rules");
+		if($rules) {
+			try {
+				$this->template->rules = $this->getPage($rules, true);
+			}
+			catch (Nette\Application\BadRequestException $e) {}
+		}
+	}
 
 	/*********************** Approve/Reject & play ****************************/
 
