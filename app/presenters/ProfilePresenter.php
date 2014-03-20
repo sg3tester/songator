@@ -17,14 +17,14 @@ class ProfilePresenter extends BasePresenter
 	public $usrmgr;
 	
 	public function actionCreate() {
-		if (!$this->user->isLoggedIn() || $this->usrmgr->hasProfile($this->user->id))
+		if (!$this->user->isLoggedIn() || !$this->usrmgr->getUser($this->user->id)->first_login)
 			$this->redirect("homepage:");
 		
 		if ($this->twitter->isTwitterUser()) {
 			$info = $this->twitter->verifyCredentials();
 			$defaults = array(
 				"realname" => $info->name,
-				"twitter" => $info->screen_name,
+				"twitter_acc" => $info->screen_name,
 				"about" => $info->description
 			);
 			if (count($info->entities->url->urls)) {
@@ -63,8 +63,9 @@ class ProfilePresenter extends BasePresenter
 			$info = $this->twitter->verifyCredentials();
 			$val["avatar"] = $info->profile_image_url;
 		}
+		$val["first_login"] = false;
 		
-		$this->usrmgr->createProfile($this->user->id, $val);
+		$this->usrmgr->update($this->user->id, $val);
 		
 		$this->redirect("Homepage:");
 	}

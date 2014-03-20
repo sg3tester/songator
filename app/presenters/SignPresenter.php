@@ -82,9 +82,10 @@ class SignPresenter extends BasePresenter
 	}
 	
 	private function redirectAfterLogin() {
-		if ($this->usrmgr->hasProfile($this->user->id))
-			$this->redirect('Homepage:');
-		$this->redirect("Profile:create");
+		if ($this->usrmgr->getUser($this->user->id)->first_login)
+			$this->redirect("Profile:create"); //First login
+		$this->redirect('Homepage:');
+		
 	}
 
 }
