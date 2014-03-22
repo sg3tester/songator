@@ -41,6 +41,7 @@ class SongPresenter extends BasePresenter
 		if($q) {
 			$searcher = new \Searcher();
 			$searcher->setModel($this->songy);
+			$searcher->setMask("%?%");
 			$searcher->setColumns(array("name","interpret_name"));
 			$searcher->search($q);
 			$this->template->q = $q;
