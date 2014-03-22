@@ -1,4 +1,4 @@
 <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} alert-dismissable">
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<button n:ifset="$flash->closable" n:if="$flash->closable" type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 	<strong n:ifset="$flash->title">{$flash->title} </strong>{$flash->message}
 </div>
