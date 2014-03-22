@@ -88,6 +88,8 @@ class SongPresenter extends BasePresenter
 	/*********************** Approve/Reject & play ****************************/
 
 	public function actionReject($id) {
+		$this->checkPermissions("song", "reject");
+		
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
@@ -96,6 +98,8 @@ class SongPresenter extends BasePresenter
 	}
 
 	public function actionApprove($id) {
+		$this->checkPermissions("song", "approve");
+		
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
@@ -104,6 +108,8 @@ class SongPresenter extends BasePresenter
 	}
 
 	public function actionPlay($id) {
+		$this->checkPermissions("song", "play");
+		
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
@@ -161,6 +167,9 @@ class SongPresenter extends BasePresenter
 
 	public function addSongSuccess(Form $form) {
 		$val = $form->getValues();
+		
+		if (!$this->checkPermissions("song", "draft"))
+			$this->redirect("add");
 
 		//Fill main data
 		$data = array(
@@ -288,34 +297,37 @@ class SongPresenter extends BasePresenter
 
 		$grid->addColumnText("vzkaz", "Vzkaz DJovi");
 
-		$grid->addActionHref("approve", "")
-				->setIcon("ok")
-				->setElementPrototype(Html::el("a",array(
-					"class" => "btn btn-success",
-					"data-toggle" => "modal",
-					"data-target" => ".modal"
-					)));
+		if ($this->user->isAllowed("song","approve"))
+			$grid->addActionHref("approve", "")
+					->setIcon("ok")
+					->setElementPrototype(Html::el("a",array(
+						"class" => "btn btn-success",
+						"data-toggle" => "modal",
+						"data-target" => ".modal"
+						)));
+		
+		if ($this->user->isAllowed("song","reject"))
+			$grid->addActionHref("reject", "")
+					->setIcon("remove")
+					->setElementPrototype(Html::el("a",array(
+						"class" => "btn btn-danger",
+						"data-toggle" => "modal",
+						"data-target" => ".modal"
+						)));
 
-		$grid->addActionHref("reject", "")
-				->setIcon("remove")
-				->setElementPrototype(Html::el("a",array(
-					"class" => "btn btn-danger",
-					"data-toggle" => "modal",
-					"data-target" => ".modal"
-					)));
-
-		$grid->addActionHref("play", "")
-				->setDisable(function($item){
-					if ($item->link)
-						return false;
-					return true;
-				})
-				->setIcon("play")
-				->setElementPrototype(Html::el("a",array(
-					"class" => "btn btn-info",
-					"data-toggle" => "modal",
-					"data-target" => ".modal"
-					)));
+		if ($this->user->isAllowed("song","play"))
+			$grid->addActionHref("play", "")
+					->setDisable(function($item){
+						if ($item->link)
+							return false;
+						return true;
+					})
+					->setIcon("play")
+					->setElementPrototype(Html::el("a",array(
+						"class" => "btn btn-info",
+						"data-toggle" => "modal",
+						"data-target" => ".modal"
+						)));
 
 		$grid->setFilterRenderType(\Grido\Components\Filters\Filter::RENDER_OUTER);
 		$grid->setDefaultSort(array("datum" => "DESC"));
@@ -349,6 +361,9 @@ class SongPresenter extends BasePresenter
 
 	public function approveSuccess(Form $form) {
 		$val = $form->getValues();
+		
+		if (!$this->checkPermissions("song", "approve"))
+			$this->redirect("list");
 
 		//Mapping additional data
 		$additional = array(
@@ -391,6 +406,9 @@ class SongPresenter extends BasePresenter
 	public function rejectSuccess(Form $form) {
 		$val = $form->getValues();
 
+		if (!$this->checkPermissions("song", "reject"))
+			$this->redirect("list");
+		
 		$this->songList->reject($val->id, $this->user->getId(), $val->note);
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");

@@ -6,8 +6,9 @@
 		<button n:if="$presenter->isAjax()" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h4 class="modal-title" id="myModalLabel">Song player: {$song->interpret_name} - {$song->name}</h4>
 	</div>
-	<div class="modal-body">
+	{include '../components/flashes.latte'}
+	<div n:if="$user->isAllowed('song','play')" class="modal-body">
 	<h1 n:if="!$presenter->isAjax()">{$song->interpret_name} - {$song->name}</h1>
-	{control player}
+		{control player}
 	</div>
 </div>

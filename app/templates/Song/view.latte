@@ -28,7 +28,7 @@
 					<td>Přidán</td>
 					<td><strong>{$song->datum|field}</strong></td>
 				</tr>
-				<tr>
+				<tr n:if="$user->isAllowed('song','play')">
 					<td>Link poslechnutí</td>
 					<td><a n:tag-if="$song->link" href="{$song->link}" target="_blank">{$song->link|truncate:42|field}</a></td>
 				</tr>
@@ -60,17 +60,17 @@
 				</tr>
 			</table>
 				<div>
-					<a n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
-					<a n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
-					<a n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Upravit</a>
-					<a n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Smazat</a>
+					<a n:if="$user->isAllowed('song','approve')" n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
+					<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
+					<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Upravit</a>
+					<a n:if="$user->isAllowed('song','remove')" n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Smazat</a>
 				</div>
 		</div>
 		<div class="col-md-5">
-			{if $song->link}
+			{if $song->link && $user->isAllowed('song','play')}
 			{control player}
 			{else}
-				<div class="noplayer">Přehrát song není k dispozici</div>
+				<div class="noplayer">Song není k dispozici nebo nemáte potřebná oprávnění</div>
 			{/if}
 		</div>
 	</div>

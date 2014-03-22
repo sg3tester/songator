@@ -5,7 +5,8 @@
 		<button n:if="$presenter->isAjax()" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h4 class="modal-title" id="myModalLabel">Zamítnout song</h4>
 	</div>
-	<form n:name="reject" role="form">
+	{include '../components/flashes.latte'}
+	<form n:if="$user->isAllowed('song','reject')" n:name="reject" role="form">
 		<div class="modal-body">
 			<p class="lead">Zamítnout '{$song->interpret_name} - {$song->name}' <small class="text-muted">{$song->zadatel}</small></p>
 			<p n:ifcontent>{$song->vzkaz}</p>

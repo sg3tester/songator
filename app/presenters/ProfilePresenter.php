@@ -17,7 +17,7 @@ class ProfilePresenter extends BasePresenter
 	public $usrmgr;
 	
 	public function actionCreate() {
-		if (!$this->user->isLoggedIn() || !$this->usrmgr->getUser($this->user->id)->first_login)
+		if (!$this->user->isLoggedIn() || !$this->usrmgr->getUser($this->user->id)->first_login || !$this->checkPermissions("ucp", "save"))
 			$this->redirect("homepage:");
 		
 		if ($this->twitter->isTwitterUser()) {
@@ -58,6 +58,9 @@ class ProfilePresenter extends BasePresenter
 	
 	public function profileCreateSuccess(Form $form) {
 		$val = $form->getValues(true);
+		
+		if (!$this->checkPermissions("ucp", "save"))
+			$this->redirect("homepage:");
 		
 		if ($this->twitter->isTwitterUser()) {
 			$info = $this->twitter->verifyCredentials();

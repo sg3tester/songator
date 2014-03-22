@@ -89,12 +89,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	
 	protected function checkPermissions($resource, $privilege, $mustLoggedIn = true) {
 		if ($mustLoggedIn && !$this->user->isLoggedIn()) {
-			$this->flashMessage("Nejprve se musíte přihlásit");
+			$this->flashMessage("Nejprve se musíte přihlásit", "warning");
 			$this->redirect("sign:in");
 		}
 		
 		if (!$this->user->isAllowed($resource, $privilege)) {
-			$this->flashMessage("Nemáte dostatečná oprávnění", "error");
+			$this->flashMessage("Nemáte dostatečná oprávnění", "danger");
 			return false;
 		}
 		
