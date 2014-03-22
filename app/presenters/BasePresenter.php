@@ -87,6 +87,20 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		return $navbar;
 	}
 	
+	protected function checkPermissions($resource, $privilege, $mustLoggedIn = true) {
+		if ($mustLoggedIn && !$this->user->isLoggedIn()) {
+			$this->flashMessage("Nejprve se musíte přihlásit");
+			$this->redirect("sign:in");
+		}
+		
+		if (!$this->user->isAllowed($resource, $privilege)) {
+			$this->flashMessage("Nemáte dostatečná oprávnění", "error");
+			return false;
+		}
+		
+		return true;
+	}
+
 	public function createTemplate($class = NULL)
     {
 		$helpers = new \App\Helpers\Helpers();

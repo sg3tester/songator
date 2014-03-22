@@ -50,3 +50,4 @@ services:
 	twitterAccess: TwitterAccess(%twitter%)
 	logger: App\Model\Logging\Logger
 	settings: Settings
+	- App\Model\Permissions
