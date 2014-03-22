@@ -40,7 +40,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 		//Compiling less theme
 		$appDir = $this->conf["appDir"];
 		$wwwDir = $this->conf["wwwDir"];
-		$theme = $this->conf["theme"];
+		$theme = $this->settings->get("theme", "default");
 		
 		$less = new \Lessify();
 		$less->cacheDir = $this->conf["tempDir"]."/less/";
