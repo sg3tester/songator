@@ -59,7 +59,7 @@ class TwitterAuthenticator
 		$user["twitter"]["oauth_token"] = $authToken["oauth_token"];
 		$user["twitter"]["oauth_token_secret"] = $authToken["oauth_token_secret"];
 
-		return new \Nette\Security\Identity($user["id"], "user", $user);
+		return new \Nette\Security\Identity($user["id"], $user["role"], $user);
 	}
 
 	public function register($info)
