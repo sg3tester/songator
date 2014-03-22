@@ -32,10 +32,23 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 	/** @var \Settings @inject */
 	public $settings;
 	
+	/** @var \Status */
+	public $status;
+
 	protected $conf;
 	
 	protected function startup() {
 		parent::startup();
+		
+		//Check maintenance mode
+		if (file_exists($this->conf["wwwDir"] . "/.maintenance"))
+			$this->setView ("../maintenance");
+		
+		//Set songator status
+		$enabled = $this->settings->get("portal_enabled", true);
+		$adding = $this->settings->get("adding_enabled", true);
+		$msg = $this->settings->get("portal_message");
+		$this->status = new \Status($enabled, $adding, $msg);
 		
 		//Compiling less theme
 		$appDir = $this->conf["appDir"];
@@ -111,4 +124,9 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
         ));
         return $template;
     }
+	
+	protected function beforeRender() {
+		parent::beforeRender();
+		$this->template->portal = $this->status;
+	}
 }
