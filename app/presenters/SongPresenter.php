@@ -38,6 +38,7 @@ class SongPresenter extends BasePresenter
 		else
 			$this->songy = $this->songList->findAll();
 		
+		//Simple song searching
 		if($q) {
 			$searcher = new \Searcher();
 			$searcher->setModel($this->songy);
@@ -47,6 +48,7 @@ class SongPresenter extends BasePresenter
 			$this->template->q = $q;
 		}
 		
+		//Filtering by flags
 		if ($flags) {
 			$this->setFilterDefaults($flags);
 			$filter = new \FlagFilter();
