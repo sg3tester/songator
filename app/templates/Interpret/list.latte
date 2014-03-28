@@ -39,7 +39,7 @@
 				<div class="col-md-2"><h3>{$startLetter}</h3></li>
 				<ul>
 			{/if}
-				<li><i n:if="$interpret->interpret" class="glyphicon glyphicon-flash" title="Alias pro {$interpret->interpret->nazev}"></i><a n:href="interpret:view $interpret->id">{$interpret->nazev}</a></li>
+				<li><i n:if="$interpret->interpret_id" class="glyphicon glyphicon-flash" title="Alias pro {$interpret->interpret->nazev}"></i><a n:href="interpret:view $interpret->id">{$interpret->nazev}</a></li>
 			{if $iterator->isLast()}</ul></div>{/if}
 			{/foreach}
 		{else}
