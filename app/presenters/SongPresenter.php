@@ -110,7 +110,7 @@ class SongPresenter extends BasePresenter
 	}
 
 	public function actionPlay($id) {
-		$this->checkPermissions("song", "play");
+		$this->checkPermissions("song", "play", false);
 		
 		if ($this->isAjax())
 			$this->setLayout(false);
