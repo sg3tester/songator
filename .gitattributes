@@ -17,3 +17,7 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# SQL
+*.SQL  diff=astextplain
+*.sql  diff=astextplain
