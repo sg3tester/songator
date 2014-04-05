@@ -44,15 +44,19 @@
 				<span class="sr-only">{$summary["rejected"]} Zamítnutých</span>
 			</div>
 		</div>
-		<p class="text-right">V databázi se nachází <strong>{$summary["all"]}</strong> songů</p>
+				<p class="text-right">V databázi se nachází <strong>{$summary["all"]}</strong> songů</p>
 
 		<ul class="nav nav-tabs">
 			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
 			<li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
 			<li n:class="$status == 'waiting' ? active"><a n:href="this status => 'waiting'">Čekající <span n:if="$summary['waiting']" class="badge">{$summary['waiting']}</span></a></li>
 			<li n:class="$status == 'rejected' ? active"><a n:href="this status => 'rejected'">Vyřazené</a></li>
+			<li class="pull-right">
+				<div class="nav-widget">
+					<a class="btn btn-success btn-sm" n:href="add"><i class="glyphicon glyphicon-plus"></i> Přidat song</a>
+				</div>
+			</li>
 		</ul>
-
 		<div class="table-responsive">
 		{control songList}
 		</div>
