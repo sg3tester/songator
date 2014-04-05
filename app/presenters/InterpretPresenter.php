@@ -34,8 +34,13 @@ class InterpretPresenter extends BasePresenter
 	
 	public function actionView($id) {
 		$interpret = $this->interpreti->find($id);
+		
 		if(!$interpret)
 			throw new Nette\Application\BadRequestException("Interpret does not exists!", 404);
+		
+		if($interpret->interpret_id)
+			$this->redirect ("this", array("id" => $interpret->interpret_id)); //If is alias => redirect to real
+		
 		$this->template->interpret = $interpret;
 	}
 
