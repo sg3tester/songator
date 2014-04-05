@@ -142,8 +142,9 @@ class SongPresenter extends BasePresenter
 		$form = new Form();
 
 		$form->addText("interpret", "Interpret")
-				->setRequired();
-		$form->addText("name", "Song");
+				->setRequired("Musíte vyplnit jméno interpreta");
+		$form->addText("name", "Song")
+				->setRequired("Musíte zadat název songu");
 		$form->addSelect("zanr", "Žánr", $this->zanry->getList());
 		$form->addText("link", "Link k poslechnutí");
 
