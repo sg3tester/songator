@@ -44,7 +44,7 @@
 				<div class="panel-heading">Aliasy</div>
 				<ul class="list-group">
 				{foreach $interpret->related("interpret") as $alias}
-					<li class="list-group-item"><a n:href="this $alias->id">{$alias->nazev}</a></li>
+					<li class="list-group-item">{$alias->nazev}</li>
 				{/foreach}
 				</ul>
 			</div>
