@@ -37,6 +37,7 @@ services:
 	- App\Model\NavbarRepository
 	- App\Model\ContentRepository
 	- App\Model\LogRepository
+	- App\Model\BlogRepository
 
 	# Navbars
 	- FactoryCreator

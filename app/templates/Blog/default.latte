@@ -1,0 +1,14 @@
+{extends '../@blog.latte'}
+{* Latte template *}
+
+{block blog}
+{foreach $articles as $article}
+	<div class="page-header">
+		<h2>{$article->nadpis}</h2>
+			<ul class="list-inline">
+				<li><i class="glyphicon glyphicon-time"></i> {$article->datum|timeAgoInWords}</li>
+				<li n:if="$article->user_id"><i class="glyphicon glyphicon-user"></i> {$article->user->username}</li>
+			</ul>
+	</div>
+	<p>{$article->perex}</p>
+{/foreach}

@@ -9,15 +9,18 @@ use Nette,
 /**
  * Homepage presenter.
  */
-class HomepagePresenter extends BasePresenter
+class BlogPresenter extends BasePresenter
 {
 
+	/** @var \App\Model\BlogRepository @inject */
+	public $blog;
+	
 	public function actionDefault() {
-		$home = $this->settings->get("page_home");
-		if ($home)
-			$this->template->page = $this->getPage("home", true);
-		else
-			throw new Nette\Application\BadRequestException("Homepage not found", 404);
+		
+	}
+	
+	public function renderDefault() {
+		$this->template->articles = $this->blog->findAll();
 	}
 
 }
