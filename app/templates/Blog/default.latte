@@ -2,7 +2,7 @@
 {* Latte template *}
 
 {block blog}
-<h4 class="blog-preheader" n:ifset="$currentTag"><a n:href="this">&times;</a> Články označené štítkem <small class="label label-tag">{$currentTag->name}</small></h4>
+<h4 class="blog-preheader" n:ifset="$currentTag"><a n:href="blog: 'tag' => null">&times;</a> Články označené štítkem <small class="label label-tag">{$currentTag->name}</small></h4>
 {foreach $articles as $article}
 	<div class="blog-article">
 		<div class="page-header">
@@ -19,7 +19,4 @@
 		</div>
 	</div>
 {/foreach}
-<ul n:if="$page->pageCount > 1" class="pager">
-  <li n:if="!$page->last" class="previous"><a n:href="this 'page' => $page->page + 1">&larr; Starší</a></li>
-  <li n:if="!$page->first" class="next"><a n:href="this 'page' => $page->page - 1">Novější &rarr;</a></li>
-</ul>
+{control paginator}

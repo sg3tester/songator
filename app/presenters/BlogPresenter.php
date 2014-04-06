@@ -18,11 +18,14 @@ class BlogPresenter extends BasePresenter
 	/** @var \App\Model\TagRepository @inject */
 	public $tags;
 	
+	/** @persistent */
+	public $tag;
+	
 	public function actionDefault() {
 		
 	}
 	
-	public function renderDefault($tag, $page = 1) {
+	public function renderDefault($tag) {
 		$articles = $this->blog->findAll()->order("datum DESC");
 		if ($tag) {
 			$articles->where(":blog_tag.tag_id",$tag);
@@ -30,10 +33,10 @@ class BlogPresenter extends BasePresenter
 		}
 		
 		/* Paginator */
-		$paginator = new Nette\Utils\Paginator;
+		$navigator = new \App\Controls\Navigator($this, "paginator");
+		$paginator = $navigator->getPaginator();
 		$paginator->setItemCount(count($articles));
-		$paginator->setItemsPerPage($this->settings->get("blog_paginator", 1));
-		$paginator->setPage($page);
+		$paginator->setItemsPerPage($this->settings->get("blog_paginator", 10));
 		
 		$articles->limit($paginator->getLength(), $paginator->getOffset()); //Paginate!
 		
@@ -49,6 +52,7 @@ class BlogPresenter extends BasePresenter
 	protected function createComponentTagCloud() {
 		$cloud = new \TagCloud();
 		$cloud->data = $this->tags->getCloud();
+		$cloud->destination = "blog:";
 		return $cloud;
 	}
 
