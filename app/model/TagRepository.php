@@ -12,5 +12,8 @@ namespace App\Model;
  * @author JDC
  */
 class TagRepository extends Repository {
-	//put your code here
+
+	public function getCloud() {
+		return $this->getTable()->select("name, COUNT(:blog_tag.tag_id) AS score")->group(":blog_tag.tag_id")->fetchPairs("name","score");
+	}
 }

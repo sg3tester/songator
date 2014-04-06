@@ -35,5 +35,11 @@ class BlogPresenter extends BasePresenter
 		parent::beforeRender();
 		$this->template->last = $this->blog->findAll()->limit(5)->order("datum DESC");
 	}
+	
+	protected function createComponentTagCloud() {
+		$cloud = new \TagCloud();
+		$cloud->data = $this->tags->getCloud();
+		return $cloud;
+	}
 
 }
