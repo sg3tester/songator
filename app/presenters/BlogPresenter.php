@@ -19,7 +19,7 @@ class BlogPresenter extends BasePresenter
 	public $tags;
 	
 	/** @persistent */
-	public $page;
+	public $page = 1;
 	
 	public function actionDefault() {
 		
@@ -40,6 +40,7 @@ class BlogPresenter extends BasePresenter
 		
 		$articles->limit($paginator->getLength(), $paginator->getOffset()); //Paginate!
 		
+		$this->template->page = $paginator;
 		$this->template->articles = $articles;
 	}
 	

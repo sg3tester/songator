@@ -19,3 +19,7 @@
 		</div>
 	</div>
 {/foreach}
+<ul n:if="$page->pageCount > 1" class="pager">
+  <li n:if="!$page->last" class="previous"><a n:href="this 'page' => $page->page + 1">&larr; Starší</a></li>
+  <li n:if="!$page->first" class="next"><a n:href="this 'page' => $page->page - 1">Novější &rarr;</a></li>
+</ul>
