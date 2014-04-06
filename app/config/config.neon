@@ -43,6 +43,7 @@ services:
 	- App\Controls\IPlaylistBarFactory
 	- App\Controls\IInterpretBarFactory
 	- App\Controls\ILoginBarFactory
+	- App\Controls\IBlogBarFactory
 
 	# Other
 	router: @App\RouterFactory::createRouter

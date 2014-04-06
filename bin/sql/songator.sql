@@ -203,7 +203,8 @@ CREATE TABLE `navbar` (
 INSERT INTO `navbar` (`id`, `factory`, `config`, `dock`, `level`) VALUES
 (1,	'\\App\\Controls\\IPlaylistBarFactory',	'{\"barname\":\"Playlist\",\"pages\":[{\"title\":\"Pravidla přidávání songů\",\"link\":\"page:rules\",\"presenter\":true},{\"title\":\"FAQ\",\"link\":\"page:faq\",\"presenter\":true}]}',	'left',	0),
 (2,	'\\App\\Controls\\ILoginBarFactory',	'',	'right',	0),
-(3,	'\\App\\Controls\\IInterpretBarFactory',	'',	'left',	1)
+(3,	'\\App\\Controls\\IInterpretBarFactory',	'',	'left',	1),
+(4,	'\\App\\Controls\\IBlogBarFactory',	'',	'left',	2)
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `factory` = VALUES(`factory`), `config` = VALUES(`config`), `dock` = VALUES(`dock`), `level` = VALUES(`level`);
 
 DROP TABLE IF EXISTS `settings`;
@@ -327,4 +328,4 @@ INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
 (4,	'C-POP',	'Čínská populární hudba')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `popis` = VALUES(`popis`);
 
--- 2014-04-05 17:50:33
+-- 2014-04-06 09:50:07
