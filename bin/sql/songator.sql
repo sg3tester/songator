@@ -49,6 +49,44 @@ END;;
 
 DELIMITER ;
 
+DROP TABLE IF EXISTS `blog`;
+CREATE TABLE `blog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nadpis` varchar(80) NOT NULL,
+  `perex` text NOT NULL,
+  `content` longtext NOT NULL,
+  `datum` datetime NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `blog` (`id`, `nadpis`, `perex`, `content`, `datum`, `user_id`) VALUES
+(1,	'Testovací článek',	'Mauris sollicitudin gravida enim, ac egestas urna fringilla in. Donec accumsan purus eget turpis congue euismod. Vivamus massa elit, suscipit vestibulum ipsum quis, hendrerit cursus risus. Vivamus leo nisi, sagittis eget dignissim at, gravida ut mauris. Vestibulum porttitor feugiat augue, ac interdum ipsum ultrices eget. Ut consequat in felis id ultricies. Sed eget aliquet tellus, eu gravida tellus. Maecenas gravida magna vitae metus mollis, non scelerisque ante laoreet. ',	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque eros quis enim interdum, at ornare neque aliquet. Etiam a erat at lacus ullamcorper pretium a non arcu. Donec tristique viverra faucibus. Cras a dui euismod ligula euismod malesuada eu quis felis. Fusce elementum massa in sem porta, nec euismod ligula convallis. Suspendisse varius metus sapien, sed congue leo laoreet quis. Cras odio turpis, sodales non sodales eu, dignissim sit amet massa. Praesent tempus, tortor id tincidunt pellentesque, lacus arcu posuere magna, sed venenatis urna ipsum a sapien. Vivamus sed tortor non elit interdum dapibus. In eros mi, cursus id sapien tristique, sollicitudin feugiat magna. Phasellus turpis mauris, molestie sollicitudin ante vel, blandit tristique justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque nunc leo, luctus a massa id, lobortis tincidunt arcu. Fusce ac scelerisque odio, gravida hendrerit dui. Fusce volutpat libero dolor, ac placerat leo iaculis non. Nunc vestibulum ultricies nisl. ',	'2014-04-06 10:25:36',	1),
+(2,	'Další zajebanej test, pitcho!',	'Etiam commodo nibh vel pharetra pretium. Donec ultricies elit lectus, nec fringilla quam fermentum non. Morbi et eros pharetra, interdum tellus ac, feugiat nisi. Sed imperdiet viverra metus, id accumsan sem suscipit sed. Nulla congue orci ac nunc elementum, id posuere dui iaculis. Vestibulum erat sem, tristique vitae viverra vitae, euismod id elit. Nulla nec ante pharetra, fringilla mi sed, rutrum turpis. Cras euismod nibh eget metus iaculis, vitae venenatis lorem posuere. ',	'Etiam enim sem, aliquet sed lacinia sed, lobortis in urna. Duis commodo, diam at pulvinar rhoncus, purus arcu blandit leo, eu consectetur elit libero molestie purus. Duis at nisl magna. Praesent sit amet eros at dolor interdum aliquam. Vivamus tempus pretium sem ac molestie. Proin at elit egestas, dictum orci quis, tincidunt eros. In blandit odio nec erat venenatis bibendum. Curabitur velit mi, tincidunt ac pellentesque non, sodales mattis dolor. Nulla et nunc euismod, porttitor ligula eget, imperdiet ipsum. Cras id laoreet arcu, ut vulputate est. Praesent faucibus, augue eu placerat consequat, neque urna consequat magna, at porttitor turpis nisl eget urna. Sed ut nulla at metus scelerisque ultrices nec id sapien. Mauris urna sem, vestibulum adipiscing arcu at, iaculis gravida mi. Maecenas fermentum quam ut lobortis commodo. Quisque tempor, erat eu lacinia lacinia, ipsum nisl feugiat tellus, vel molestie libero dui eu erat. Sed vestibulum consequat urna vel pharetra. ',	'2014-04-06 11:14:29',	1)
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `nadpis` = VALUES(`nadpis`), `perex` = VALUES(`perex`), `content` = VALUES(`content`), `datum` = VALUES(`datum`), `user_id` = VALUES(`user_id`);
+
+DROP TABLE IF EXISTS `blog_tag`;
+CREATE TABLE `blog_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `blog_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `blog_id` (`blog_id`),
+  KEY `tag_id` (`tag_id`),
+  CONSTRAINT `blog_tag_ibfk_1` FOREIGN KEY (`blog_id`) REFERENCES `blog` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `blog_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `blog_tag` (`id`, `blog_id`, `tag_id`) VALUES
+(1,	1,	2),
+(2,	1,	3),
+(3,	1,	1),
+(4,	2,	1),
+(5,	2,	4)
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `blog_id` = VALUES(`blog_id`), `tag_id` = VALUES(`tag_id`);
+
 DROP TABLE IF EXISTS `content`;
 CREATE TABLE `content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -289,6 +327,23 @@ CREATE TABLE `storage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(70) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `tag` (`id`, `name`) VALUES
+(1,	'test'),
+(2,	'k-pop'),
+(3,	'hudba'),
+(4,	'DJ'),
+(5,	'kecy'),
+(6,	'pitchoviny'),
+(7,	'srajdy')
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`);
+
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -328,4 +383,4 @@ INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
 (4,	'C-POP',	'Čínská populární hudba')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `popis` = VALUES(`popis`);
 
--- 2014-04-06 09:50:07
+-- 2014-04-06 11:58:20

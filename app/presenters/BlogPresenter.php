@@ -20,7 +20,12 @@ class BlogPresenter extends BasePresenter
 	}
 	
 	public function renderDefault() {
-		$this->template->articles = $this->blog->findAll();
+		$this->template->articles = $this->blog->findAll()->order("datum DESC");
+	}
+	
+	protected function beforeRender() {
+		parent::beforeRender();
+		$this->template->last = $this->blog->findAll()->limit(5)->order("datum DESC");
 	}
 
 }

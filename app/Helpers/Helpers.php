@@ -57,7 +57,7 @@ class Helpers {
         }
 
         $delta = round($delta / 60);
-        if ($delta == 0) return 'před okamžikem';
+        if ($delta == 0) return 'právě teď';
         if ($delta == 1) return 'před minutou';
         if ($delta < 45) return "před $delta minutami";
         if ($delta < 90) return 'před hodinou';
