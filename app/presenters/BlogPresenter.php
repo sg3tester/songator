@@ -19,8 +19,11 @@ class BlogPresenter extends BasePresenter
 		
 	}
 	
-	public function renderDefault() {
-		$this->template->articles = $this->blog->findAll()->order("datum DESC");
+	public function renderDefault($tag) {
+		$articles = $this->blog->findAll()->order("datum DESC");
+		if ($tag)
+			$articles->where(":blog_tag.tag_id",$tag);
+		$this->template->articles = $articles;
 	}
 	
 	protected function beforeRender() {
