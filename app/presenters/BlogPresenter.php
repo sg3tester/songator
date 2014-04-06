@@ -18,14 +18,11 @@ class BlogPresenter extends BasePresenter
 	/** @var \App\Model\TagRepository @inject */
 	public $tags;
 	
-	/** @persistent */
-	public $page = 1;
-	
 	public function actionDefault() {
 		
 	}
 	
-	public function renderDefault($tag) {
+	public function renderDefault($tag, $page = 1) {
 		$articles = $this->blog->findAll()->order("datum DESC");
 		if ($tag) {
 			$articles->where(":blog_tag.tag_id",$tag);
@@ -35,8 +32,8 @@ class BlogPresenter extends BasePresenter
 		/* Paginator */
 		$paginator = new Nette\Utils\Paginator;
 		$paginator->setItemCount(count($articles));
-		$paginator->setItemsPerPage($this->settings->get("blog_paginator", 10));
-		$paginator->setPage($this->page);
+		$paginator->setItemsPerPage($this->settings->get("blog_paginator", 1));
+		$paginator->setPage($page);
 		
 		$articles->limit($paginator->getLength(), $paginator->getOffset()); //Paginate!
 		
