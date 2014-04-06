@@ -4,16 +4,18 @@
 {block blog}
 <h4 class="blog-preheader" n:ifset="$currentTag"><a n:href="this">&times;</a> Články označené štítkem <small class="label label-tag">{$currentTag->name}</small></h4>
 {foreach $articles as $article}
-	<div class="page-header">
-		<h2 class="blog">{$article->nadpis}</h2>
-			<ul class="list-inline blog-info">
-				<li><a href="#" title="{$article->datum}"><i class="glyphicon glyphicon-time"></i> {$article->datum|timeAgoInWords}</a></li>
-				<li n:if="$article->user_id"><a href="#"><i class="glyphicon glyphicon-user"></i> {$article->user->username}</a></li>
-				<li><a href="#"><i class="glyphicon glyphicon-comment"></i> Napsat komentář</a></li>
-			</ul>
-	</div>
-	<p>{$article->perex}</p>
-	<div class="blog-tags">
-		<a n:href="this 'tag' => $tag->tag->id" n:foreach="$article->related('blog_tag') as $tag" class="label label-tag">{$tag->tag->name}</a>
+	<div class="blog-article">
+		<div class="page-header">
+			<h2 class="blog">{$article->nadpis}</h2>
+				<ul class="list-inline blog-info">
+					<li><a href="#" title="{$article->datum}"><i class="glyphicon glyphicon-time"></i> {$article->datum|timeAgoInWords}</a></li>
+					<li n:if="$article->user_id"><a href="#"><i class="glyphicon glyphicon-user"></i> {$article->user->username}</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-comment"></i> Napsat komentář</a></li>
+				</ul>
+		</div>
+		<p>{$article->perex}</p>
+		<div class="blog-tags">
+			<a n:href="this 'tag' => $tag->tag->id" n:foreach="$article->related('blog_tag') as $tag" class="label label-tag">{$tag->tag->name}</a>
+		</div>
 	</div>
 {/foreach}
