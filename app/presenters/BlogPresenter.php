@@ -18,6 +18,9 @@ class BlogPresenter extends BasePresenter
 	/** @var \App\Model\TagRepository @inject */
 	public $tags;
 	
+	/** @persistent */
+	public $page;
+	
 	public function actionDefault() {
 		
 	}
@@ -28,6 +31,15 @@ class BlogPresenter extends BasePresenter
 			$articles->where(":blog_tag.tag_id",$tag);
 			$this->template->currentTag = $this->tags->find($tag);
 		}
+		
+		/* Paginator */
+		$paginator = new Nette\Utils\Paginator;
+		$paginator->setItemCount(count($articles));
+		$paginator->setItemsPerPage($this->settings->get("blog_paginator", 10));
+		$paginator->setPage($this->page);
+		
+		$articles->limit($paginator->getLength(), $paginator->getOffset()); //Paginate!
+		
 		$this->template->articles = $articles;
 	}
 	
