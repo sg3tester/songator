@@ -33,10 +33,7 @@
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a n:href="dashboard:" class="logo">
-                <!-- Add the class icon to your logo image or logo icon to add the margining -->
-                AdminLTE
-            </a>
+            <a n:href="dashboard:" class="logo">Songator 3</a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -420,6 +417,7 @@
         <!-- add new calendar event modal -->
 
 
+		{block scripts}
         <!-- jQuery 2.0.2 -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
         <!-- jQuery UI 1.10.3 -->
@@ -450,6 +448,6 @@
         
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{$basePath}/js/AdminLTE/dashboard.js" type="text/javascript"></script>        
-
+		{/block}
     </body>
 </html>
