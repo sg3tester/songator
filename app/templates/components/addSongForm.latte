@@ -56,6 +56,15 @@
 						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
 					</div>
 					
+					{******* Označit zprávu za soukromou? (only registered) *******}
+					{var $input = "private_vzkaz"}
+					<div n:if="$user->isAllowed('privateMsg', 'add')" class="checkbox {if $form[$input]->error}has-error{/if}">
+						<label n:name="$input">
+							<input n:name="$input" type="checkbox"> Označit vzkaz jako soukromý
+						</label>
+						<p n:ifcontent class="error help-block">{$form[$input]->error}</p>
+					</div>
+					
 					{******* Je song remix? *******}
 					{var $input = "remix"}
 					<div class="checkbox {if $form[$input]->error}has-error{/if}">

@@ -46,6 +46,7 @@ class Permissions extends \Nette\Security\Permission {
 		
 		$this->allow("user", "song", array("like"));
 		$this->allow("user", "ucp", array("view", "save"));
+		$this->allow("user", "privateMsg", "add");
 		
 		$this->allow("asistent", "admin", "view");
 		$this->allow("asistent", "song", array("approve", "reject"));

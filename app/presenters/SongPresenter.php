@@ -153,6 +153,7 @@ class SongPresenter extends BasePresenter
 			$form->addText("zadatel", "Žadatel")
 				->setRequired("Musíte zadat svou přezdívku!");
 
+		$form->addCheckbox("private_vzkaz", "Označit vzkaz pro DJe jako soukromý");
 		$form->addCheckbox("remix","Tento song je remix!");
 		$form->addCheckbox("terms","Souhlasím s podmínkami")
 				->setRequired("Musíte souhlasit s podmínkami");
@@ -162,7 +163,13 @@ class SongPresenter extends BasePresenter
 		$form->addSubmit("add");
 
 		$form->setRenderer(new \Nextras\Forms\Rendering\Bs3FormRenderer());
-
+	
+		$form->onValidate = function ($form) {
+			$val = $form->getValues();
+			
+			if ($val->private_vzkaz && !$this->user->isAllowed("privateMsg","add"))
+					$form->addError("Nemáte oprávnění označit zprávu pro DJejako soukromou!");
+		};
 		$form->onSuccess[] = $this->addSongSuccess;
 
 		return $form;
@@ -181,8 +188,12 @@ class SongPresenter extends BasePresenter
 			"zanr_id" => $val->zanr,
 			"link" => $val->link,
 			"remix" => $val->remix,
-			"vzkaz" => $val->vzkaz
+			"vzkaz" => $val->vzkaz,
+			"private_vzkaz" => $val->private_vzkaz
 		);
+		
+		if (!$this->user->isAllowed("privateMsg", "add"))
+				$data["private_vzkaz"] = false;
 
 		//Add user information
 		if ($this->user->isLoggedIn()) {
