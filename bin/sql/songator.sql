@@ -230,7 +230,11 @@ INSERT INTO `log` (`id`, `media`, `event`, `user_id`, `who`, `resource`, `datum`
 (71,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-05 12:34:39'),
 (72,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-05 12:57:28'),
 (73,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-05 12:57:32'),
-(74,	'song',	'add',	1,	'JDC',	'{\"id\":27,\"interpret\":\"safsdf\",\"song\":\"\",\"vzkaz\":\"\"}',	'2014-04-05 16:18:39')
+(74,	'song',	'add',	1,	'JDC',	'{\"id\":27,\"interpret\":\"safsdf\",\"song\":\"\",\"vzkaz\":\"\"}',	'2014-04-05 16:18:39'),
+(75,	'song',	'add',	1,	'JDC',	'{\"id\":28,\"interpret\":\"2NE1\",\"song\":\"Happy\",\"vzkaz\":\"\"}',	'2014-04-06 22:21:17'),
+(76,	'song',	'add',	1,	'JDC',	'{\"id\":29,\"interpret\":\"BIGBANG\",\"song\":\"Oh my friend\",\"vzkaz\":\"\"}',	'2014-04-06 22:21:47'),
+(77,	'song',	'add',	1,	'JDC',	'{\"id\":30,\"interpret\":\"sfsf\",\"song\":\"saasfsadf\",\"vzkaz\":\"Lol tajnej vzkaz\"}',	'2014-04-09 23:57:45'),
+(78,	'song',	'add',	1,	'JDC',	'{\"id\":31,\"interpret\":\"ddgf\",\"song\":\"dsgfsdf\",\"vzkaz\":\"veřejný\"}',	'2014-04-09 23:59:16')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `media` = VALUES(`media`), `event` = VALUES(`event`), `user_id` = VALUES(`user_id`), `who` = VALUES(`who`), `resource` = VALUES(`resource`), `datum` = VALUES(`datum`);
 
 DROP TABLE IF EXISTS `navbar`;
@@ -283,6 +287,7 @@ CREATE TABLE `song` (
   `revisor` int(11) DEFAULT NULL,
   `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `vzkaz` text NOT NULL,
+  `private_vzkaz` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `interpret_id` (`interpret_id`),
   KEY `user_id` (`user_id`),
@@ -294,33 +299,37 @@ CREATE TABLE `song` (
   CONSTRAINT `song_ibfk_4` FOREIGN KEY (`zanr_id`) REFERENCES `zanr` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `zanr_id`, `user_id`, `zadatel`, `link`, `note`, `pecka`, `instro`, `remix`, `revisor`, `datum`, `vzkaz`) VALUES
-(1,	'Pokus',	'Pokusník',	NULL,	'approved',	1,	NULL,	'anonymous',	'',	'',	0,	0,	0,	1,	'2014-02-17 16:54:54',	''),
-(2,	'dgdgf',	'cvbxcvb',	NULL,	'approved',	2,	NULL,	'me',	'',	'',	0,	0,	0,	1,	'2014-02-17 16:58:04',	'lorem ipsum...'),
-(3,	'Do you love me',	'2NE1',	1,	'approved',	1,	NULL,	'JDC',	'',	'2NE1 <3',	1,	0,	0,	1,	'2014-02-19 12:07:45',	'I love 2NE1 <3'),
-(5,	'stsddg',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-20 18:49:48',	''),
-(6,	'xcvyxcvxyc',	'sdfsdf',	NULL,	'rejected',	2,	1,	'JarDacan',	'',	'Není taneční song',	0,	0,	0,	1,	'2014-02-20 18:56:31',	''),
-(7,	'xcvyxcvxyc',	'sdfsdf',	NULL,	'rejected',	2,	1,	'JarDacan',	'',	'Nehodí se na párty',	0,	0,	0,	1,	'2014-02-20 18:57:22',	''),
-(8,	'rttz',	'ttt',	NULL,	'rejected',	2,	1,	'JarDacan',	'',	'',	0,	0,	0,	NULL,	'2014-02-20 19:02:49',	''),
-(9,	'zutzu',	'21',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-20 19:04:06',	''),
-(11,	'xxb',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-20 19:07:39',	''),
-(12,	'dfgdfg',	'dfgdf',	NULL,	'rejected',	1,	1,	'JarDacan',	'',	'Není taneční song',	0,	0,	1,	1,	'2014-02-20 23:53:33',	''),
-(13,	'Ugly',	'2NE1',	NULL,	'approved',	1,	1,	'JarDacan',	'',	'I love 2NE1',	1,	1,	0,	1,	'2014-02-21 13:24:20',	''),
-(14,	'Lonely',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'jkhkjhk',	0,	1,	0,	1,	'2014-02-21 13:25:27',	''),
-(15,	'Can\'t nobody',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-23 12:38:09',	''),
-(16,	'Fantastic baby',	'BIGBANG',	3,	'approved',	1,	NULL,	'JDC',	'',	'',	1,	0,	0,	1,	'2014-02-23 12:40:29',	''),
-(17,	'Mr. Mr',	'Girls\' Generation',	5,	'approved',	1,	1,	'JarDacan',	'http://www.youtube.com/watch?v=Qq1TaTGrAIQ',	'SNSD <3',	0,	0,	0,	1,	'2014-02-24 22:49:27',	''),
-(18,	'Falling in love',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'https://soundcloud.com/vipbjshow/2ne1-falling-in-love',	'2NE1 4ever <3',	1,	0,	0,	1,	'2014-02-25 16:56:18',	'sdbdsgf dfg dfg sdg dg dgsd g cvxyjcvh xuicvy xicv uvyxuichvxui xyýváxyýcva asudfa sudf'),
-(19,	'I love you',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'http://www.dailymotion.com/video/xs0yef_2ne1-i-love-you-sub-espanol-hangul-romanizacion_music',	'',	0,	0,	0,	1,	'2014-02-28 13:43:24',	''),
-(20,	'I Got a Boy',	'Girls\' Generation',	5,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-28 20:24:34',	'test asasdfasdf asdf asdf asdfasdf'),
-(21,	'Crush',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'http://www.youtube.com/watch?v=OODTt2kahI0',	'',	1,	0,	0,	1,	'2014-03-10 12:36:48',	''),
-(22,	'Come Back Home',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'http://www.youtube.com/watch?v=vLbfv-AAyvQ',	'',	0,	0,	0,	1,	'2014-03-10 12:44:33',	''),
-(23,	'Gotta be you',	'2NE1',	1,	'waiting',	1,	1,	'JarDacan',	'https://www.youtube.com/watch?v=pbQP9Q2tNoU',	'',	0,	0,	0,	NULL,	'2014-03-19 14:49:09',	'2NE1 <3'),
-(24,	'Beautiful Hangover',	'BIGBANG',	3,	'waiting',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	NULL,	'2014-03-19 14:53:33',	'twertwert'),
-(25,	'We are a bit different',	'EvoL',	8,	'waiting',	1,	NULL,	'Lolek',	'',	'',	0,	0,	0,	NULL,	'2014-03-19 14:56:23',	''),
-(26,	'High High',	'GD&TOP',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-03-20 11:25:58',	''),
-(27,	'',	'safsdf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-05 16:18:37',	'')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `interpret_name` = VALUES(`interpret_name`), `interpret_id` = VALUES(`interpret_id`), `status` = VALUES(`status`), `zanr_id` = VALUES(`zanr_id`), `user_id` = VALUES(`user_id`), `zadatel` = VALUES(`zadatel`), `link` = VALUES(`link`), `note` = VALUES(`note`), `pecka` = VALUES(`pecka`), `instro` = VALUES(`instro`), `remix` = VALUES(`remix`), `revisor` = VALUES(`revisor`), `datum` = VALUES(`datum`), `vzkaz` = VALUES(`vzkaz`);
+INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `zanr_id`, `user_id`, `zadatel`, `link`, `note`, `pecka`, `instro`, `remix`, `revisor`, `datum`, `vzkaz`, `private_vzkaz`) VALUES
+(1,	'Pokus',	'Pokusník',	NULL,	'approved',	1,	NULL,	'anonymous',	'',	'',	0,	0,	0,	1,	'2014-02-17 16:54:54',	'',	0),
+(2,	'dgdgf',	'cvbxcvb',	NULL,	'approved',	2,	NULL,	'me',	'',	'',	0,	0,	0,	1,	'2014-02-17 16:58:04',	'lorem ipsum...',	0),
+(3,	'Do you love me',	'2NE1',	1,	'approved',	1,	NULL,	'JDC',	'',	'2NE1 <3',	1,	0,	0,	1,	'2014-02-19 12:07:45',	'I love 2NE1 <3',	0),
+(5,	'stsddg',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-20 18:49:48',	'',	0),
+(6,	'xcvyxcvxyc',	'sdfsdf',	NULL,	'rejected',	2,	1,	'JarDacan',	'',	'Není taneční song',	0,	0,	0,	1,	'2014-02-20 18:56:31',	'',	0),
+(7,	'xcvyxcvxyc',	'sdfsdf',	NULL,	'rejected',	2,	1,	'JarDacan',	'',	'Nehodí se na párty',	0,	0,	0,	1,	'2014-02-20 18:57:22',	'',	0),
+(8,	'rttz',	'ttt',	NULL,	'rejected',	2,	1,	'JarDacan',	'',	'',	0,	0,	0,	NULL,	'2014-02-20 19:02:49',	'',	0),
+(9,	'zutzu',	'21',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-20 19:04:06',	'',	0),
+(11,	'xxb',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-20 19:07:39',	'',	0),
+(12,	'dfgdfg',	'dfgdf',	NULL,	'rejected',	1,	1,	'JarDacan',	'',	'Není taneční song',	0,	0,	1,	1,	'2014-02-20 23:53:33',	'',	0),
+(13,	'Ugly',	'2NE1',	NULL,	'approved',	1,	1,	'JarDacan',	'',	'I love 2NE1',	1,	1,	0,	1,	'2014-02-21 13:24:20',	'',	0),
+(14,	'Lonely',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'jkhkjhk',	0,	1,	0,	1,	'2014-02-21 13:25:27',	'',	0),
+(15,	'Can\'t nobody',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-23 12:38:09',	'',	0),
+(16,	'Fantastic baby',	'BIGBANG',	3,	'approved',	1,	NULL,	'JDC',	'',	'',	1,	0,	0,	1,	'2014-02-23 12:40:29',	'',	0),
+(17,	'Mr. Mr',	'Girls\' Generation',	5,	'approved',	1,	1,	'JarDacan',	'http://www.youtube.com/watch?v=Qq1TaTGrAIQ',	'SNSD <3',	0,	0,	0,	1,	'2014-02-24 22:49:27',	'',	0),
+(18,	'Falling in love',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'https://soundcloud.com/vipbjshow/2ne1-falling-in-love',	'2NE1 4ever <3',	1,	0,	0,	1,	'2014-02-25 16:56:18',	'sdbdsgf dfg dfg sdg dg dgsd g cvxyjcvh xuicvy xicv uvyxuichvxui xyýváxyýcva asudfa sudf',	0),
+(19,	'I love you',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'http://www.dailymotion.com/video/xs0yef_2ne1-i-love-you-sub-espanol-hangul-romanizacion_music',	'',	0,	0,	0,	1,	'2014-02-28 13:43:24',	'',	0),
+(20,	'I Got a Boy',	'Girls\' Generation',	5,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	1,	'2014-02-28 20:24:34',	'test asasdfasdf asdf asdf asdfasdf',	0),
+(21,	'Crush',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'http://www.youtube.com/watch?v=OODTt2kahI0',	'',	1,	0,	0,	1,	'2014-03-10 12:36:48',	'',	0),
+(22,	'Come Back Home',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'http://www.youtube.com/watch?v=vLbfv-AAyvQ',	'',	0,	0,	0,	1,	'2014-03-10 12:44:33',	'',	0),
+(23,	'Gotta be you',	'2NE1',	1,	'waiting',	1,	1,	'JarDacan',	'https://www.youtube.com/watch?v=pbQP9Q2tNoU',	'',	0,	0,	0,	NULL,	'2014-03-19 14:49:09',	'2NE1 <3',	1),
+(24,	'Beautiful Hangover',	'BIGBANG',	3,	'waiting',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	NULL,	'2014-03-19 14:53:33',	'twertwert',	0),
+(25,	'We are a bit different',	'EvoL',	8,	'waiting',	1,	NULL,	'Lolek',	'',	'',	0,	0,	0,	NULL,	'2014-03-19 14:56:23',	'',	0),
+(26,	'High High',	'GD&TOP',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-03-20 11:25:58',	'',	0),
+(27,	'',	'safsdf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-05 16:18:37',	'',	0),
+(28,	'Happy',	'2NE1',	1,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-06 22:21:17',	'',	0),
+(29,	'Oh my friend',	'BIGBANG',	3,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-06 22:21:47',	'',	0),
+(30,	'saasfsadf',	'sfsf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-09 23:57:45',	'Lol tajnej vzkaz',	1),
+(31,	'dsgfsdf',	'ddgf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-09 23:59:16',	'veřejný',	0)
+ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `interpret_name` = VALUES(`interpret_name`), `interpret_id` = VALUES(`interpret_id`), `status` = VALUES(`status`), `zanr_id` = VALUES(`zanr_id`), `user_id` = VALUES(`user_id`), `zadatel` = VALUES(`zadatel`), `link` = VALUES(`link`), `note` = VALUES(`note`), `pecka` = VALUES(`pecka`), `instro` = VALUES(`instro`), `remix` = VALUES(`remix`), `revisor` = VALUES(`revisor`), `datum` = VALUES(`datum`), `vzkaz` = VALUES(`vzkaz`), `private_vzkaz` = VALUES(`private_vzkaz`);
 
 DROP TABLE IF EXISTS `storage`;
 CREATE TABLE `storage` (
@@ -388,4 +397,4 @@ INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
 (4,	'C-POP',	'Čínská populární hudba')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `popis` = VALUES(`popis`);
 
--- 2014-04-06 14:07:18
+-- 2014-04-10 00:10:12
