@@ -297,8 +297,23 @@ class SongPresenter extends BasePresenter
 				})
 				->setSortable()
 				->setFilterSelect($statuses);
-
-		$grid->addColumnText("vzkaz", "Vzkaz DJovi");
+				
+		$grid->addColumnText("vzkaz", "Vzkaz DJovi")
+				->setCustomRender(function($item){
+					$elm = Html::el("span");
+					if ($item->private_vzkaz) {
+						if (!$this->user->isAllowed("privateMsg", "view")) {
+							$elm->addAttributes(array("class" => "msg-hidden", "title" => "Tento vzkaz je určen pouze pro DJe"));
+							$elm->setText("Soukromý vzkaz");
+							return $elm;
+						}
+						$elm->addAttributes(array("class" => "msg-private", "title" => "Tento vzkaz je určen pouze pro DJe"));
+						$elm->setText($item->vzkaz);
+					}
+					else
+						return $item->vzkaz;
+					return $elm;
+				});
 
 		if ($this->user->isAllowed("song","approve"))
 			$grid->addActionHref("approve", "")
