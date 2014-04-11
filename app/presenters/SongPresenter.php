@@ -313,7 +313,7 @@ class SongPresenter extends BasePresenter
 				->setCustomRender(function($item){
 					$elm = Html::el("span");
 					if ($item->private_vzkaz) {
-						if (!$this->user->isAllowed("privateMsg", "view")) {
+						if (!$this->user->isAllowed("privateMsg", "view") || $this->user->id != $item->user_id) {
 							$elm->addAttributes(array("class" => "msg-hidden", "title" => "Tento vzkaz je určen pouze pro DJe"));
 							$elm->setText("Soukromý vzkaz");
 							return $elm;
