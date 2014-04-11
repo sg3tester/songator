@@ -405,7 +405,11 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
 		$msg->title = "A je tam!";
-		$this->logger->log("song", "approve", array("id" => $val->id));
+		$song = $this->songList->find($val->id);
+		$this->logger->log("song", "approve", array(
+			"id" => $val->id,
+			"name" => $song->name,
+			"interpret" => $song->interpret_name));
 		
 		if($this->back) {
 			$back = $this->back;
@@ -442,7 +446,13 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
 		$msg->title = "A je ze hry!";
-		$this->logger->log("song", "reject", array("id" => $val->id, "reason" => $val->note));
+		$song = $this->songList->find($val->id);
+		$this->logger->log("song", "reject", array(
+			"id" => $val->id,
+			"reason" => $val->note,
+			"name" => $song->name,
+			"interpret" => $song->interpret_name
+		));
 		
 		if($this->back) {
 			$back = $this->back;
