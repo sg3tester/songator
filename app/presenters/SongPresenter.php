@@ -164,7 +164,7 @@ class SongPresenter extends BasePresenter
 
 		$form->setRenderer(new \Nextras\Forms\Rendering\Bs3FormRenderer());
 	
-		$form->onValidate = function ($form) {
+		$form->onValidate[] = function ($form) {
 			$val = $form->getValues();
 			
 			if ($val->private_vzkaz && !$this->user->isAllowed("privateMsg","add"))
