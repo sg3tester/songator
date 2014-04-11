@@ -6,7 +6,17 @@
 		{$song->interpret_name} - {$song->name}
 		<small>{$song->zadatel}</small>
 	</h1>
-	<p n:ifcontent>{$song->vzkaz}</p>
+	<p n:ifcontent>
+		{if $song->private_vzkaz}
+			{if $user->isAllowed('privateMsg','view') || $user->id == $song->user_id}
+				<i class="glyphicon glyphicon-eye-open" title="Tento vzkaz je soukromý"></i> {$song->vzkaz}
+			{else}
+				<span class="msg-hidden"><i class="glyphicon glyphicon-eye-close"></i> Vzkaz pro DJe je soukromý</span>
+			{/if}
+		{else}
+			{$song->vzkaz}
+		{/if}
+	</p>
 	<br />
 	<div class="row">
 		<div class="col-md-7">
