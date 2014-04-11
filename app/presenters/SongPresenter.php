@@ -178,7 +178,7 @@ class SongPresenter extends BasePresenter
 	public function addSongSuccess(Form $form) {
 		$val = $form->getValues();
 		
-		if (!$this->checkPermissions("song", "draft"))
+		if (!$this->checkPermissions("song", "draft", FALSE))
 			$this->redirect("add");
 
 		//Fill main data
