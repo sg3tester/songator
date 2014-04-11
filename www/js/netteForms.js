@@ -175,6 +175,7 @@ Nette.validateForm = function(sender) {
 			msg = msg + index++ + '. ' + element + '\n'; 
 		});
 		alert(msg);
+		Nette.errors = [];
 	}
 	
 	return success;
