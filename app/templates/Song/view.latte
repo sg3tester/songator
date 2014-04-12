@@ -5,6 +5,10 @@
 	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 		{$song->interpret_name} - {$song->name}
 		<small>{$song->zadatel}</small>
+		<div class="pull-right">
+			<a n:href="list" class="btn btn-default btn-sm">Seznam songů</a>
+			<a n:href="add" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Přidat song</a>
+		</div>
 	</h1>
 	<p n:ifcontent>
 		{if $song->private_vzkaz}

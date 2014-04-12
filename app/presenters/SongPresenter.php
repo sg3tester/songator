@@ -172,7 +172,7 @@ class SongPresenter extends BasePresenter
 			if ($val->private_vzkaz && !$this->user->isAllowed("privateMsg","add"))
 					$form->addError("Nemáte oprávnění označit zprávu pro DJe jako soukromou!");
 			
-			if (($this->settings->get('songator_status', 'enabled') != 'fenabled' || $this->settings->get('songator_wip', false))
+			if (($this->settings->get('songator_status', 'enabled') != 'enabled' || $this->settings->get('songator_wip', false))
 					&& !$this->user->isAllowed("wip","switch"))
 					$form->addError("Omlouváme se, Songator je dočasně vypnut. Nelze přidat song.");
 		};
