@@ -234,7 +234,19 @@ INSERT INTO `log` (`id`, `media`, `event`, `user_id`, `who`, `resource`, `datum`
 (75,	'song',	'add',	1,	'JDC',	'{\"id\":28,\"interpret\":\"2NE1\",\"song\":\"Happy\",\"vzkaz\":\"\"}',	'2014-04-06 22:21:17'),
 (76,	'song',	'add',	1,	'JDC',	'{\"id\":29,\"interpret\":\"BIGBANG\",\"song\":\"Oh my friend\",\"vzkaz\":\"\"}',	'2014-04-06 22:21:47'),
 (77,	'song',	'add',	1,	'JDC',	'{\"id\":30,\"interpret\":\"sfsf\",\"song\":\"saasfsadf\",\"vzkaz\":\"Lol tajnej vzkaz\"}',	'2014-04-09 23:57:45'),
-(78,	'song',	'add',	1,	'JDC',	'{\"id\":31,\"interpret\":\"ddgf\",\"song\":\"dsgfsdf\",\"vzkaz\":\"veřejný\"}',	'2014-04-09 23:59:16')
+(78,	'song',	'add',	1,	'JDC',	'{\"id\":31,\"interpret\":\"ddgf\",\"song\":\"dsgfsdf\",\"vzkaz\":\"veřejný\"}',	'2014-04-09 23:59:16'),
+(79,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-11 18:44:46'),
+(80,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-11 18:44:55'),
+(81,	'song',	'add',	NULL,	'lolokol',	'{\"id\":32,\"interpret\":\"test\",\"song\":\"tst\",\"vzkaz\":\"ffgdfgv cxvb dgfdg dgf \"}',	'2014-04-11 21:10:02'),
+(82,	'song',	'add',	1,	'JDC',	'{\"id\":33,\"interpret\":\"ssdf\",\"song\":\"sfsfcx\",\"vzkaz\":\"xcvxcvxcv\"}',	'2014-04-11 21:23:58'),
+(83,	'song',	'approve',	1,	'JDC',	'{\"id\":\"33\",\"name\":null,\"interpret\":null}',	'2014-04-11 22:20:03'),
+(84,	'song',	'approve',	1,	'JDC',	'{\"id\":\"33\",\"name\":\"sfsfcx\",\"interpret\":\"ssdf\"}',	'2014-04-11 22:24:41'),
+(85,	'song',	'reject',	1,	'JDC',	'{\"id\":\"32\",\"reason\":\"Není k dispozici v požadované kvalitě\",\"name\":\"tst\",\"interpret\":\"test\"}',	'2014-04-11 22:45:51'),
+(86,	'song',	'add',	1,	'JDC',	'{\"id\":34,\"interpret\":\"adasd\",\"song\":\"asdasd\",\"vzkaz\":\"\"}',	'2014-04-12 09:53:42'),
+(87,	'song',	'add',	1,	'JDC',	'{\"id\":35,\"interpret\":\"asasd\",\"song\":\"aasas\",\"vzkaz\":\"sadasd\"}',	'2014-04-12 09:58:28'),
+(88,	'song',	'add',	1,	'JDC',	'{\"id\":36,\"interpret\":\"sdsdds\",\"song\":\"sdsdsdsd\",\"vzkaz\":\"\"}',	'2014-04-12 10:02:40'),
+(89,	'song',	'add',	NULL,	'lolk',	'{\"id\":37,\"interpret\":\"2NE1\",\"song\":\"asdasd\",\"vzkaz\":\"\"}',	'2014-04-12 10:03:46'),
+(90,	'song',	'add',	1,	'JDC',	'{\"id\":38,\"interpret\":\"wfwfwfwf\",\"song\":\"wfefef\",\"vzkaz\":\"wefwefefef\"}',	'2014-04-12 10:05:15')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `media` = VALUES(`media`), `event` = VALUES(`event`), `user_id` = VALUES(`user_id`), `who` = VALUES(`who`), `resource` = VALUES(`resource`), `datum` = VALUES(`datum`);
 
 DROP TABLE IF EXISTS `navbar`;
@@ -266,7 +278,10 @@ INSERT INTO `settings` (`id`, `key`, `value`) VALUES
 (1,	'test',	'testovníddd'),
 (2,	'test2',	'pokus druhý'),
 (3,	'page_rules',	'rules'),
-(4,	'page_home',	'home')
+(4,	'page_home',	'home'),
+(5,	'songator_wip',	'0'),
+(6,	'songator_status',	'enabled'),
+(7,	'songator_msg',	'Přidávání songů bylo uzavřeno. Všem děkujeme za spolupráci.')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `key` = VALUES(`key`), `value` = VALUES(`value`);
 
 DROP TABLE IF EXISTS `song`;
@@ -328,7 +343,14 @@ INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `z
 (28,	'Happy',	'2NE1',	1,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-06 22:21:17',	'',	0),
 (29,	'Oh my friend',	'BIGBANG',	3,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-06 22:21:47',	'',	0),
 (30,	'saasfsadf',	'sfsf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-09 23:57:45',	'Lol tajnej vzkaz',	1),
-(31,	'dsgfsdf',	'ddgf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-09 23:59:16',	'veřejný',	0)
+(31,	'dsgfsdf',	'ddgf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-09 23:59:16',	'veřejný',	0),
+(32,	'tst',	'test',	NULL,	'rejected',	3,	NULL,	'lolokol',	'',	'Není k dispozici v požadované kvalitě',	0,	0,	0,	1,	'2014-04-11 21:10:02',	'ffgdfgv cxvb dgfdg dgf ',	0),
+(33,	'sfsfcx',	'ssdf',	NULL,	'approved',	1,	1,	'JDC',	'',	'',	0,	0,	0,	1,	'2014-04-11 21:23:58',	'xcvxcvxcv',	1),
+(34,	'asdasd',	'adasd',	NULL,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 09:53:42',	'',	0),
+(35,	'aasas',	'asasd',	NULL,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 09:58:28',	'sadasd',	0),
+(36,	'sdsdsdsd',	'sdsdds',	NULL,	'waiting',	4,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:02:40',	'',	0),
+(37,	'asdasd',	'2NE1',	1,	'waiting',	3,	NULL,	'lolk',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:03:46',	'',	0),
+(38,	'wfefef',	'wfwfwfwf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:05:15',	'wefwefefef',	0)
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `interpret_name` = VALUES(`interpret_name`), `interpret_id` = VALUES(`interpret_id`), `status` = VALUES(`status`), `zanr_id` = VALUES(`zanr_id`), `user_id` = VALUES(`user_id`), `zadatel` = VALUES(`zadatel`), `link` = VALUES(`link`), `note` = VALUES(`note`), `pecka` = VALUES(`pecka`), `instro` = VALUES(`instro`), `remix` = VALUES(`remix`), `revisor` = VALUES(`revisor`), `datum` = VALUES(`datum`), `vzkaz` = VALUES(`vzkaz`), `private_vzkaz` = VALUES(`private_vzkaz`);
 
 DROP TABLE IF EXISTS `storage`;
@@ -397,4 +419,4 @@ INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
 (4,	'C-POP',	'Čínská populární hudba')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `popis` = VALUES(`popis`);
 
--- 2014-04-10 00:10:12
+-- 2014-04-12 10:52:16

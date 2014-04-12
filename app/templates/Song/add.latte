@@ -14,6 +14,15 @@
 			<div class="col-md-7">
 				<h3>Přidejte svůj tip do playlistu</h3>
 				<p>Vyplněním formuláře níže můžete poslat svůj tip do playlistu. Pokud ji DJ schválí, pravděpodobně ji uslyšíte na akcích, na kterých DJ bude hrát.</p>
+				
+				{* Songator disabled notices *}
+				<div n:if="$settings->get('songator_status', 'enabled') != 'enabled'" class="alert alert-info">
+					<strong>Songátor vypnut </strong>{$settings->get('songator_msg', 'Přidávání songů bylo uzavřeno. Všem děkujeme za spolupráci.')}
+				</div>
+				<div n:if="$settings->get('songator_wip', false)" class="alert alert-warning">
+					<strong>Songátor dočasně vypnut </strong> DJ momentálně zpracovává frontu songů. Vyčkejte prosím chvíli, někdy to trvá dlouho. Brzy bude přidávání opět spuštěno.
+				</div>
+				
 				{include '../components/addSongForm.latte'}
 			</div>
 			<div class="col-md-5">

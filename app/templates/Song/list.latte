@@ -10,6 +10,13 @@
 	</div>
 
 	<div class="container">
+		{* Songator disabled notices *}
+		<div n:if="$settings->get('songator_status', 'enabled') != 'enabled'" class="alert alert-info">
+			<strong>Songátor vypnut </strong>{$settings->get('songator_msg', 'Přidávání songů bylo uzavřeno. Všem děkujeme za spolupráci.')}
+		</div>
+		<div n:if="$settings->get('songator_wip', false)" class="alert alert-warning">
+			<strong>Songátor dočasně vypnut </strong> DJ momentálně zpracovává frontu songů. Vyčkejte prosím chvíli, někdy to trvá dlouho. Brzy bude přidávání opět spuštěno.
+		</div>
 		{include '../components/flashes.latte'}
 		<div id="filter" class="row">
 			<div class="col-md-8">

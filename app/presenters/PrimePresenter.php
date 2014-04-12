@@ -58,6 +58,8 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 		$less = new \Lessify();
 		$less->cacheDir = $this->conf["tempDir"]."/less/";
 		$less->compile($appDir . "/templates/themes/$theme/$theme.less", $wwwDir . "/css/style.css");
+		
+		$this->template->settings = $this->settings;
 	}
 
 	protected function getPage($page, $xray = false) {
