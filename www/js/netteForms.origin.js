@@ -80,8 +80,6 @@ Nette.getEffectiveValue = function(elem) {
 };
 
 
-Nette.errors = [];
-
 /**
  * Validates form element against given rules.
  */
@@ -122,13 +120,11 @@ Nette.validateControl = function(elem, rules, onlyCheck) {
 				var message = rule.msg.replace(/%(value|\d+)/g, function(foo, m) {
 					return Nette.getValue(m === 'value' ? el : elem.form.elements[arr[m].control]);
 				});
-				Nette.errors.push(message);
-				$(el).parent().addClass("has-error");
+				Nette.addError(el, message);
 			}
 			return false;
 		}
 	}
-	$(el).parent().removeClass("has-error");
 	return true;
 };
 
@@ -148,7 +144,7 @@ Nette.validateForm = function(sender) {
 	}
 
 	var radios = {}, i, elem;
-	var success = true;
+
 	for (i = 0; i < form.elements.length; i++) {
 		elem = form.elements[i];
 
@@ -164,21 +160,10 @@ Nette.validateForm = function(sender) {
 		}
 
 		if (!Nette.validateControl(elem)) {
-			success = false;
+			return false;
 		}
 	}
-	
-	if (!success) {
-		var msg = '';
-		Nette.errors.forEach(function(element, index){
-			index = index + 1;
-			msg = msg + index++ + '. ' + element + '\n'; 
-		});
-		alert(msg);
-		Nette.errors = [];
-	}
-	
-	return success;
+	return true;
 };
 
 
@@ -208,10 +193,7 @@ Nette.addError = function(elem, message) {
 	}
 	if (message) {
 		alert(message);
-		$(elem).parent().append('<p class="error help-block">'+message+'</p>');
 	}
-	console.log(elem);
-	$(elem).parent().addClass("has-error");
 };
 
 

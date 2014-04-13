@@ -46,14 +46,14 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 
 		$row = $this->database->table(self::TABLE_NAME)
 				->where(self::AUTH_SERVICE, "songator")
-				->where(self::COLUMN_NAME, $username)
+				->where(self::COLUMN_NAME.' = ? OR '.self::COLUMN_EMAIL.' = ?', $username, $username)
 				->fetch();
 
 		if (!$row) {
-			throw new Nette\Security\AuthenticationException('The username is incorrect.', self::IDENTITY_NOT_FOUND);
+			throw new Nette\Security\AuthenticationException('Uživatelské jméno nebo email nejsou platné', self::IDENTITY_NOT_FOUND);
 
 		} elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
-			throw new Nette\Security\AuthenticationException('The password is incorrect.', self::INVALID_CREDENTIAL);
+			throw new Nette\Security\AuthenticationException('Neplatné heslo', self::INVALID_CREDENTIAL);
 
 		} elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
 			$row->update(array(
@@ -75,6 +75,17 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	 */
 	public function add($username, $password, $email)
 	{
+		$row = $this->database->table(self::TABLE_NAME)
+				->select("username, email")
+				->where("username = ? OR email = ?", $username, $email)
+				->fetch();
+		if ($row) {
+			if ($row->username == $username)
+				throw new UserManagerException("Uživatel $username již existuje", 44);
+			if ($row->email == $email)
+				throw new UserManagerException("Email $email již někdo používá", 44);
+			throw new UserManagerException("Chyba při registraci uživatele: Duplicitní uživatel", 45);
+		}
 		$this->database->table(self::TABLE_NAME)->insert(array(
 			self::COLUMN_NAME => $username,
 			self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
@@ -139,3 +150,5 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	}
 
 }
+
+class UserManagerException extends Nette\InvalidStateException {}

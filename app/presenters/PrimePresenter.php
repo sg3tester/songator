@@ -34,6 +34,8 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 	
 	/** @var \Status */
 	public $status;
+	
+	public $wip;
 
 	protected $conf;
 	
@@ -58,6 +60,9 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 		$less = new \Lessify();
 		$less->cacheDir = $this->conf["tempDir"]."/less/";
 		$less->compile($appDir . "/templates/themes/$theme/$theme.less", $wwwDir . "/css/style.css");
+		
+		$this->template->settings = $this->settings;
+		$this->template->wip = $this->wip = $this->settings->get("songator_wip", false);
 	}
 
 	protected function getPage($page, $xray = false) {
@@ -100,12 +105,12 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 		return $navbar;
 	}
 	
-	protected function checkPermissions($resource, $privilege, $mustLoggedIn = true) {
+	public function checkPermissions($resource, $privilege, $mustLoggedIn = true) {
 		if ($mustLoggedIn && !$this->user->isLoggedIn()) {
 			$this->flashMessage("Nejprve se musíte přihlásit", "warning");
 			$this->redirect("sign:in");
 		}
-		
+
 		if (!$this->user->isAllowed($resource, $privilege)) {
 			$this->flashMessage("Nemáte dostatečná oprávnění", "danger");
 			return false;

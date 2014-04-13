@@ -5,8 +5,22 @@
 	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 		{$song->interpret_name} - {$song->name}
 		<small>{$song->zadatel}</small>
+		<div class="pull-right">
+			<a n:href="list" class="btn btn-default btn-sm">Seznam songů</a>
+			<a n:href="add" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Přidat song</a>
+		</div>
 	</h1>
-	<p n:ifcontent>{$song->vzkaz}</p>
+	<p n:ifcontent>
+		{if $song->private_vzkaz}
+			{if $user->isAllowed('privateMsg','view') || $user->id == $song->user_id}
+				<i class="glyphicon glyphicon-eye-open" title="Tento vzkaz je soukromý"></i> {$song->vzkaz}
+			{else}
+				<span class="msg-hidden"><i class="glyphicon glyphicon-eye-close"></i> Vzkaz pro DJe je soukromý</span>
+			{/if}
+		{else}
+			{$song->vzkaz}
+		{/if}
+	</p>
 	<br />
 	<div class="row">
 		<div class="col-md-7">
@@ -59,7 +73,7 @@
 					<td><strong>{if $song->revisor}{$song->ref("user","revisor")->username}{else}-{/if}</strong></td>
 				</tr>
 			</table>
-				<div>
+				<div n:ifcontent class="btn-group">
 					<a n:if="$user->isAllowed('song','approve')" n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
 					<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
 					<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Upravit</a>

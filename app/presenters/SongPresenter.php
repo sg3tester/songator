@@ -12,7 +12,7 @@ use Nette,
 /**
  * Song presenter.
  */
-class SongPresenter extends BasePresenter
+class SongPresenter extends PrimePresenter
 {
 	/** @var \App\Model\SongRepository @inject */
 	public $songList;
@@ -145,7 +145,9 @@ class SongPresenter extends BasePresenter
 				->setRequired("Musíte vyplnit jméno interpreta");
 		$form->addText("name", "Song")
 				->setRequired("Musíte zadat název songu");
-		$form->addSelect("zanr", "Žánr", $this->zanry->getList());
+		$form->addSelect("zanr", "Žánr", $this->zanry->getList())
+				->setPrompt("Vyberte žánr")
+				->setRequired("Není vybrán žádný platný žánr");
 		$form->addText("link", "Link k poslechnutí");
 
 		//This field only if user is NOT logged in
@@ -153,6 +155,7 @@ class SongPresenter extends BasePresenter
 			$form->addText("zadatel", "Žadatel")
 				->setRequired("Musíte zadat svou přezdívku!");
 
+		$form->addCheckbox("private_vzkaz", "Označit vzkaz pro DJe jako soukromý");
 		$form->addCheckbox("remix","Tento song je remix!");
 		$form->addCheckbox("terms","Souhlasím s podmínkami")
 				->setRequired("Musíte souhlasit s podmínkami");
@@ -162,7 +165,17 @@ class SongPresenter extends BasePresenter
 		$form->addSubmit("add");
 
 		$form->setRenderer(new \Nextras\Forms\Rendering\Bs3FormRenderer());
-
+	
+		$form->onValidate[] = function ($form) {
+			$val = $form->getValues();
+			
+			if ($val->private_vzkaz && !$this->user->isAllowed("privateMsg","add"))
+					$form->addError("Nemáte oprávnění označit zprávu pro DJe jako soukromou!");
+			
+			if (($this->settings->get('songator_status', 'enabled') != 'enabled' || $this->settings->get('songator_wip', false))
+					&& !$this->user->isAllowed("wip","switch"))
+					$form->addError("Omlouváme se, Songator je dočasně vypnut. Nelze přidat song.");
+		};
 		$form->onSuccess[] = $this->addSongSuccess;
 
 		return $form;
@@ -171,7 +184,7 @@ class SongPresenter extends BasePresenter
 	public function addSongSuccess(Form $form) {
 		$val = $form->getValues();
 		
-		if (!$this->checkPermissions("song", "draft"))
+		if (!$this->checkPermissions("song", "draft", FALSE))
 			$this->redirect("add");
 
 		//Fill main data
@@ -181,8 +194,12 @@ class SongPresenter extends BasePresenter
 			"zanr_id" => $val->zanr,
 			"link" => $val->link,
 			"remix" => $val->remix,
-			"vzkaz" => $val->vzkaz
+			"vzkaz" => $val->vzkaz,
+			"private_vzkaz" => $val->private_vzkaz
 		);
+		
+		if (!$this->user->isAllowed("privateMsg", "add"))
+				$data["private_vzkaz"] = false;
 
 		//Add user information
 		if ($this->user->isLoggedIn()) {
@@ -297,8 +314,23 @@ class SongPresenter extends BasePresenter
 				})
 				->setSortable()
 				->setFilterSelect($statuses);
-
-		$grid->addColumnText("vzkaz", "Vzkaz DJovi");
+				
+		$grid->addColumnText("vzkaz", "Vzkaz DJovi")
+				->setCustomRender(function($item){
+					$elm = Html::el("span");
+					if ($item->private_vzkaz) {
+						if (!$this->user->isAllowed("privateMsg", "view") && $this->user->id != $item->user_id) {
+							$elm->addAttributes(array("class" => "msg-hidden", "title" => "Tento vzkaz je určen pouze pro DJe"));
+							$elm->setText("Soukromý vzkaz");
+							return $elm;
+						}
+						$elm->addAttributes(array("class" => "msg-private", "title" => "Tento vzkaz je určen pouze pro DJe"));
+						$elm->setText($item->vzkaz);
+					}
+					else
+						return $item->vzkaz;
+					return $elm;
+				});
 
 		if ($this->user->isAllowed("song","approve"))
 			$grid->addActionHref("approve", "")
@@ -379,7 +411,11 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
 		$msg->title = "A je tam!";
-		$this->logger->log("song", "approve", array("id" => $val->id));
+		$song = $this->songList->find($val->id);
+		$this->logger->log("song", "approve", array(
+			"id" => $val->id,
+			"name" => $song->name,
+			"interpret" => $song->interpret_name));
 		
 		if($this->back) {
 			$back = $this->back;
@@ -416,7 +452,13 @@ class SongPresenter extends BasePresenter
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
 		$msg->title = "A je ze hry!";
-		$this->logger->log("song", "reject", array("id" => $val->id, "reason" => $val->note));
+		$song = $this->songList->find($val->id);
+		$this->logger->log("song", "reject", array(
+			"id" => $val->id,
+			"reason" => $val->note,
+			"name" => $song->name,
+			"interpret" => $song->interpret_name
+		));
 		
 		if($this->back) {
 			$back = $this->back;

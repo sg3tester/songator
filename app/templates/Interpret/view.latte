@@ -7,9 +7,10 @@
 	<br />
 	<div class="row">
 		<div class="col-md-8">
+			{include '../components/flashes.latte'}
 			{var $songy = $interpret->related("song")}
 			{if count($songy)}
-			<h2>Songy interpreta</h2>
+			<h3>Songy interpreta</h3>
 			{foreach $songy as $song}
 				<div class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 					<div class="page-header">

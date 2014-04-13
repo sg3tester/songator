@@ -45,7 +45,7 @@ class ProfilePresenter extends BasePresenter
 		$form = new Form();
 		
 		$form->addText("realname");
-		$form->addText("twitter");
+		$form->addText("twitter_acc");
 		$form->addText("www");
 		$form->addTextArea("about");
 		

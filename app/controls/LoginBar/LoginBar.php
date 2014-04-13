@@ -7,7 +7,7 @@
  */
 namespace App\Controls;
 /**
- * Description of SongLink
+ * Login Bar
  *
  * @author JDC
  */
@@ -19,6 +19,7 @@ class LoginBar extends NavbarControl {
 
 	public function render() {
 		$this->template->setFile(__DIR__ . "/LoginBar.latte");
+		$this->template->wip = $this->presenter->wip;
 		$this->template->render();
 	}
 
@@ -29,4 +30,19 @@ class LoginBar extends NavbarControl {
 		return $info;
 	}
 
+	public function handleWipOn() {
+		if ($this->presenter->checkPermissions("wip", "switch")) {
+			$this->presenter->settings->set("songator_wip", true);
+			$this->presenter->settings->push();
+		}
+		$this->redirect("this");
+	}
+	
+	public function handleWipOff() {
+		if ($this->presenter->checkPermissions("wip", "switch")) {
+			$this->presenter->settings->set("songator_wip", false);
+			$this->presenter->settings->push();
+		}
+		$this->redirect("this");
+	}
 }

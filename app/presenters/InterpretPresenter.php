@@ -38,8 +38,11 @@ class InterpretPresenter extends BasePresenter
 		if(!$interpret)
 			throw new Nette\Application\BadRequestException("Interpret does not exists!", 404);
 		
-		if($interpret->interpret_id)
+		if($interpret->interpret_id) {
+			$msg = $this->flashMessage("Přesměrováno z '$interpret->nazev'");
+			$msg->title = "Alias";
 			$this->redirect ("this", array("id" => $interpret->interpret_id)); //If is alias => redirect to real
+		}
 		
 		$this->template->interpret = $interpret;
 	}

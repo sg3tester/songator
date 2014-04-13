@@ -36,6 +36,7 @@ class Permissions extends \Nette\Security\Permission {
 		$this->addResource("wip");
 		$this->addResource("ucp");
 		$this->addResource("sign");
+		$this->addResource("privateMsg");
 		
 		//Privileges		
 		$this->deny(array("guest", "user"), "system"); //Security
@@ -45,10 +46,12 @@ class Permissions extends \Nette\Security\Permission {
 		
 		$this->allow("user", "song", array("like"));
 		$this->allow("user", "ucp", array("view", "save"));
+		$this->allow("user", "privateMsg", "add");
 		
 		$this->allow("asistent", "admin", "view");
 		$this->allow("asistent", "song", array("approve", "reject"));
 		$this->allow("asistent", "wip", array("switch"));
+		$this->allow("asistent", "privateMsg", "view");
 		
 		$this->allow("dj", "song", array("manage", "add", "edit", "remove"));
 		$this->allow("dj", "interpret", array("manage", "add", "edit", "remove", "assoc", "approve"));
