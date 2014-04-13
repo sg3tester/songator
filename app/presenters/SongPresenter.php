@@ -12,7 +12,7 @@ use Nette,
 /**
  * Song presenter.
  */
-class SongPresenter extends BasePresenter
+class SongPresenter extends PrimePresenter
 {
 	/** @var \App\Model\SongRepository @inject */
 	public $songList;
