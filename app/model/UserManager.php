@@ -46,11 +46,11 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 
 		$row = $this->database->table(self::TABLE_NAME)
 				->where(self::AUTH_SERVICE, "songator")
-				->where(self::COLUMN_NAME, $username)
+				->where(self::COLUMN_NAME.' = ? OR '.self::COLUMN_EMAIL.' = ?', $username, $username)
 				->fetch();
 
 		if (!$row) {
-			throw new Nette\Security\AuthenticationException('Neplatné uživatelské jméno', self::IDENTITY_NOT_FOUND);
+			throw new Nette\Security\AuthenticationException('Uživatelské jméno nebo email nejsou platné', self::IDENTITY_NOT_FOUND);
 
 		} elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
 			throw new Nette\Security\AuthenticationException('Neplatné heslo', self::INVALID_CREDENTIAL);
