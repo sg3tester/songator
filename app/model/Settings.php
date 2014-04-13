@@ -36,7 +36,7 @@ class Settings extends \Nette\Object {
 	
 	public function set($key, $value) {
 		$this->fetch();
-		
+		//dump($key.":".$value);
 		if(key_exists($key, $this->fetched))
 			$this->toUpdate[$key] = $value;
 		else

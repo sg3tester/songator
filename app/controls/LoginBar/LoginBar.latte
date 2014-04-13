@@ -4,7 +4,8 @@
 	<ul class="dropdown-menu">
 		<li><a href="#"><b>Administrace</b></a></li>
 		<li><a href="#">Spravovat interprety</a></li>
-		<li><a href="#">Zapnout WIP režim</a></li>
+		<li><a n:if="!$wip && $user->isAllowed('wip','switch')" n:href="wipOn!">Zapnout WIP režim</a></li>
+		<li><a n:if="$wip && $user->isAllowed('wip','switch')" n:href="wipOff!">Vypnout WIP režim</a></li>
 		<li class="divider"></li>
 		<li><a href="{plink sign:out}">Odhlásit</a></li>
 	</ul>
