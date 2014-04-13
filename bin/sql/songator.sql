@@ -121,8 +121,8 @@ CREATE TABLE `interpret` (
   PRIMARY KEY (`id`),
   KEY `interpret_id` (`interpret_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `interpret_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `interpret_ibfk_1` FOREIGN KEY (`interpret_id`) REFERENCES `interpret` (`id`) ON DELETE SET NULL
+  CONSTRAINT `interpret_ibfk_1` FOREIGN KEY (`interpret_id`) REFERENCES `interpret` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `interpret_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `interpret` (`id`, `nazev`, `desc`, `interpret_id`, `valid`, `picture`, `user_id`, `pridal`) VALUES
@@ -246,7 +246,30 @@ INSERT INTO `log` (`id`, `media`, `event`, `user_id`, `who`, `resource`, `datum`
 (87,	'song',	'add',	1,	'JDC',	'{\"id\":35,\"interpret\":\"asasd\",\"song\":\"aasas\",\"vzkaz\":\"sadasd\"}',	'2014-04-12 09:58:28'),
 (88,	'song',	'add',	1,	'JDC',	'{\"id\":36,\"interpret\":\"sdsdds\",\"song\":\"sdsdsdsd\",\"vzkaz\":\"\"}',	'2014-04-12 10:02:40'),
 (89,	'song',	'add',	NULL,	'lolk',	'{\"id\":37,\"interpret\":\"2NE1\",\"song\":\"asdasd\",\"vzkaz\":\"\"}',	'2014-04-12 10:03:46'),
-(90,	'song',	'add',	1,	'JDC',	'{\"id\":38,\"interpret\":\"wfwfwfwf\",\"song\":\"wfefef\",\"vzkaz\":\"wefwefefef\"}',	'2014-04-12 10:05:15')
+(90,	'song',	'add',	1,	'JDC',	'{\"id\":38,\"interpret\":\"wfwfwfwf\",\"song\":\"wfefef\",\"vzkaz\":\"wefwefefef\"}',	'2014-04-12 10:05:15'),
+(91,	'song',	'add',	1,	'JDC',	'{\"id\":39,\"interpret\":\"2NE1\",\"song\":\"Scream\",\"vzkaz\":\"tohle je tajnej vzkaz\"}',	'2014-04-13 02:55:20'),
+(92,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-13 02:59:46'),
+(93,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-13 02:59:54'),
+(94,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-13 19:52:12'),
+(95,	'auth',	'login',	3,	'test',	'{\"service\":\"songator\"}',	'2014-04-13 22:00:44'),
+(96,	'song',	'add',	3,	'test',	'{\"id\":40,\"interpret\":\"ddfgdfg\",\"song\":\"sdfsdfgdgf\",\"vzkaz\":\"sdfgsdgf cvvcvbcvb\"}',	'2014-04-13 22:13:55'),
+(97,	'auth',	'logout',	3,	'test',	NULL,	'2014-04-13 22:20:59'),
+(98,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-13 22:21:06'),
+(99,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-13 22:25:09'),
+(100,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-13 22:32:11'),
+(101,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-13 22:44:04'),
+(102,	'auth',	'login',	3,	'test',	'{\"service\":\"songator\"}',	'2014-04-13 22:44:11'),
+(103,	'auth',	'logout',	3,	'test',	NULL,	'2014-04-13 22:44:13'),
+(104,	'auth',	'login',	3,	'test',	'{\"service\":\"songator\"}',	'2014-04-13 22:44:34'),
+(105,	'auth',	'logout',	3,	'test',	NULL,	'2014-04-13 22:44:37'),
+(106,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-13 22:45:48'),
+(107,	'song',	'add',	1,	'JDC',	'{\"id\":41,\"interpret\":\"gsdgsdgf\",\"song\":\"dgfsdfgsdfg\",\"vzkaz\":\"sdfgsdgf\"}',	'2014-04-13 23:17:14'),
+(108,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-13 23:19:42'),
+(109,	'auth',	'login',	3,	'test',	'{\"service\":\"songator\"}',	'2014-04-13 23:19:52'),
+(110,	'auth',	'logout',	3,	'test',	NULL,	'2014-04-13 23:29:12'),
+(111,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-13 23:29:17'),
+(112,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-14 00:22:08'),
+(113,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-14 00:22:16')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `media` = VALUES(`media`), `event` = VALUES(`event`), `user_id` = VALUES(`user_id`), `who` = VALUES(`who`), `resource` = VALUES(`resource`), `datum` = VALUES(`datum`);
 
 DROP TABLE IF EXISTS `navbar`;
@@ -281,7 +304,12 @@ INSERT INTO `settings` (`id`, `key`, `value`) VALUES
 (4,	'page_home',	'home'),
 (5,	'songator_wip',	'0'),
 (6,	'songator_status',	'enabled'),
-(7,	'songator_msg',	'Přidávání songů bylo uzavřeno. Všem děkujeme za spolupráci.')
+(7,	'songator_msg',	'Přidávání songů bylo uzavřeno. Všem děkujeme za spolupráci.'),
+(8,	'songlist_reguser_add',	'0'),
+(9,	'ucp_allow_register',	'1'),
+(10,	'ucp_twitter_login',	'1'),
+(11,	'songlist_mode',	'open'),
+(12,	'songlist_allowed_players',	'youtube.com;soundcloud.com;dailymotion.com')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `key` = VALUES(`key`), `value` = VALUES(`value`);
 
 DROP TABLE IF EXISTS `song`;
@@ -350,7 +378,10 @@ INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `z
 (35,	'aasas',	'asasd',	NULL,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 09:58:28',	'sadasd',	0),
 (36,	'sdsdsdsd',	'sdsdds',	NULL,	'waiting',	4,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:02:40',	'',	0),
 (37,	'asdasd',	'2NE1',	1,	'waiting',	3,	NULL,	'lolk',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:03:46',	'',	0),
-(38,	'wfefef',	'wfwfwfwf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:05:15',	'wefwefefef',	0)
+(38,	'wfefef',	'wfwfwfwf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:05:15',	'wefwefefef',	0),
+(39,	'Scream',	'2NE1',	1,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 02:55:20',	'tohle je tajnej vzkaz',	1),
+(40,	'sdfsdfgdgf',	'ddfgdfg',	NULL,	'waiting',	1,	3,	'test',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 22:13:55',	'sdfgsdgf cvvcvbcvb',	1),
+(41,	'dgfsdfgsdfg',	'gsdgsdgf',	NULL,	'waiting',	3,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 23:17:14',	'sdfgsdgf',	0)
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `interpret_name` = VALUES(`interpret_name`), `interpret_id` = VALUES(`interpret_id`), `status` = VALUES(`status`), `zanr_id` = VALUES(`zanr_id`), `user_id` = VALUES(`user_id`), `zadatel` = VALUES(`zadatel`), `link` = VALUES(`link`), `note` = VALUES(`note`), `pecka` = VALUES(`pecka`), `instro` = VALUES(`instro`), `remix` = VALUES(`remix`), `revisor` = VALUES(`revisor`), `datum` = VALUES(`datum`), `vzkaz` = VALUES(`vzkaz`), `private_vzkaz` = VALUES(`private_vzkaz`);
 
 DROP TABLE IF EXISTS `storage`;
@@ -397,11 +428,14 @@ CREATE TABLE `user` (
   `avatar` varchar(255) NOT NULL,
   `twitter_acc` varchar(64) NOT NULL,
   `www` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `role`, `registered`, `ip`, `auth_service`, `auth_token`, `first_login`, `realname`, `about`, `avatar`, `twitter_acc`, `www`) VALUES
-(1,	'JDC',	'',	'',	'admin',	'2014-02-18 12:15:07',	'',	'twitter',	'364921955',	0,	'JDC (이지민)',	'Producer, Song writer, DJ, Programmer, Author, Editor, Amatuer writer, Lyrics writer and Blogger in JDC Entertainment.',	'http://pbs.twimg.com/profile_images/2548714957/zxmzvsd9so5cjvkco9eq_normal.jpeg',	'JarDacan',	'http://www.jdc.2ne1.cz')
+(1,	'JDC',	'',	'',	'admin',	'2014-02-18 12:15:07',	'',	'twitter',	'364921955',	0,	'JDC (이지민)',	'Producer, Song writer, DJ, Programmer, Author, Editor, Amatuer writer, Lyrics writer and Blogger in JDC Entertainment.',	'http://pbs.twimg.com/profile_images/2548714957/zxmzvsd9so5cjvkco9eq_normal.jpeg',	'JarDacan',	'http://www.jdc.2ne1.cz'),
+(3,	'test',	'$2y$10$v9d592UJJ/uw9Ijb/Qb6xuOuKYk2AJ5.WKlffEI3kFv3YzRx7fLWW',	'test@test.localhost',	'user',	'2014-04-13 22:00:34',	'',	'songator',	'',	0,	'Testovací účet',	'',	'',	'',	'')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `username` = VALUES(`username`), `password` = VALUES(`password`), `email` = VALUES(`email`), `role` = VALUES(`role`), `registered` = VALUES(`registered`), `ip` = VALUES(`ip`), `auth_service` = VALUES(`auth_service`), `auth_token` = VALUES(`auth_token`), `first_login` = VALUES(`first_login`), `realname` = VALUES(`realname`), `about` = VALUES(`about`), `avatar` = VALUES(`avatar`), `twitter_acc` = VALUES(`twitter_acc`), `www` = VALUES(`www`);
 
 DROP TABLE IF EXISTS `zanr`;
@@ -419,4 +453,4 @@ INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
 (4,	'C-POP',	'Čínská populární hudba')
 ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `popis` = VALUES(`popis`);
 
--- 2014-04-12 10:52:16
+-- 2014-04-14 00:48:49
