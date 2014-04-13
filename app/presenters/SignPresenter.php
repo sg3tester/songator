@@ -44,6 +44,45 @@ class SignPresenter extends BasePresenter
 		return $form;
 	}
 
+	protected function createComponentRegisterForm()
+	{
+		$form = new Nette\Application\UI\Form;
+		$form->addText('username', 'Username:')
+			->addRule(\Nette\Application\UI\Form::MIN_LENGTH, "Uživatelské jméno musí mít minimálně %d znaků.", 3)
+			->setRequired('Musíte si zvolit uživatelské jméno');
+		
+		$form->addText('email', 'Email')
+			->addRule(\Nette\Application\UI\Form::EMAIL, "E-mail není v platném formátu")
+			->setRequired('Zadejte platný e-mail');
+
+		$form->addPassword('password', 'Heslo:')
+			->addRule(\Nette\Application\UI\Form::MIN_LENGTH, "Heslo musí mít minimálně %d znaků.", 6)
+			->setRequired('Musíte si zvolit heslo');
+		
+		$form->addPassword('verify', 'Kontrola hesla:')
+			->addRule(\Nette\Forms\Form::EQUAL, "Hesla se neshodují", $form["password"])
+			->setRequired('Zadejte heslo ještě jednou');
+
+
+		$form->addSubmit('send', 'Vytvořit účet');
+
+		// call method signInFormSucceeded() on success
+		$form->onSuccess[] = $this->registerFormSuccess;
+		return $form;
+	}
+
+	public function registerFormSuccess($form) {
+		$val = $form->values;
+		
+		try {
+			$this->usrmgr->add($val->username, $val->password, $val->email);
+			$this->flashMessage("Registrace proběhla v pořádku", "success");
+			$this->redirect("in");
+		}
+		catch (\App\UserManagerException $ex) {
+			$form->addError($ex->getMessage());
+		}
+	}
 
 	public function signInFormSucceeded($form)
 	{
