@@ -529,4 +529,20 @@ class SongPresenter extends PrimePresenter
 		
 		$form->setDefaults($defaults);
 	}
+
+	public function handleLike($id) {
+		if (!$this->checkPermissions("song","like"))
+			$this->flashMessage("Pro lajkování songu se musíte přihlásit", "warning");
+		else {
+			try {
+				$this->songList->like($id, $this->user->id);
+				$msg = $this->flashMessage("Hlasovat můžeš každých 24 hodin!","success");
+			}
+			catch (\Nette\IOException $e) {
+				$msg = $this->flashMessage("Hlasovat lze jen jednou za 24 hodin", "warning");
+				$msg->title = "Pro tento song jsi již hlasoval(a)!";
+			}
+		}
+		$this->redirect("this");
+	}
 }

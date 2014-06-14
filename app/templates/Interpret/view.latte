@@ -10,7 +10,19 @@
 			{include '../components/flashes.latte'}
 			{var $songy = $interpret->related("song")}
 			{if count($songy)}
-			<h3>Songy interpreta</h3>
+			{default $status = ''}
+			<ul class="nav nav-tabs">
+			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
+			<li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
+			<li n:class="$status == 'waiting' ? active"><a n:href="this status => 'waiting'">Čekající</a></li>
+			<li n:class="$status == 'rejected' ? active"><a n:href="this status => 'rejected'">Vyřazené</a></li>
+			<li class="pull-right">
+				<div class="nav-widget">
+					<a class="btn btn-success btn-sm" n:href="Song:add 'interpret' => $interpret->nazev"><i class="glyphicon glyphicon-plus"></i> Přidat song</a>
+				</div>
+			</li>
+			</ul>
+			<p class="text-right">Interpret má v databázi <strong>{count($songy)}</strong> songů.</p>
 			{foreach $songy as $song}
 				<div class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 					<div class="page-header">
@@ -39,12 +51,15 @@
 			{/if}
 		</div>
 		<div class="col-md-3">
+			<div class="profile-pic">
+				! profile pic here !
+			</div>
 			{var $aliasy = $interpret->related("interpret")}
 			<div n:if="count($aliasy)" class="panel panel-default">
 				<!-- Default panel contents -->
 				<div class="panel-heading">Aliasy</div>
 				<ul class="list-group">
-				{foreach $interpret->related("interpret") as $alias}
+				{foreach $aliasy as $alias}
 					<li class="list-group-item">{$alias->nazev}</li>
 				{/foreach}
 				</ul>

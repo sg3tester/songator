@@ -4,7 +4,10 @@
 <div class="container content">
 	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 		{$song->interpret_name} - {$song->name}
-		<small>{$song->zadatel}</small>
+		<small>
+			{$song->zadatel}
+			<small><i class="glyphicon glyphicon-heart"></i> {count($song->related('song_likes'))}</small>
+		</small>
 		<div class="pull-right">
 			<a n:href="list" class="btn btn-default btn-sm">Seznam songů</a>
 			<a n:href="add" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-plus"></i> Přidat song</a>
@@ -24,6 +27,7 @@
 	<br />
 	<div class="row">
 		<div class="col-md-7">
+		    {include '../components/flashes.latte'}
 			<p n:if="$song->note" class="well"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
 			<table class="table table-hover">
 				<tr>
@@ -74,6 +78,7 @@
 				</tr>
 			</table>
 				<div n:ifcontent class="btn-group">
+					<a n:if="$user->isAllowed('song','like')" n:href="like!" class="btn btn-default"><i class="glyphicon glyphicon-heart"></i> Líbí se mi</a>
 					<a n:if="$user->isAllowed('song','approve')" n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
 					<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
 					<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Upravit</a>
@@ -84,7 +89,7 @@
 			{if $song->link && $user->isAllowed('song','play')}
 			{control player}
 			{else}
-				<div class="noplayer">Song není k dispozici nebo nemáte potřebná oprávnění</div>
+				<div class="noplayer">Song není k dispozici</div>
 			{/if}
 		</div>
 	</div>

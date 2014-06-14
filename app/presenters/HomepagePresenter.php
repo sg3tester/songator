@@ -17,7 +17,7 @@ class HomepagePresenter extends BasePresenter
 		if ($home)
 			$this->template->page = $this->getPage("home", true);
 		else
-			throw new Nette\Application\BadRequestException("Homepage not found", 404);
+			throw new nette\Application\BadRequestException("homepage not found", 404);
 	}
 
 }

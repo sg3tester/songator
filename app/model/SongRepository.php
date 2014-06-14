@@ -7,6 +7,7 @@
  */
 
 namespace App\Model;
+use Nette\Database\IRow;
 use Nette\Utils\Arrays;
 
 /**
@@ -18,7 +19,8 @@ class SongRepository extends Repository {
 
 	const STATUS_APPROVED = "approved",
 			STATUS_REJECTED = "rejected",
-			STATUS_WAITING = "waiting";
+			STATUS_WAITING = "waiting",
+			TABLE_LIKES = "song_likes";
 
 	/** @var \App\Model\InterpretRepository */
 	protected $interpreti;
@@ -185,6 +187,25 @@ class SongRepository extends Repository {
 		$data["status"] = $status; //This is important
 
 		$this->getTable()->get($song)->update($data); //Update song
+	}
+	
+	/**
+	 * User likes a song
+	 * @param int $song
+	 * @param int $user
+	 * @throws \Nette\IOException
+	 * @return IRow|int|bool
+	 */
+	public function like($song, $user) {
+		$table = $this->database->table(self::TABLE_LIKES);
+
+		if($table->where("user_id", $user)->where("song_id", $song)->where("date < ?","24 hours")->fetch())
+			throw new \Nette\IOException("This user liked it", 77);
+		
+		return $table->insert(array(
+				'user_id' => $user,
+				'song_id' => $song
+			));
 	}
 
 }
