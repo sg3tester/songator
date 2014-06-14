@@ -209,20 +209,26 @@ class SongPresenter extends PrimePresenter
 		else
 			$data["zadatel"] = $val->zadatel;
 
-		$song = $this->songList->add($data);
+		try {
+			$song = $this->songList->add($data);
 
-		$msg = $this->flashMessage("Song byl úspěšně přidán", "success");
-		$msg->title = "Yeah!";
+			$msg = $this->flashMessage("Song byl úspěšně přidán", "success");
+			$msg->title = "Yeah!";
+
+			$zadatel = isset($val->zadatel) ? $val->zadatel : null;
+			$this->logger->log("song", "add", array(
+				"id" => $song->id,
+				"interpret" => $val->interpret,
+				"song" => $val->name,
+				"vzkaz" => $val->vzkaz
+					), $zadatel);
 		
-		$zadatel = isset($val->zadatel) ? $val->zadatel : null;
-		$this->logger->log("song", "add", array(
-			"id" => $song->id,
-			"interpret" => $val->interpret,
-			"song" => $val->name,
-			"vzkaz" => $val->vzkaz
-				), $zadatel);
-		
-		$this->redirect("this");
+			$this->redirect("this");
+		}
+		catch (\UnexpectedValueException $e){
+			$msg = $this->flashMessage("Tento song už někdo přidal před tebou", "danger");
+			$msg->title = "Ooops!";
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////

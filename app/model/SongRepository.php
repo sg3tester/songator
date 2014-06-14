@@ -38,6 +38,10 @@ class SongRepository extends Repository {
 	public function add(array $song) {
 		$interpret = isset($song["interpret_name"]) ? $song["interpret_name"] : null;
 
+		//Check song duplicity
+		if ($this->getTable()->where("interpret_name = ? AND name = ?", $interpret, $song["name"])->fetch())
+			throw new \UnexpectedValueException("Duplicitní song. Nelze uložit");
+
 		//Assign interpret (if registered)
 		$ri = $this->interpreti->getByName($interpret);
 		if($ri)
