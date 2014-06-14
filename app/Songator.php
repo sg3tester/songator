@@ -11,7 +11,7 @@
  *
  * @author JDC
  */
-class Songator {
+final class Songator {
 
 	const NAME = "Songator",
 			VERSION = "3.0-dev",
