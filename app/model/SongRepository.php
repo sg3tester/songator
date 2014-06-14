@@ -203,13 +203,26 @@ class SongRepository extends Repository {
 	public function like($song, $user) {
 		$table = $this->database->table(self::TABLE_LIKES);
 
-		if($table->where("user_id", $user)->where("song_id", $song)->where("date < ?","24 hours")->fetch())
+		if($this->isLiked($song, $user))
 			throw new \Nette\IOException("This user liked it", 77);
 		
 		return $table->insert(array(
 				'user_id' => $user,
 				'song_id' => $song
 			));
+	}
+
+	/**
+	 * Is a song liked?
+	 * @param int $song song where liked
+	 * @param int $user liked by user ID
+	 * @return bool
+	 */
+	public function isLiked($song, $user) {
+		$table = $this->database->table(self::TABLE_LIKES);
+		if($table->where("user_id", $user)->where("song_id", $song)->where("date < ?","24 hours")->fetch())
+			return true;
+		return false;
 	}
 
 }
