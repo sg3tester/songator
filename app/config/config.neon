@@ -54,3 +54,4 @@ services:
 	logger: App\Model\Logging\Logger
 	settings: Settings
 	- App\Model\Permissions
+	- App\Model\Lastfm\Lastfm(%lastfm.apikey%)

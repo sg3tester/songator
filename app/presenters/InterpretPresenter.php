@@ -14,6 +14,9 @@ class InterpretPresenter extends BasePresenter
 
 	/** @var \App\Model\InterpretRepository @inject */
 	public $interpreti;
+
+	/** @var  \App\Model\Lastfm\Lastfm @inject */
+	public $lastfm;
 	
 	public function actionList($q, $noaliases) {
 
@@ -45,6 +48,7 @@ class InterpretPresenter extends BasePresenter
 		}
 		
 		$this->template->interpret = $interpret;
+		$this->template->lastfm = $this->lastfm->call('Artist.getInfo', ['artist' => '2NE1']);
 	}
 
 }
