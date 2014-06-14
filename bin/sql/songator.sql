@@ -5,50 +5,6 @@ SET foreign_key_checks = 0;
 SET time_zone = '+02:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DELIMITER ;;
-
-DROP FUNCTION IF EXISTS `levenshtein`;;
-CREATE FUNCTION `levenshtein`(`s1` varchar(255), `s2` varchar(255)) RETURNS int(11)
-    DETERMINISTIC
-BEGIN
-DECLARE s1_len, s2_len, i, j, c, c_temp, cost INT;
-DECLARE s1_char CHAR;
--- max strlen=255
-DECLARE cv0, cv1 VARBINARY(256);
-SET s1_len = CHAR_LENGTH(s1), s2_len = CHAR_LENGTH(s2), cv1 = 0x00, j = 1, i = 1, c = 0;
-IF s1 = s2 THEN
-RETURN 0;
-ELSEIF s1_len = 0 THEN
-RETURN s2_len;
-ELSEIF s2_len = 0 THEN
-RETURN s1_len;
-ELSE
-WHILE j <= s2_len DO
-SET cv1 = CONCAT(cv1, UNHEX(HEX(j))), j = j + 1;
-END WHILE;
-WHILE i <= s1_len DO
-SET s1_char = SUBSTRING(s1, i, 1), c = i, cv0 = UNHEX(HEX(i)), j = 1;
-WHILE j <= s2_len DO
-SET c = c + 1;
-IF s1_char = SUBSTRING(s2, j, 1) THEN
-SET cost = 0; ELSE SET cost = 1;
-END IF;
-SET c_temp = CONV(HEX(SUBSTRING(cv1, j, 1)), 16, 10) + cost;
-IF c > c_temp THEN SET c = c_temp; END IF;
-SET c_temp = CONV(HEX(SUBSTRING(cv1, j+1, 1)), 16, 10) + 1;
-IF c > c_temp THEN
-SET c = c_temp;
-END IF;
-SET cv0 = CONCAT(cv0, UNHEX(HEX(c))), j = j + 1;
-END WHILE;
-SET cv1 = cv0, i = i + 1;
-END WHILE;
-END IF;
-RETURN c;
-END;;
-
-DELIMITER ;
-
 DROP TABLE IF EXISTS `blog`;
 CREATE TABLE `blog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -65,8 +21,7 @@ CREATE TABLE `blog` (
 INSERT INTO `blog` (`id`, `nadpis`, `perex`, `content`, `datum`, `user_id`) VALUES
 (1,	'Testovací článek',	'Mauris sollicitudin gravida enim, ac egestas urna fringilla in. Donec accumsan purus eget turpis congue euismod. Vivamus massa elit, suscipit vestibulum ipsum quis, hendrerit cursus risus. Vivamus leo nisi, sagittis eget dignissim at, gravida ut mauris. Vestibulum porttitor feugiat augue, ac interdum ipsum ultrices eget. Ut consequat in felis id ultricies. Sed eget aliquet tellus, eu gravida tellus. Maecenas gravida magna vitae metus mollis, non scelerisque ante laoreet. ',	'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pellentesque eros quis enim interdum, at ornare neque aliquet. Etiam a erat at lacus ullamcorper pretium a non arcu. Donec tristique viverra faucibus. Cras a dui euismod ligula euismod malesuada eu quis felis. Fusce elementum massa in sem porta, nec euismod ligula convallis. Suspendisse varius metus sapien, sed congue leo laoreet quis. Cras odio turpis, sodales non sodales eu, dignissim sit amet massa. Praesent tempus, tortor id tincidunt pellentesque, lacus arcu posuere magna, sed venenatis urna ipsum a sapien. Vivamus sed tortor non elit interdum dapibus. In eros mi, cursus id sapien tristique, sollicitudin feugiat magna. Phasellus turpis mauris, molestie sollicitudin ante vel, blandit tristique justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque nunc leo, luctus a massa id, lobortis tincidunt arcu. Fusce ac scelerisque odio, gravida hendrerit dui. Fusce volutpat libero dolor, ac placerat leo iaculis non. Nunc vestibulum ultricies nisl. ',	'2014-04-06 10:25:36',	1),
 (2,	'Další zajebanej test, pitcho!',	'Etiam commodo nibh vel pharetra pretium. Donec ultricies elit lectus, nec fringilla quam fermentum non. Morbi et eros pharetra, interdum tellus ac, feugiat nisi. Sed imperdiet viverra metus, id accumsan sem suscipit sed. Nulla congue orci ac nunc elementum, id posuere dui iaculis. Vestibulum erat sem, tristique vitae viverra vitae, euismod id elit. Nulla nec ante pharetra, fringilla mi sed, rutrum turpis. Cras euismod nibh eget metus iaculis, vitae venenatis lorem posuere. ',	'Etiam enim sem, aliquet sed lacinia sed, lobortis in urna. Duis commodo, diam at pulvinar rhoncus, purus arcu blandit leo, eu consectetur elit libero molestie purus. Duis at nisl magna. Praesent sit amet eros at dolor interdum aliquam. Vivamus tempus pretium sem ac molestie. Proin at elit egestas, dictum orci quis, tincidunt eros. In blandit odio nec erat venenatis bibendum. Curabitur velit mi, tincidunt ac pellentesque non, sodales mattis dolor. Nulla et nunc euismod, porttitor ligula eget, imperdiet ipsum. Cras id laoreet arcu, ut vulputate est. Praesent faucibus, augue eu placerat consequat, neque urna consequat magna, at porttitor turpis nisl eget urna. Sed ut nulla at metus scelerisque ultrices nec id sapien. Mauris urna sem, vestibulum adipiscing arcu at, iaculis gravida mi. Maecenas fermentum quam ut lobortis commodo. Quisque tempor, erat eu lacinia lacinia, ipsum nisl feugiat tellus, vel molestie libero dui eu erat. Sed vestibulum consequat urna vel pharetra. ',	'2014-04-06 11:14:29',	1),
-(3,	'Další pitchus',	'asdfasfd asdfas a asdf asdf asdfas dfsdfsfas dfa sdf asdf asdfas fas df as',	'sdfasf sdf asfas df sdyxcvxc x xyvxycv',	'2014-04-06 13:52:01',	1)
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `nadpis` = VALUES(`nadpis`), `perex` = VALUES(`perex`), `content` = VALUES(`content`), `datum` = VALUES(`datum`), `user_id` = VALUES(`user_id`);
+(3,	'Další pitchus',	'asdfasfd asdfas a asdf asdf asdfas dfsdfsfas dfa sdf asdf asdfas fas df as',	'sdfasf sdf asfas df sdyxcvxc x xyvxycv',	'2014-04-06 13:52:01',	1);
 
 DROP TABLE IF EXISTS `blog_tag`;
 CREATE TABLE `blog_tag` (
@@ -89,8 +44,7 @@ INSERT INTO `blog_tag` (`id`, `blog_id`, `tag_id`) VALUES
 (6,	3,	1),
 (7,	3,	3),
 (8,	3,	5),
-(9,	1,	7)
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `blog_id` = VALUES(`blog_id`), `tag_id` = VALUES(`tag_id`);
+(9,	1,	7);
 
 DROP TABLE IF EXISTS `content`;
 CREATE TABLE `content` (
@@ -105,8 +59,7 @@ CREATE TABLE `content` (
 
 INSERT INTO `content` (`id`, `name`, `heading`, `body`, `data`, `hidden`) VALUES
 (1,	'home',	'Homepage',	'<div id=\"sg-main\"> \r\n      <div class=\"container\">\r\n        <div class=\"jumbotron\">\r\n          <h1>DJ JDC\'s otevřený playlist</h1>\r\n          <br />\r\n          <p>Chcete slyšet na AsianStyle párty svou oblíbenou písničku? Přidejte ji do\r\n             playlistu právě teď! Do databáze DJova playlistu jste již přidali více než 1000 tipů. Přispějte i svými dalšími tipy!</p>\r\n             <br />\r\n          <p>\r\n            <a href=\"#\" class=\"btn btn-primary btn-lg\" role=\"button\">Přidat song</a>\r\n            <a href=\"#\" class=\"btn btn-default btn-lg\" role=\"button\">Procházet songy</a>\r\n          </p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <div id=\"sg-about\" class=\"container\">\r\n      <div class=\"page-header text-center\">\r\n      <h1>Co je DJ\'s otevřený playlist?</h1>\r\n      <p class=\"lead\">Nahlédnout a přispět do playlistu může kdokoli a kdekoli</p>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-8\">\r\n          <p>DJ JDC se v rámci zpětné vazby a zlepšování opět rozhodl dát prostor zase VÁM! Prostřednictvím tohoto malého portálu můžete dát DJovi tipy na songy, které byste rádi na AS párty slyšeli a zatančili si na ně. Stačí k tomu jediné - Poslat váš tip přes náš formulář!</p>\r\n          <p>Pro více informací ohledně DJova playlistu sledujte JDC\'s oficiální Facebook (dejte mu lajk, uděláte mu tím radost a zachráníte život dvaceti kočičkám a třem tisícům stromů :P) a pro všeobecné informace ohledně párty sledujte server AsianStyle.cz</p>\r\n        </div>\r\n        <div class=\"col-md-4 text-center\">\r\n        <img src=\"img/music.png\" />\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <div id=\"sg-video\">\r\n      <div class=\"container\">\r\n        <div class=\"page-header text-center\">\r\n        <h1>Co je AsianStyle party?</h1>\r\n        <p class=\"lead\">Největší pařba na asijskou hudbu v Česku!</p>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col-md-7\">\r\n            <iframe width=\"640\" height=\"360\" src=\"http://www.youtube.com/embed/yEqDOBZ7DK8\" frameborder=\"0\" allowfullscreen></iframe>\r\n          </div>\r\n          <div class=\"col-md-5\">\r\n            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam imperdiet neque velit, in lobortis massa accumsan in. Sed sollicitudin felis urna. Proin sollicitudin lacus sit amet nunc pulvinar tempor. Aliquam libero sem, volutpat nec nisl fermentum, imperdiet sodales dui. Integer ligula nulla, lacinia vitae mollis nec, tincidunt ac leo. Suspendisse viverra luctus dui ut accumsan. Aliquam sit amet consectetur diam. Proin adipiscing nisi quis quam tempor, ut commodo magna volutpat. Praesent ante lorem, commodo sed neque quis, porta vulputate enim. Mauris dictum risus ut turpis fringilla egestas.</p>\r\n            <p>Quisque at fringilla justo, nec placerat ante. Quisque posuere nisi tellus, a iaculis sem vestibulum sit amet. Pellentesque posuere hendrerit nunc vitae sodales. Vivamus nisi mi, feugiat et odio nec, consectetur blandit lorem. Sed dictum lectus at eros dapibus, a porta nibh adipiscing. Praesent lacinia vulputate dignissim. Nam facilisis volutpat odio, a molestie erat pulvinar vitae.</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <div id=\"sg-party\" class=\"container\">\r\n      <div class=\"page-header text-center\">\r\n        <h1>Kdy a kde bude další AS párty?</h1>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-8\">\r\n          <p class=\"lead\">Zatím není známo, kdy a kde se bude konat nadcházející AsianStyle párty.<br />O případném konání této akce budeme informovat.</p>\r\n          <div class=\"text-center\"><img src=\"img/dolby.png\" /></div>\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n          <div class=\"panel panel-default\">\r\n          <div class=\"panel-heading\">\r\n            <h3 class=\"panel-title\">Proběhlé akce</h3>\r\n          </div>\r\n            <div class=\"list-group\">\r\n              <a class=\"list-group-item\" href=\"#\" target=\"blank\">AsianStyle party <small class=\"sg-light\">20. duben 2013</small></a>\r\n              <a class=\"list-group-item\" href=\"#\" target=\"blank\">AsianStyle party 2 - CZHW víkend <small class=\"sg-light\">11. srpen 2013</small></a>\r\n              <a class=\"list-group-item\" href=\"#\" target=\"blank\">Narozeninová AsianStyle party <small class=\"sg-light\">7. prosinec 2013</small></a>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <div id=\"sg-staff\" class=\"container\">\r\n      <div class=\"page-header text-center\">\r\n        <h1>Kdo je na párty DJ?</h1>\r\n        <p class=\"lead\">Na této akci vás krmí hudbou DJ JDC</p>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\">\r\n          <img src=\"img/dj.png\" />\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n          <h3>About DJ</h3>\r\n          <p>Kdo je vlastně ten DJ JDC? Myslím, že odpově na tuto otázku neuhodnete, jelikož je to člověk, jako každý jiný. A nebo ne? Každopádně ať už je co je, hudbu prostě miluje, a už je jakéhokoli druhu. Nejraději má ovšem tu asijskou a proto se ve svém volném čase věnuje hraní asijské hudby na AsianStyle párty. Pokud se někdy přijdete podívat, ať už ze zvědavosti, nebo si jen tak zatancovat, zajisté usyšíte K-POP, C-POP, J-POP, Thai-Pop a další asijské žánry a styly.</p>\r\n        </div>\r\n        <div class=\"col-md-4\">\r\n          <h3>Správci playlistu</h3>\r\n          <ul>\r\n            <li><strong>JDC</strong> <small>DJ, Admin</small></li>\r\n            <li><strong>Syrinox</strong> <small>Asistentka</small></li>\r\n          </ul>\r\n        </div>\r\n      </div>\r\n      <div id=\"sg-social\" class=\"text-center\">\r\n        <a href=\"https://www.facebook.com/officialJDC\" target=\"_blank\"><img src=\"http://icons.iconarchive.com/icons/danleech/simple/64/facebook-icon.png\" alt=\"\" /></a>\r\n        <a href=\"http://www.twitter.com/JarDacan\" target=\"_blank\"><img src=\"http://icons.iconarchive.com/icons/danleech/simple/64/twitter-icon.png\" alt=\"\" /></a>\r\n        <a href=\"https://plus.google.com/u/0/+JaroslavJDCVojt&iacute;&scaron;ek\" target=\"_blank\"><img src=\"http://icons.iconarchive.com/icons/danleech/simple/64/google-plus-icon.png\" alt=\"\" /></a>\r\n        <a href=\"http://www.youtube.com/user/cunoryp\" target=\"_blank\"><img src=\"http://icons.iconarchive.com/icons/danleech/simple/64/youtube-icon.png\" alt=\"\" /></a>\r\n      </div>\r\n    </div>\r\n    \r\n    <div id=\"sg-contact\" class=\"container\">\r\n      <div class=\"page-header text-center\">\r\n        <h1>Kontaktujte nás</h1>\r\n        <p class=\"lead\">Sdělte nám své dotazy, názory, připomínky</p>\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-6\">\r\n          <form role=\"form\">\r\n            <h3>Zanechte vzkaz</h3>\r\n            <p>Než nám zanecháte vzkaz, přečtěte si <a href=\"#\">Často kladené dotazy.</a></p>\r\n            <div class=\"form-group\">\r\n              <div class=\"input-group\">\r\n                <span class=\"input-group-addon\">@</span>\r\n                <input name=\"email\" type=\"text\" class=\"form-control\" placeholder=\"Váš e-mail\">\r\n              </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <div class=\"input-group\">\r\n                <span class=\"input-group-addon\"><i class=\"glyphicon glyphicon-envelope\"></i></span>\r\n                <input name=\"subject\" type=\"text\" class=\"form-control\" placeholder=\"Zadejte předmět zprávy\">\r\n              </div>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <textarea name=\"text\" type=\"text\" class=\"form-control\" placeholder=\"Napište zprávu\"></textarea>\r\n            </div>\r\n            <input type=\"submit\" class=\"btn btn-default\" value=\"Odeslat\">\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>',	'',	1),
-(2,	'rules',	'Pravidla přidávání songů',	'dfgsdfgsdfgsdfg',	'',	0)
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `heading` = VALUES(`heading`), `body` = VALUES(`body`), `data` = VALUES(`data`), `hidden` = VALUES(`hidden`);
+(2,	'rules',	'Pravidla přidávání songů',	'dfgsdfgsdfgsdfg',	'',	0);
 
 DROP TABLE IF EXISTS `interpret`;
 CREATE TABLE `interpret` (
@@ -139,8 +92,7 @@ INSERT INTO `interpret` (`id`, `nazev`, `desc`, `interpret_id`, `valid`, `pictur
 (11,	'G-Dragon',	'',	NULL,	0,	'',	NULL,	''),
 (12,	'GD',	'',	11,	0,	'',	NULL,	''),
 (13,	'CL',	'',	NULL,	0,	'',	NULL,	''),
-(14,	'Sistar',	'',	NULL,	0,	'',	NULL,	'')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `nazev` = VALUES(`nazev`), `desc` = VALUES(`desc`), `interpret_id` = VALUES(`interpret_id`), `valid` = VALUES(`valid`), `picture` = VALUES(`picture`), `user_id` = VALUES(`user_id`), `pridal` = VALUES(`pridal`);
+(14,	'Sistar',	'',	NULL,	0,	'',	NULL,	'');
 
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
@@ -269,8 +221,10 @@ INSERT INTO `log` (`id`, `media`, `event`, `user_id`, `who`, `resource`, `datum`
 (110,	'auth',	'logout',	3,	'test',	NULL,	'2014-04-13 23:29:12'),
 (111,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-13 23:29:17'),
 (112,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-04-14 00:22:08'),
-(113,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-14 00:22:16')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `media` = VALUES(`media`), `event` = VALUES(`event`), `user_id` = VALUES(`user_id`), `who` = VALUES(`who`), `resource` = VALUES(`resource`), `datum` = VALUES(`datum`);
+(113,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-04-14 00:22:16'),
+(114,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-06-09 21:11:44'),
+(115,	'auth',	'logout',	1,	'JDC',	NULL,	'2014-06-11 21:59:30'),
+(116,	'auth',	'login',	1,	'JDC',	'{\"service\":\"twitter\"}',	'2014-06-11 22:00:11');
 
 DROP TABLE IF EXISTS `navbar`;
 CREATE TABLE `navbar` (
@@ -286,8 +240,7 @@ INSERT INTO `navbar` (`id`, `factory`, `config`, `dock`, `level`) VALUES
 (1,	'\\App\\Controls\\IPlaylistBarFactory',	'{\"barname\":\"Playlist\",\"pages\":[{\"title\":\"Pravidla přidávání songů\",\"link\":\"page:rules\",\"presenter\":true},{\"title\":\"FAQ\",\"link\":\"page:faq\",\"presenter\":true}]}',	'left',	0),
 (2,	'\\App\\Controls\\ILoginBarFactory',	'',	'right',	0),
 (3,	'\\App\\Controls\\IInterpretBarFactory',	'',	'left',	1),
-(4,	'\\App\\Controls\\IBlogBarFactory',	'',	'left',	2)
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `factory` = VALUES(`factory`), `config` = VALUES(`config`), `dock` = VALUES(`dock`), `level` = VALUES(`level`);
+(4,	'\\App\\Controls\\IBlogBarFactory',	'',	'left',	2);
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
@@ -309,8 +262,7 @@ INSERT INTO `settings` (`id`, `key`, `value`) VALUES
 (9,	'ucp_allow_register',	'1'),
 (10,	'ucp_twitter_login',	'1'),
 (11,	'songlist_mode',	'open'),
-(12,	'songlist_allowed_players',	'youtube.com;soundcloud.com;dailymotion.com')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `key` = VALUES(`key`), `value` = VALUES(`value`);
+(12,	'songlist_allowed_players',	'youtube.com;soundcloud.com;dailymotion.com');
 
 DROP TABLE IF EXISTS `song`;
 CREATE TABLE `song` (
@@ -381,8 +333,26 @@ INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `z
 (38,	'wfefef',	'wfwfwfwf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-12 10:05:15',	'wefwefefef',	0),
 (39,	'Scream',	'2NE1',	1,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 02:55:20',	'tohle je tajnej vzkaz',	1),
 (40,	'sdfsdfgdgf',	'ddfgdfg',	NULL,	'waiting',	1,	3,	'test',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 22:13:55',	'sdfgsdgf cvvcvbcvb',	1),
-(41,	'dgfsdfgsdfg',	'gsdgsdgf',	NULL,	'waiting',	3,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 23:17:14',	'sdfgsdgf',	0)
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `interpret_name` = VALUES(`interpret_name`), `interpret_id` = VALUES(`interpret_id`), `status` = VALUES(`status`), `zanr_id` = VALUES(`zanr_id`), `user_id` = VALUES(`user_id`), `zadatel` = VALUES(`zadatel`), `link` = VALUES(`link`), `note` = VALUES(`note`), `pecka` = VALUES(`pecka`), `instro` = VALUES(`instro`), `remix` = VALUES(`remix`), `revisor` = VALUES(`revisor`), `datum` = VALUES(`datum`), `vzkaz` = VALUES(`vzkaz`), `private_vzkaz` = VALUES(`private_vzkaz`);
+(41,	'dgfsdfgsdfg',	'gsdgsdgf',	NULL,	'waiting',	3,	1,	'JDC',	'',	'',	0,	0,	0,	NULL,	'2014-04-13 23:17:14',	'sdfgsdgf',	0);
+
+DROP TABLE IF EXISTS `song_likes`;
+CREATE TABLE `song_likes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `song_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `song_id` (`song_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `song_likes_ibfk_1` FOREIGN KEY (`song_id`) REFERENCES `song` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `song_likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `song_likes` (`id`, `song_id`, `user_id`, `date`) VALUES
+(3,	28,	1,	'2014-06-14 09:53:36'),
+(4,	29,	1,	'2014-06-14 09:56:45'),
+(5,	25,	1,	'2014-06-14 10:22:51'),
+(6,	22,	1,	'2014-06-14 10:25:19');
 
 DROP TABLE IF EXISTS `storage`;
 CREATE TABLE `storage` (
@@ -408,8 +378,7 @@ INSERT INTO `tag` (`id`, `name`) VALUES
 (4,	'DJ'),
 (5,	'kecy'),
 (6,	'pitchoviny'),
-(7,	'srajdy')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`);
+(7,	'srajdy');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -435,8 +404,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `role`, `registered`, `ip`, `auth_service`, `auth_token`, `first_login`, `realname`, `about`, `avatar`, `twitter_acc`, `www`) VALUES
 (1,	'JDC',	'',	'',	'admin',	'2014-02-18 12:15:07',	'',	'twitter',	'364921955',	0,	'JDC (이지민)',	'Producer, Song writer, DJ, Programmer, Author, Editor, Amatuer writer, Lyrics writer and Blogger in JDC Entertainment.',	'http://pbs.twimg.com/profile_images/2548714957/zxmzvsd9so5cjvkco9eq_normal.jpeg',	'JarDacan',	'http://www.jdc.2ne1.cz'),
-(3,	'test',	'$2y$10$v9d592UJJ/uw9Ijb/Qb6xuOuKYk2AJ5.WKlffEI3kFv3YzRx7fLWW',	'test@test.localhost',	'user',	'2014-04-13 22:00:34',	'',	'songator',	'',	0,	'Testovací účet',	'',	'',	'',	'')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `username` = VALUES(`username`), `password` = VALUES(`password`), `email` = VALUES(`email`), `role` = VALUES(`role`), `registered` = VALUES(`registered`), `ip` = VALUES(`ip`), `auth_service` = VALUES(`auth_service`), `auth_token` = VALUES(`auth_token`), `first_login` = VALUES(`first_login`), `realname` = VALUES(`realname`), `about` = VALUES(`about`), `avatar` = VALUES(`avatar`), `twitter_acc` = VALUES(`twitter_acc`), `www` = VALUES(`www`);
+(3,	'test',	'$2y$10$v9d592UJJ/uw9Ijb/Qb6xuOuKYk2AJ5.WKlffEI3kFv3YzRx7fLWW',	'test@test.localhost',	'user',	'2014-04-13 22:00:34',	'',	'songator',	'',	0,	'Testovací účet',	'',	'',	'',	'');
 
 DROP TABLE IF EXISTS `zanr`;
 CREATE TABLE `zanr` (
@@ -450,7 +418,6 @@ INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
 (1,	'K-POP',	'Korejská populární hudba'),
 (2,	'J-POP',	'Japonská populární hudba'),
 (3,	'J-ROCK',	'Japonský rock'),
-(4,	'C-POP',	'Čínská populární hudba')
-ON DUPLICATE KEY UPDATE `id` = VALUES(`id`), `name` = VALUES(`name`), `popis` = VALUES(`popis`);
+(4,	'C-POP',	'Čínská populární hudba');
 
--- 2014-04-14 00:48:49
+-- 2014-06-14 10:40:13
