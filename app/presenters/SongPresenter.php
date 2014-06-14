@@ -65,6 +65,9 @@ class SongPresenter extends PrimePresenter
 			$filter->filter($flags);
 		}
 
+		//Store list page and filtering
+		$this->getSession()->getSection("SongList")->listing = $this->getHttpRequest()->getQuery();
+
 		$this->template->summary = $this->songList->getSummary();
 		$this->template->status = $status;
 	}
@@ -429,7 +432,8 @@ class SongPresenter extends PrimePresenter
 			$this->back = null;
 			$this->redirect($back, array("id" => $val->id));
 		}
-		$this->redirect("list");
+		$query = $this->getSession()->getSection("SongList")->listing;
+		$this->redirect("list", isset($query) ? $query : array());
 	}
 
 	////////////////////////////////////////////////////////////////////////////
@@ -472,7 +476,8 @@ class SongPresenter extends PrimePresenter
 			$this->back = null;
 			$this->redirect($back, array("id" => $val->id));
 		}
-		$this->redirect("list");
+		$query = $this->getSession()->getSection("SongList")->listing;
+		$this->redirect("list", isset($query) ? $query : array());
 	}
 
 	////////////////////////////////////////////////////////////////////////////
