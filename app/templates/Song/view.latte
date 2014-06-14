@@ -78,11 +78,11 @@
 				</tr>
 			</table>
 				<div n:ifcontent class="btn-group">
-					<a n:if="$user->isAllowed('song','like')" n:href="like!" class="btn btn-default"><i class="glyphicon glyphicon-heart"></i> Líbí se mi</a>
+					<a n:if="$user->isAllowed('song','like')" n:href="like!" class="btn {if $liked}btn-danger{else}btn-default{/if}"><i class="glyphicon glyphicon-heart"></i> Líbí se mi</a>
 					<a n:if="$user->isAllowed('song','approve')" n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
-					<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
-					<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Upravit</a>
-					<a n:if="$user->isAllowed('song','remove')" n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i> Smazat</a>
+					<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
+					<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+					<a n:if="$user->isAllowed('song','remove')" n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></a>
 				</div>
 		</div>
 		<div class="col-md-5">

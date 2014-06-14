@@ -73,8 +73,9 @@ class SongPresenter extends PrimePresenter
 	public function actionView($id) {
 		$song = $this->songList->find($id);
 		$this->playUrl = new \Nette\Http\Url($song->link);
-		
+
 		$this->template->song = $song;
+		$this->template->liked = $this->user->isLoggedIn() ? $this->songList->isLiked($id, $this->user->id) : false;
 	}
 
 	public function renderAdd() {
