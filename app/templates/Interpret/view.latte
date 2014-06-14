@@ -52,7 +52,12 @@
 		</div>
 		<div class="col-md-3">
 			<div class="profile-pic">
-				! profile pic here !
+				{foreach $lastfm->image as $image}
+					{if $image->size == 'extralarge'}
+						{var $image_src = (array)$image}
+						<img src="{$image_src['#text']}" alt="{$interpret->nazev}" class="img-thumbnail" />
+					{/if}
+				{/foreach}
 			</div>
 			{var $aliasy = $interpret->related("interpret")}
 			<div n:if="count($aliasy)" class="panel panel-default">

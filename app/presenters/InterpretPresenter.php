@@ -48,7 +48,7 @@ class InterpretPresenter extends BasePresenter
 		}
 		
 		$this->template->interpret = $interpret;
-		$this->template->lastfm = $this->lastfm->call('Artist.getInfo', ['artist' => '2NE1']);
+		$this->template->lastfm = $this->lastfm->call('Artist.getInfo', ['artist' => $interpret->nazev])->artist;
 	}
 
 }
