@@ -3,7 +3,8 @@
 namespace App\Presenters;
 
 use Nette,
-	App\Model;
+	App\Model,
+	\Nette\Diagnostics\Debugger;
 
 
 /**
@@ -34,7 +35,11 @@ class InterpretPresenter extends BasePresenter
 		$this->template->noaliases = $noaliases;
 		$this->template->q = $q;
 	}
-	
+
+	/**
+	 * @param $id
+	 * @throws \Nette\Application\BadRequestException
+	 */
 	public function actionView($id) {
 		$interpret = $this->interpreti->find($id);
 		
@@ -48,7 +53,15 @@ class InterpretPresenter extends BasePresenter
 		}
 		
 		$this->template->interpret = $interpret;
-		$this->template->lastfm = $this->lastfm->call('Artist.getInfo', ['artist' => $interpret->nazev])->artist;
+
+		//Last.fm Interpret info (images)
+		try {
+			$this->template->lastfm = $this->lastfm->call('Artist.getInfo', ['artist' => $interpret->nazev])->artist;
+		}
+		catch (Model\Lastfm\LastfmException $e) {
+			if($this->settings->get('lastfm_enabled', false))
+				Debugger::log($e);
+		}
 	}
 
 }

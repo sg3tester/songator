@@ -8,6 +8,7 @@
 
 namespace App\Model;
 use Nette\Database\IRow;
+use Nette\Database\SqlLiteral;
 use Nette\Utils\Arrays;
 
 /**
@@ -220,7 +221,7 @@ class SongRepository extends Repository {
 	 */
 	public function isLiked($song, $user) {
 		$table = $this->database->table(self::TABLE_LIKES);
-		if($table->where("user_id", $user)->where("song_id", $song)->where("date < ?","24 hours")->fetch())
+		if($table->where("user_id", $user)->where("song_id", $song)->where("date >= ?", new SqlLiteral("NOW() - INTERVAL 24 hour"))->fetch())
 			return true;
 		return false;
 	}
