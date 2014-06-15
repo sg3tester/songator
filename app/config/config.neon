@@ -5,6 +5,8 @@
 # http://nette.org/security-warning
 #
 parameters:
+	lastfm:
+		apikey:
 
 php:
 	date.timezone: Europe/Prague

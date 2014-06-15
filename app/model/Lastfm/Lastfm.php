@@ -36,6 +36,7 @@ class Lastfm extends Object{
 	/**
 	 * @param string $method
 	 * @param array $args
+	 * @throws LastfmException
 	 * @return \stdClass|string
 	 */
 	public function call($method, array $args) {
