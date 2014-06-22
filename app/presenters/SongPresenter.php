@@ -27,6 +27,9 @@ class SongPresenter extends PrimePresenter
 
 	/** @var \Nette\Http\Url */
 	private $playUrl;
+
+	/** @var  \App\Model\Lastfm\Lastfm @inject */
+	public $lastfm;
 	
 	/** @persistent */
 	public $back;
@@ -191,6 +194,15 @@ class SongPresenter extends PrimePresenter
 		if (!$this->checkPermissions("song", "draft", FALSE))
 			$this->redirect("add");
 
+		//Fetch song album image form Last.fm
+		$image = null;
+		try {
+			$lfm = $this->lastfm;
+			$image = $lfm->call('Track.getInfo', ['artist' => $val->interpret, 'track' => $val->name])
+				->track->album->image;
+		}
+		catch (Model\Lastfm\LastfmException $e) {}
+
 		//Fill main data
 		$data = array(
 			"name" => $val->name,
@@ -199,7 +211,8 @@ class SongPresenter extends PrimePresenter
 			"link" => $val->link,
 			"remix" => $val->remix,
 			"vzkaz" => $val->vzkaz,
-			"private_vzkaz" => $val->private_vzkaz
+			"private_vzkaz" => $val->private_vzkaz,
+			"image" => json_encode($image)
 		);
 		
 		if (!$this->user->isAllowed("privateMsg", "add"))

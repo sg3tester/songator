@@ -2,9 +2,11 @@
 
 namespace App\Presenters;
 
+use App\Console\RefreshSongCommand;
 use Nette,
 	App\Model,
 	\Nette\Diagnostics\Debugger;
+use Symfony\Component\Console\Output\NullOutput;
 
 
 /**
@@ -18,7 +20,7 @@ class InterpretPresenter extends BasePresenter
 
 	/** @var  \App\Model\Lastfm\Lastfm @inject */
 	public $lastfm;
-	
+
 	public function actionList($q, $noaliases) {
 
 		$interpreti = $this->interpreti->findAll()->order("nazev ASC");
@@ -51,8 +53,18 @@ class InterpretPresenter extends BasePresenter
 			$msg->title = "Alias";
 			$this->redirect ("this", array("id" => $interpret->interpret_id)); //If is alias => redirect to real
 		}
-		
+
 		$this->template->interpret = $interpret;
+
+		//Register helper fot fetching song form last.fm
+		$this->template->registerhelper('songImage', function($song, $img = 0) {
+			try {
+				return $this->lastfm->call('Track.getInfo', ['track' => $song->name, 'artist' => $song->interpret_name])
+					->track->album->image[$img]->{'#text'};
+			} catch (Model\Lastfm\LastfmException $e) {
+				return null;
+			}
+		});
 
 		//Last.fm Interpret info (images)
 		try {

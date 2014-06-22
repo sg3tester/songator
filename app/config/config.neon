@@ -32,6 +32,8 @@ nette:
 console:
 	name: Songator
 	version: Songator::VERSION
+	commands:
+		- App\Console\RefreshSongCommand
 
 services:
 	# Base

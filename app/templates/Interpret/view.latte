@@ -24,27 +24,30 @@
 			</ul>
 			<p class="text-right">Interpret má v databázi <strong>{count($songy)}</strong> songů.</p>
 			{foreach $songy as $song}
-				<div class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
-					<div class="page-header">
-						<h4>
-							<a n:href="song:view $song->id">{$song->interpret_name} - {$song->name}</a> 
-							<small>
-								{$song->zadatel}
-								<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
-								<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
-								<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
-								<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
-							</small>
-							<small class="float-right">{$song->zanr->name}</small>
-						</h4>
-					</div>
-					<p n:ifcontent>{$song->vzkaz}</p>
-					<p n:if="$song->note" class="well well-sm"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
-					<div class="btn-group">
-						<a title="Detail" n:href="song:view $song->id" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-search"></i></a>
-						<a title="Schválit" n:href="song:approve $song->id" class="btn btn-success btn-sm" target="_blank"><i class="glyphicon glyphicon-ok"></i></a>
-						<a title="Zamítnout" n:href="song:reject $song->id" class="btn btn-danger btn-sm" target="_blank"><i class="glyphicon glyphicon-remove"></i></a>
-						<a title="Přehrát" n:href="song:play $song->id" class="btn btn-info btn-sm" target="_blank"><i class="glyphicon glyphicon-play"></i></a>
+				<div class="song-wrapper stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
+					<img n:if="json_decode($song->image)" src="{json_decode($song->image)[1]->{'#text'}}" class="song-image" />
+					<div class="song-box">
+						<div class="page-header">
+							<h4>
+								<a n:href="song:view $song->id">{$song->interpret_name} - {$song->name}</a>
+								<small>
+									{$song->zadatel}
+									<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
+									<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
+									<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
+									<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
+								</small>
+								<small class="float-right">{$song->zanr->name}</small>
+							</h4>
+						</div>
+						<p n:ifcontent>{$song->vzkaz}</p>
+						<p n:if="$song->note"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
+						{*<div class="btn-group">
+							<a title="Detail" n:href="song:view $song->id" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-search"></i></a>
+							<a title="Schválit" n:href="song:approve $song->id" class="btn btn-success btn-sm" target="_blank"><i class="glyphicon glyphicon-ok"></i></a>
+							<a title="Zamítnout" n:href="song:reject $song->id" class="btn btn-danger btn-sm" target="_blank"><i class="glyphicon glyphicon-remove"></i></a>
+							<a title="Přehrát" n:href="song:play $song->id" class="btn btn-info btn-sm" target="_blank"><i class="glyphicon glyphicon-play"></i></a>
+						</div>*}
 					</div>
 				</div>
 			{/foreach}

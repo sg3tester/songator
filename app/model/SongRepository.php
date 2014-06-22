@@ -51,6 +51,10 @@ class SongRepository extends Repository {
 		return $this->getTable()->insert($song);
 	}
 
+	public function edit($id, array $data) {
+		return $this->getTable()->where('id',$id)->update($data);
+	}
+
 	/**
 	 *
 	 * @param int $songId
