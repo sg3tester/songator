@@ -53,4 +53,12 @@ abstract class Repository extends \Nette\Object {
 		$prename = \lcfirst($reflection->getShortName());
 		return str_replace("Repository", "", $prename);
 	}
+
+	public function beginTransaction() {
+		$this->database->beginTransaction();
+	}
+
+	public function commit() {
+		$this->database->commit();
+	}
 }

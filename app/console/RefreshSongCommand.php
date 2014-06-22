@@ -31,6 +31,7 @@ class RefreshSongCommand extends Command {
 		$ok_counter = 0;
 		$error_counter = 0;
 
+		$songRepo->beginTransaction();
 		foreach ($songRepo->findAll() as $song) {
 			/** @var Lastfm $lfm */
 			$lfm = $di->getByType('App\Model\Lastfm\Lastfm');
@@ -46,6 +47,7 @@ class RefreshSongCommand extends Command {
 				$output->writeln("<error>[ERROR] Cannot reach ".$song->interpret_name." - ".$song->name."</error>");
 			}
 		}
+		$songRepo->commit();
 		$output->writeln('');
 		$output->writeln('DONE! '.$ok_counter.' success, '.$error_counter.' failed');
 	}
