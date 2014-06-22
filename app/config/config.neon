@@ -8,6 +8,9 @@ parameters:
 	lastfm:
 		apikey:
 
+extensions:
+	console: Kdyby\Console\DI\ConsoleExtension
+
 php:
 	date.timezone: Europe/Prague
 	# zlib.output_compression: yes
@@ -26,6 +29,9 @@ nette:
 		bar:
 			- Nette\Http\Diagnostics\SessionPanel
 
+console:
+	name: Songator
+	version: Songator::VERSION
 
 services:
 	# Base
