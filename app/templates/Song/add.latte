@@ -50,10 +50,10 @@
 				matchInterpret(data, "#interpret-match");
 				$("#interpret").removeClass("ui-autocomplete-loading");
 				if ($("#song").val())
-					$("#song").change();
+					$("#song").keypress();
 		 });
 	});
-	$("#song").change(function(){
+	$("#song").keypress(function(){
 		$(this).addClass("ui-autocomplete-loading");
 		$.get({plink matchSong},{ song: $("#song").val(), interpret: $("#interpret").val()}).done(function(data){
 				matchSong(data, "#song-match");

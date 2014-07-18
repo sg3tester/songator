@@ -58,14 +58,17 @@ function matchSong(json, selector) {
 			}
 			
 		else {
-			$(selector).html('<strong><ul id="ms-list" class="list-inline"></ul></strong>');
+			$(selector).html('<div class="well"><b class="text-warning"><i class="glyphicon glyphicon-warning-sign"></i> Nalezeny možné shody!</b><br/>Věnuj pozornost následujícímu výčtu:<br/><br/> <strong><ul id="ms-list" class="list-inline"></ul></strong><br/><span class="text-success" id="userVerify"><small>Klikni na toto tlačítko jen tehdy, pokud jsi si jist, že tvůj song ještě není v playlistu.</small><br/><a href="#" class="btn btn-info" id="itsok">Můj song ještě v playlistu není</a></span></div>');
 			json.similar.forEach(function(entry){
 				$("#ms-list").append('<li class="'+rndColor()+'">'+entry.interpret+" - "+entry.name+"</li>");
 			});
+            $("#song-add").attr("disabled","disabled");
+            $("#itsok").click(itsokHandle);
 		}
 	}
 	else {
 		$(selector).html('<p class="text-muted">Žádný podobný song není v playlistu</i>');
+        $("#song-add").removeAttr("disabled");
 	}
 }
 
@@ -75,10 +78,18 @@ function setMatch() {
 	return false;
 }
 
+function itsokHandle(){
+    $("#song-add").removeAttr("disabled");
+    $("#itsok").remove();
+    $("#userVerify").html('<i class="glyphicon glyphicon-ok"></i> Song <strong>'+$("#song").val()+"</strong> bude přidán do playlistu");
+    return false;
+}
+
 $(document).ready(function(){
 	$(".reason").click(function(){
 	    $("#reason").val($(this).text());
 	    return false;
 	});
 	$(".match").click(setMatch);
+    $("#itsok").click(itsokHandle);
 });
