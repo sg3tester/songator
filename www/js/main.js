@@ -58,7 +58,7 @@ function matchSong(json, selector) {
 			}
 			
 		else {
-			$(selector).html('<div class="well"><b class="text-warning"><i class="glyphicon glyphicon-warning-sign"></i> Nalezeny možné shody!</b><br/>Věnuj pozornost následujícímu výčtu:<br/><br/> <strong><ul id="ms-list" class="list-inline"></ul></strong><br/><span class="text-success" id="userVerify"><small>Klikni na toto tlačítko jen tehdy, pokud jsi si jist, že tvůj song ještě není v playlistu.</small><br/><a href="#" class="btn btn-info" id="itsok">Můj song ještě v playlistu není</a></span></div>');
+			$(selector).html('<div class="well"><b class="text-warning"><i class="glyphicon glyphicon-warning-sign"></i> Nalezeny možné shody!</b><br/>Věnuj pozornost následujícímu výčtu:<br/><br/> <strong><ul id="ms-list" class="list-inline"></ul></strong><br/><span class="text-success" id="userVerify"><small>Kliknutím na následující tlačítko potvrzujete, že přidávaný song ještě nebyl zařazen do playlistu.</small><br/><a href="#" class="btn btn-info" id="itsok">Můj song ještě není v playlistu</a></span></div>');
 			json.similar.forEach(function(entry){
 				$("#ms-list").append('<li class="'+rndColor()+'">'+entry.interpret+" - "+entry.name+"</li>");
 			});
