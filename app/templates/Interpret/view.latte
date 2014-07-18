@@ -9,6 +9,7 @@
 		<div class="col-md-8">
 			{include '../components/flashes.latte'}
 			{var $songy = $interpret->related("song")}
+			{ifset $status}{var $songy = $songy->where("status", $status)}{/ifset}
 			{if count($songy)}
 			{default $status = ''}
 			<ul class="nav nav-tabs">

@@ -94,6 +94,11 @@
 		$(".filter").toggle();
 		return false;
 	});
+	$('#myModal').on('loaded.bs.modal', function (e) {
+     	for (var i = 0; i < document.forms.length; i++) {
+        		Nette.initForm(document.forms[i]);
+        	}
+    })
 	$(document).on('hidden.bs.modal', function (e) {
 		$(e.target).removeData('bs.modal');
 		$(".modal-content").html('<div class="text-center"><img src="'+{$basePath}+'/images/295.gif" /></div>');

@@ -40,11 +40,12 @@ class InterpretPresenter extends BasePresenter
 
 	/**
 	 * @param $id
+	 * @param $status
 	 * @throws \Nette\Application\BadRequestException
 	 */
-	public function actionView($id) {
+	public function actionView($id, $status = null) {
 		$interpret = $this->interpreti->find($id);
-		
+		if ($status) $this->template->status = $status;
 		if(!$interpret)
 			throw new Nette\Application\BadRequestException("Interpret does not exists!", 404);
 		
