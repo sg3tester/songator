@@ -65,3 +65,4 @@ services:
 	settings: Settings
 	- App\Model\Permissions
 	- App\Model\Lastfm\Lastfm(%lastfm.apikey%)
+	- Navigation
