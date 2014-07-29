@@ -60,6 +60,7 @@ class SongPresenter extends PrimePresenter
 				"r" => "remix",
 				"i" => "instro",
 				"p" => "pecka",
+				"w" => "wishlist_only",
 				"n" => array(
 					"column" => "note",
 					"by" => " != ''"
@@ -407,6 +408,7 @@ class SongPresenter extends PrimePresenter
 		$form->addCheckbox("remix");
 		$form->addCheckbox("pecka");
 		$form->addCheckbox("instro");
+		$form->addCheckbox("wishlist_only");
 		$form->addTextArea("note");
 		$form->addHidden("id");
 
@@ -427,7 +429,8 @@ class SongPresenter extends PrimePresenter
 		$additional = array(
 			"remix" => $val->remix,
 			"instro" => $val->instro,
-			"pecka" => $val->pecka
+			"pecka" => $val->pecka,
+			"wishlist_only" => $val->wishlist_only
 		);
 
 		$this->songList->approve($val->id, $this->user->getId(), $val->note, $additional);
@@ -520,6 +523,7 @@ class SongPresenter extends PrimePresenter
 		$form->addCheckbox("instro");
 		$form->addCheckbox("pecka");
 		$form->addCheckbox("note");
+		$form->addCheckbox("wishlist_only");
 		
 		$form->addSubmit("filtruj");
 		
@@ -533,7 +537,8 @@ class SongPresenter extends PrimePresenter
 			$val->instro ? $flags .= "i" : null;
 			$val->pecka ? $flags .= "p" : null;
 			$val->note ? $flags .= "n" : null;
-			
+			$val->wishlist_only ? $flags .= "w" : null;
+
 			$this->redirect("this",array("flags" => $flags));
 		};
 		
@@ -550,6 +555,7 @@ class SongPresenter extends PrimePresenter
 			$flag == "i" ? $defaults["instro"] = true : null;
 			$flag == "p" ? $defaults["pecka"] = true : null;
 			$flag == "n" ? $defaults["note"] = true : null;
+			$flag == "w" ? $defaults["wishlist_only"] = true : null;
 		}
 		
 		$form->setDefaults($defaults);
