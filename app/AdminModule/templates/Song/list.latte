@@ -1,3 +1,6 @@
+
+{block sectionHeading}Seznam songů{/block}
+{block sectionDesc}Registrované songy v playlistu{/block}
 {block content}
 
                             <div class="box">
@@ -8,4 +11,9 @@
                                     {control songList}
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
+{/block}
+
+{block css}
+{include #parent}
+<link rel="stylesheet" href="{$basePath}/css/grido.css">
 {/block}

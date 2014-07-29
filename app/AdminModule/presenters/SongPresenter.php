@@ -10,6 +10,7 @@ namespace App\AdminModule\Presenters;
 
 
 use App\Model\ZanrRepository;
+use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use Nette\Utils\Html;
 
@@ -24,8 +25,12 @@ class SongPresenter extends BasePresenter{
 		$grid->setModel($this->songy->findAll());
 
 		$grid->addColumnDate("datum", "Datum", "d.m.y")
-			->setSortable();
+			->setSortable()
+			->setFilterDateRange();
 		$grid->addColumnText("interpret_name", "Interpret")
+			->setCustomRender(function($item){
+				return $item->interpret_name . ($item->interpret ? " " . Html::el('i')->addAttributes(['class' => 'fa fa-ticket', 'title' => 'Asociován s '.$item->interpret->nazev]) : null);
+			})
 			->setSortable()
 			->setFilterText()
 			->setSuggestion();
@@ -86,56 +91,30 @@ class SongPresenter extends BasePresenter{
 			->setSortable()
 			->setFilterSelect($statuses);
 
-		$grid->addColumnText("vzkaz", "Vzkaz DJovi")
-			->setCustomRender(function($item){
-				$elm = Html::el("span");
-				if ($item->private_vzkaz) {
-					if (!$this->user->isAllowed("privateMsg", "view") && $this->user->id != $item->user_id) {
-						$elm->addAttributes(array("class" => "msg-hidden", "title" => "Tento vzkaz je určen pouze pro DJe"));
-						$elm->setText("Soukromý vzkaz");
-						return $elm;
-					}
-					$elm->addAttributes(array("class" => "msg-private", "title" => "Tento vzkaz je určen pouze pro DJe"));
-					$elm->setText($item->vzkaz);
-				}
-				else
-					return $item->vzkaz;
-				return $elm;
-			});
+		$grid->addColumnText("pecka","Pecka")->setReplacement(array(
+			0 => '',
+			1 => Html::el('i')->addAttributes(['class' => 'fa fa-check'])
+		))->setFilterCheck()->setCondition(" = 1");
 
-		if ($this->user->isAllowed("song","approve"))
-			$grid->addActionHref("approve", "")
-				->setIcon("ok")
-				->setElementPrototype(Html::el("a",array(
-					"class" => "btn btn-success",
-					"data-toggle" => "modal",
-					"data-target" => ".modal"
-				)));
+		$grid->addColumnText("instro","Instro")->setReplacement(array(
+			0 => '',
+			1 => Html::el('i')->addAttributes(['class' => 'fa fa-check'])
+		))->setFilterCheck()->setCondition(" = 1");
 
-		if ($this->user->isAllowed("song","reject"))
-			$grid->addActionHref("reject", "")
-				->setIcon("remove")
-				->setElementPrototype(Html::el("a",array(
-					"class" => "btn btn-danger",
-					"data-toggle" => "modal",
-					"data-target" => ".modal"
-				)));
+		$grid->addColumnText("remix","Remix")->setReplacement(array(
+			0 => '',
+			1 => Html::el('i')->addAttributes(['class' => 'fa fa-check'])
+		))->setFilterCheck()->setCondition(" = 1");
 
-		if ($this->user->isAllowed("song","play"))
-			$grid->addActionHref("play", "")
-				->setDisable(function($item){
-					if ($item->link)
-						return false;
-					return true;
-				})
-				->setIcon("play")
-				->setElementPrototype(Html::el("a",array(
-					"class" => "btn btn-info",
-					"data-toggle" => "modal",
-					"data-target" => ".modal"
-				)));
+		$grid->addColumnNumber("likes",Html::el('i')->addAttributes(['class' => 'fa fa-heart']))->setCustomRender(function($item){
+			return $item->related("song_likes")->count();
+		});
 
-		$grid->setFilterRenderType(\Grido\Components\Filters\Filter::RENDER_OUTER);
+		$grid->addActionHref("edit","Editovat")
+				->setIcon("pencil");
+
+		$grid->setFilterRenderType(Filter::RENDER_OUTER);
+
 		$grid->setDefaultSort(array("datum" => "DESC"));
 
 		//Set face for grid
