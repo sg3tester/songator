@@ -23,10 +23,11 @@
 				</div>
 			</li>
 			</ul>
+			<br/>
 			<p class="text-right">Interpret má v databázi <strong>{count($songy)}</strong> songů.</p>
 			{foreach $songy as $song}
 				<div class="song-wrapper stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
-					<img n:if="json_decode($song->image)" src="{json_decode($song->image)[1]->{'#text'}}" class="song-image" />
+					<img src="{if json_decode($song->image)}{json_decode($song->image)[1]->{'#text'}}{else}{$basePath}/img/song.png{/if}" class="song-image" />
 					<div class="song-box">
 						<div class="page-header">
 							<h4>
