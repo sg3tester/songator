@@ -21,7 +21,17 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter {
 	/** @var  \Navigation @inject */
 	public $navigation;
 
+	protected function startup() {
+		//Nejsi-li admin, vyfič!
+		if (!$this->user->isAllowed('admin','view'))
+			$this->redirect(':Homepage:');
+
+		parent::startup();
+	}
+
 	public function beforeRender() {
+
+
 		$stats = $this->songy->findAll()->select("status, COUNT(id) AS score")->group("status")->fetchPairs("status", "score");
 		$stats["all"] = count($this->songy->findAll());
 

@@ -36,10 +36,10 @@ class Navigation extends \Nette\Object {
 			),
 			"list" => array(
 				"text" => "Seznam songů",
-				"badge" => array(
+				/*"badge" => array(
 					"text" => 6,
 					"color" => "yellow"
-				)
+				)*/
 			)
 		);
 	}
