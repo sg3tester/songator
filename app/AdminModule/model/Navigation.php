@@ -25,6 +25,29 @@ class Navigation extends \Nette\Object {
 				"text" => "Songy",
 				"icon" => "fa fa-music",
 				"menu" => $this->buildSongMenu()
+			),
+			"interpret" => array(
+				"text" => "Interpreti",
+				"icon" => "fa fa-star-o",
+				"menu" => $this->buildInterpretMenu()
+			),
+			"cms" => array(
+				"text" => "CMS",
+				"icon" => "fa fa-file",
+				"menu" => $this->buildCmsMenu()
+			),
+			"system" => array(
+				"text" => "Systém",
+				"icon" => "fa fa-cogs",
+				"menu" => $this->buildSystemMenu()
+			),
+			"log" => array(
+				"text" => "Logy",
+				"icon" => "fa fa-tasks"
+			),
+			"about" => array(
+				"text" => "O Songatoru",
+				"icon" => "fa fa-info-circle"
 			)
 		);
 	}
@@ -41,6 +64,45 @@ class Navigation extends \Nette\Object {
 					"color" => "yellow"
 				)*/
 			)
+		);
+	}
+
+	public function buildInterpretMenu() {
+		return array(
+			"add" => array(
+				"text" => "Přidat interpreta"
+			),
+			"list" => array(
+				"text" => "Seznam interpretů",
+			),
+			"assoc" => array(
+				"text" => "Asociace"
+			)
+		);
+	}
+
+	public function buildCmsMenu() {
+		return array(
+			"add" => array(
+				"text" => "Vytvořit stránku"
+			),
+			"list" => array(
+				"text" => "Seznam stránek",
+			),
+			"default" => array(
+				"text" => "Výchozí stránky"
+			)
+		);
+	}
+
+	public function buildSystemMenu() {
+		return array(
+			"default" => array(
+				"text" => "Nastavení"
+			),
+			"expert" => array(
+				"text" => "Expertní nastavení",
+			),
 		);
 	}
 
