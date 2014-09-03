@@ -1,0 +1,55 @@
+﻿#
+# SECURITY WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+#
+# If you don't protect this directory from direct web access, anybody will be able to see your passwords.
+# http://nette.org/security-warning
+#
+common:
+	parameters:
+
+	php:
+		date.timezone: Europe/Prague
+		# zlib.output_compression: yes
+
+	nette:
+		application:
+			errorPresenter: Error
+
+		session:
+			autoStart: smart
+			expiration: +30 days
+	nesys:
+		appName: 'Songátor'
+		appDesc: 'JDCho songátor playlistu na AS párty'
+		appAuthors: ['JDC','JDC Entertainment']
+		appEmail: ['jdc@2ne1.cz']
+		appVersion: '1.8'
+		serviceIPs: ['127.0.0.1','::1','88.102.19.211']
+		modules:
+	services:
+		authenticator: Nesys\Authenticator
+		routerFactory: RouterFactory
+		router: @routerFactory::createRouter
+		opravneni: Nesys\Opravneni
+		userRepository: Nesys\UserRepository
+		obsah: Nesys\StaticContent
+		songy: Nesys\Songy
+		podobne: Nesys\Podobne
+		songylog: Songylog
+		ban: Ban
+	factories:
+
+
+production < common:
+	nette:
+		database:
+			dsn: 'mysql:host=wm56.wedos.net;dbname=d65331_asparty'
+			user: 'w65331_asparty'
+			password: 'gRm9Vmp8'
+
+development < common:
+	nette:
+		database:
+			dsn: 'mysql:host=localhost;dbname=playlist'
+			user: 'root'
+			password: 'chrochtavec'

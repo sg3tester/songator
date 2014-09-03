@@ -1,0 +1,36 @@
+
+{block content}
+<div id="lside">
+    <h2>Správa obsahu</h2>
+    <p>Moduly pro správu obsahu CMS NESys.</p>
+    
+    {* Sem linkuj odkazy na moduly pro správu obsahu *}
+    <div class="navi">
+	<ul>
+	    {*<li><a n:href=":redakce:clanky"><span class="icon-book"></span>Články</a></li>
+	    <li><a n:href="content:default"><span class="icon-hdd"></span> Statický obsah</a></li>
+	    <li><a n:href="projekty:default"><span class="icon-briefcase"></span> Projekty</a></li>
+	    <li><a n:href="tv21:default"><span class="icon-facetime-video"></span> 2NE1 TV</a></li>
+	    <li><a n:href="trash:default"><span class="icon-trash"></span> Smetiště článků</a></li>*}
+	    {foreach $contentmenu as $item}
+	    <li {if $item->restricted}n:if="$user->isAllowed($item->permsResource,$item->permsCapability)"{/if}><a n:href="$item->target"><span n:if="$item->additional->icon != null" n:class="$item->additional->icon"></span>{$item->caption}</a></li>
+	    {/foreach}
+	</ul>
+    </div>
+    <br />
+    {*<p><span style="color: red">POZNÁMKA:</span> Pokud chcete přidat moduly do systému, je nutné je nalinkovat ručně v souboru &LT;adresář webu&gt;/app/SystemModule/templates/system/content.latte!</p>*}
+</div>
+<div id="rside">
+    <h2>Stručný přehled</h2>
+    <p>
+	V systému se nachází celkem:<br />
+	<summary><b>{$articlecount}</b> článků<br />
+	<b>x</b> videí<br />
+	<b>x</b> galerií<br />
+	<b>x</b> obrázků<br />
+	<b>x</b> projektů<br />
+	<b>x</b> hodnocení<br />
+	<b>x</b> komentářů<br />
+	<b>{$usrcount}</b> uživatelů</summary>.
+    </p>
+</div>

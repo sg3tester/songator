@@ -1,0 +1,36 @@
+
+{block content}
+<div id="lside">
+    <h2>Správa statických stránek</h2>
+    {if $obsah == null}
+    <p class="list-empty">Seznam stránek je prázdný.</p>
+    {else}
+    <table class="nesys-table" width="100%">
+	<thead>
+	    <tr>
+		<td>ID</td>
+		<td>Stránka</td>
+		<td>Shortcut</td>
+		<td>Akce</td>
+	    </tr>
+	</thead>
+	<tbody>
+	    {foreach $obsah as $stranka}
+	    <tr n:class="$iterator->isOdd() ? odd : even">
+		<td width="24">{$stranka->id}</td>
+		<td width="200">{$stranka->nazev}</td>
+		<td width="88">{$stranka->shortcut}</td>
+		<td width="15" class="symboled spaced"><a n:href="edit  $stranka->id" title="Upravit">&#xf040;</a> <a n:href="delete! $stranka->id" title="Smazat">&#xf014;</a></td>
+	    </tr>
+	    {/foreach}
+	</tbody>
+    </table>
+    {/if}
+</div>
+<div id="rside">
+    <h2>Úkoly</h2>
+    <ul>
+	<li><a n:href="edit"><span class="icon-plus-sign"></span>Přidat stránku</a></li>
+	<li><a n:href="system:content"><span class="icon-hdd"></span>Správa obsahu</a></li>
+    </ul>
+</div>

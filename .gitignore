@@ -1,0 +1,6 @@
+/temp/cache
+/temp/sessions
+/bk
+/log/*.html
+/log/*.log
+/.idea

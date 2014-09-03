@@ -1,0 +1,17 @@
+
+{block content}
+<div id="lside">
+    <h2>Nastavení portálu</h2>
+    <br />
+    {control formSystem}
+</div>
+<div id="rside">
+    <h2>Spravovat</h2>
+	<ul>
+	    <li><a n:href="System:user"><span class="symboled">&#xf0ad;</span> Režim údržby</a></li>	   
+	    <li><a n:href="Moduly:default"><span class="symboled">&#xf01c;</span> Moduly</a></li>
+	    <li><a n:href="Sluzby:default"><span class="symboled">&#xf0c2;</span> Služby</a></li>
+	    <li><a n:href="System:permissions"><span class="symboled">&#xf043;</span>&nbsp; Vyčistit cache a logy</a></li>
+	    <li><a n:href="System:users filter => 'ban'"><span class="symboled">&#xf05e;</span>&nbsp; Správa IP banů</a></li>
+	</ul>
+</div>

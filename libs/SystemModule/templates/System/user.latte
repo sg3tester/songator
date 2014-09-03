@@ -1,0 +1,20 @@
+
+{block content}
+<div id="lside">
+    <h2>{$titulek}</h2>
+    <br />
+    {ifset $cuid}
+    {control editUserForm}
+    {else}
+    {control userForm}
+    {/ifset}
+</div>
+<div id="rside">
+    <h2>Úkoly</h2>
+	<ul>
+	    <li><a n:href="System:users"><span class="symboled">&#xf0c0;</span> Procházet uživatele</a></li>
+	    <li><a n:href="System:user"><span class="symboled">&#xf055;</span> Vytvořit uživatele</a></li>
+	    <li><a n:href="System:permissions"><span class="symboled">&#xf023;</span>&nbsp; Role&amp;Oprávnění</a></li>
+	    <li><a n:href="System:users filter => 'ban'"><span class="symboled">&#xf05e;</span>&nbsp; Procházet bany</a></li>
+	</ul>
+</div>

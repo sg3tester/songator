@@ -1,0 +1,22 @@
+{layout none}
+{block content}
+{if $matches->count()}
+{var $valid = $matches->fetch()->valid}
+{if $valid != $matching}
+<p>Měl(a) jsi na mysli <a href="#" id="match">{$valid}</a>?</p>
+{*<p><a n:href="interpreti:add" target="_blank">Přidat <strong>{$matching}</strong> do seznamu interpretů</a></p>*}
+<script>$("#match").click(function() {
+	    $("#interpret").val($(this).text());
+	    matchInterpret();
+	    loadSongs();
+	    return false;
+	 });
+</script>
+{else}
+	<div class="interpret-valid">
+		<span class="icon-ok-sign"></span>Interpret {$matching} je v našem registru</span>
+	</div>
+{/if}
+{else}
+{*<p><a n:href="interpreti:add" target="_blank">Přidat <strong>{$matching}</strong> do seznamu interpretů</a></p>*}
+{/if}

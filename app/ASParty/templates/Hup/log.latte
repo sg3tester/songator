@@ -1,0 +1,19 @@
+{* Latte template *}
+
+{block content}
+<table class="nesys-table" width="100%">
+	<thead>
+		<th>Timestamp</th>
+		<th>IP</th>
+		<th>Song</th>
+	</thead>
+	<tbody>
+		{foreach $logs as $log}
+			<tr>
+				<td>{$log->timestamp}</td>
+				<td>{$log->ip}</td>
+				<td>{$log->ref("songy","songy_id")->interpret} - {$log->ref("songy","songy_id")->song}</td>
+			</tr>
+		{/foreach}
+	</tbody>
+</table>

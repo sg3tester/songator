@@ -1,0 +1,66 @@
+{block title}Přidat song{/block}
+{block content}
+<h2>{$page->nazev}</h2>
+{!$page->content}
+<h2>Přidat song do playlistu</h2>
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+{if $wip == false && $active || $user->isAllowed("article","add")}
+{control addSong}
+<p class="tip">
+	<b>TIP:</b> Napište do vzkazu pro DJe '<strong>To: JDC</strong>' (bez uvozovek), chcete-li, aby Váš tip schválil výhradně DJ JDC.
+</p>
+{/if}
+{/block}
+{block head}
+<script>
+    var req = "";
+    var req2 = "";
+    function loadSongs() {
+	if ($("#song").val() != "") {
+	    $("#song").addClass("ui-autocomplete-loading");
+		if (req != "")
+		    req.abort();
+		req = $.get({plink song:bindSong},{ interpret: $("#interpret").val(), song: $("#song").val() }).done(function(data){
+		    $("#song").removeClass("ui-autocomplete-loading");
+		    $("#existujici").html(data);
+		    $("#existujici").show();
+		});	
+	}
+    }
+    function matchInterpret() {
+		if (req2 != "")
+		    req2.abort();
+		req2 = $.get({plink song:matchInterpret},{ interpret: $("#interpret").val() }).done(function(data){
+		    $("#matched").html(data);
+		    $("#matched").show();
+		});	
+    }
+    $(function() {
+	var wt;
+	$("#song").parent().append('<div id="existujici"></div>');
+	$("#interpret").parent().append('<div id="matched"></div>');
+	$("#existujici").hide();
+	$("#matched").hide();
+	/*var availableInterprets = [{*foreach $rows as $row}{$row->interpret},{/foreach*}];
+	var availableSongs = [{*foreach $rows as $row}{$row->song},{/foreach*}];
+	$( "#interpret" ).autocomplete({
+	    source: availableInterprets
+	});*/
+	
+	 $( "#interpret" ).autocomplete({
+	    source: {plink song:bindInterpret},
+	    minLength: 1,
+	    select: function() {
+		matchInterpret();
+		loadSongs();
+	    }
+	}).on("input",function(){
+	    loadSongs();
+	}).change(matchInterpret);
+
+	$("#song").on("input",function(){
+	    loadSongs();
+	});
+    });
+
+</script>

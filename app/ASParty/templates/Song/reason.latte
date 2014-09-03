@@ -1,0 +1,19 @@
+
+{block content}
+<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+<h2>Udejte důvod zamítnutí</h2>
+<div class="box">
+{form reason}
+{input note}<br />
+{input odeslat} <a n:href="list#track$id">Přeskočit</a>
+{/form}
+</div>
+<div class="box">
+    <ul>
+	<li><a href="#" class="reason">Není taneční song</a></li>
+	<li><a href="#" class="reason">Není k dispozici v požadované kvalitě</a></li>
+	<li><a href="#" class="reason">Remixy nejsou povoleny</a></li>
+	<li><a href="#" class="reason">Nehodí se na párty</a></li>
+	<li><a href="#" class="reason">Zamítnut managementem AsianStyle.cz</a></li>
+    </ul>
+</div>

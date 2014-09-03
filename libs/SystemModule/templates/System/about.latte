@@ -1,0 +1,20 @@
+
+{block content}
+<div id="lside">
+    <h2>About Adminex</h2>
+    <p>Adminex (Admin Extension) module for NESys by <b>JDC</b><br />
+	Adminex version <b>{=SystemModule\Adminex::VERSION}</b></p><br />
+    <h2>About NESys</h2>
+    <p>NESys (New Evolution System) by <b>JDC</b><br />
+	NESys version <b>{=Nesys\NesysCore::VERSION} ({=Nesys\NesysCore::NICKNAME})</b><br />
+	NESys level <b>API-{=Nesys\NesysCore::API}</b><br />
+	NESys skeleton <b>{=NESYS_SKELETON}</b><br />
+	Based on <b>Nette Framework {=Nette\Framework::VERSION}</b>
+    </p>
+</div>
+<div id="rside">
+    <h2>Server info</h2>
+    <p>PHP {=PHP_VERSION} <br />
+		{ifset $_SERVER['SERVER_SOFTWARE']}Server {$_SERVER['SERVER_SOFTWARE']}{/ifset} <br />
+		Nette Framework {=Nette\Framework::VERSION}</p>
+</div>

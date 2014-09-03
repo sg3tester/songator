@@ -1,0 +1,102 @@
+{**
+ * My Application layout template.
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="robots" content="{$robots}" n:ifset="$robots">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- <meta http-equiv="cache-control" content="no-cache" /> -->
+	<meta name="author" content="JDC Entertainment" />
+	<meta name="description" content="Otevřený playlist na AsianStyle párty DJe JDC" />
+	<meta name="generator" content="Nesys/Nette" />
+	<meta name="keywords" content="JDC,hudba,playlist,párty,DJ,Asian Style,Nesys,2ne1.cz,JDC Entertainment,help,tvorba,music,asie,K-POP,J-POP,Thaipop,asijská hudba" />
+	<title>{$sitename} - {block title|striptags}{$sitedesc}{/block}</title>
+	<link rel="stylesheet" href="{$basePath}/css/nesys.css">
+	<link rel="stylesheet" href="{$basePath}/css/roboto.css">
+	<link rel="stylesheet" href="{$basePath}/css/slider.css">
+	<link rel="stylesheet" href="{$basePath}/css/style.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.png">
+	<link rel="stylesheet" href="{$basePath}/css/font-awesome.css">
+	<script type="application/javascript" src="{$basePath}/js/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="{$basePath}/js/live-form-validation.js"></script>
+	<script type="application/javascript" src="{$basePath}/js/jquery.aw-showcase.min.js"></script>
+	<script src="{$basePath}/js/funkce.js"></script>
+	<script n:syntax="off">
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-37944322-5', 'jdcent.cz');
+	    ga('send', 'pageview');
+
+	</script>
+	{block head}{/block}
+</head>
+
+<body>
+	<script> document.documentElement.className+=' js' </script>
+
+	
+	{block header}
+	<div class="webwidth">
+	    <header>
+		<a n:href=":homepage:default"><img src="{$basePath}/img/as_party_logo2.png" /></a>
+		{if $devel}<div class='devel'>{$develMsg}</div>{/if}
+	    </header>
+	    <menu>
+		<ul>
+		    <li><a n:href=":homepage:default">Domů</a></li>
+		    <li><a n:href=":song:add">Přidat song</a></li>
+		    <li><a n:href=":song:list">Seznam songů</a></li>
+		    <li><a n:href=":homepage:kontakt">Kontakt</a></li>
+		</ul>
+	    </menu>
+	    <div class="admin">
+		{if $isLoggedIn}
+	    <h1>{$uzivatel}<span style="font-size: 10px">&nbsp;
+		
+			<a n:href="sign:out">Odhlásit</a></span></h1>
+		{else}
+	    <br />
+	    <h1><a n:href="sign:in">DJ's secret</a></h1>
+		{/if}
+	    {if $user->isAllowed("system","view")}
+	    <a n:href=":system:system:default">Správa systému</a>
+	    {/if}
+	    </div>
+	    {/block}
+	    {dump}
+	    <div class="content">
+		{include #content}
+	    </div>
+
+	    <footer>
+		<div class="footmenu">
+		    <ul>
+			<li><a n:href="interpreti:">Seznam interpretů</a></li>
+			<li><a n:href="homepage:dj">About DJ</a></li>
+			<li><a n:href="homepage:asparty">About AsianStyle party</a></li>
+			<li><a n:href="homepage:kontakt">Kontakt</a></li>
+		    </ul>
+		</div>
+		<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FofficialJDC&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>
+		<div class="copy">Copyright &copy; 2013-2014 - JDC Entertainment & AsianStyle</div>
+		<div class="powered">Powered by Nesys</div>
+		<div class="partners">
+		    <a href="http://jdc.2ne1.cz/" target="_blank"><img src="{$basePath}/img/jdcent.png" /></a>
+		    <a href="http://www.asianstyle.cz/" target="_blank"><img src="{$basePath}/img/as.png" /></a>
+		</div>
+	    </footer>
+	</div>
+</body>
+</html>

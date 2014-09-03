@@ -1,0 +1,17 @@
+
+{block content}
+{var $startLetter = ""}
+<h2>Seznam interpretů</h2>
+<ul class="interpreti">
+{foreach $interpreti as $interpret}
+{if $startLetter != Nette\Utils\Strings::upper($interpret->valid[0])}
+{var $startLetter = Nette\Utils\Strings::upper($interpret->valid[0])}
+    {if !$iterator->isFirst()}</ul></div>{/if}
+<div>
+    <li class="big"><b>{$startLetter}</b></li>
+    <ul>
+{/if}
+	<li><a n:href="interpreti:detail $interpret->valid">{$interpret->valid}</a>{if $interpret->asprofil} <a href="http://www.asianstyle.cz/profily/{$interpret->asprofil}" target="_blank"><img src="{$basePath}/img/aslogo_nano.png" title="Profil na AsianStyle.cz" /></a>{/if} <a n:href="song:list 'search' => $interpret->valid" class="toolicon" title="Vyhledat songy tohoto interpreta"><span class="icon-search"></span></a></li>
+{if $iterator->isLast()}</ul></div>{/if}
+{/foreach}
+</ul>

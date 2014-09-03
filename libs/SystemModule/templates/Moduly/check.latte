@@ -1,0 +1,35 @@
+
+
+{block content}
+<div id="lside">
+    <h2>Moduly k instalaci</h2>
+    <p style="color: red; margin-bottom: 15px; margin-top: 5px;"><b>VAROVÁNÍ!</b> Instalace modulů je POUZE PRO EXPERTY. Špatným zásahem do modulů můžete znefunkčnit celý portál.</p>
+    <table class="nesys-table" width="100%">
+	<thead>
+	    <tr>
+		<td>Modul</td>
+		<td>Autor</td>
+		<td>Verze</td>
+		<td><span class="symboled">&#xf013;</span> Akce</td>
+	    </tr>
+	</thead>
+	<tbody>
+	    {foreach $moduly as $modul}
+	    <tr n:class="$iterator->isOdd() ? odd : even">
+		<td width="232">{$modul["fullname"]}<br /><i style="font-size: 12px">{$modul["desc"]}</i></td>
+		<td width="150">{$modul["author"]}<br /><i style="font-size: 12px">{$modul["e-mail"]}</i></td>
+		<td width="88">{$modul["version"]}</td>
+		<td width="64"><a n:href="install! $modul['name']">Instalovat</a></td>
+	    </tr>
+	    {/foreach}
+	</tbody>
+    </table>
+</div>
+<div id="rside">
+    <h2>Úkoly</h2>
+	<ul>
+	    <li><a n:href="Moduly:default"><span class="symboled">&#xf01c;</span> Správa modulů</a></li>
+	    <li><a n:href="Sluzby:default"><span class="symboled">&#xf0c2;</span> Služby</a></li>
+	    <li><a n:href="System:control"><span class="symboled">&#xf0fa;</span> Správa systému</a></li>
+	</ul>
+</div>

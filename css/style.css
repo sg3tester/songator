@@ -1,0 +1,482 @@
+/* 
+    Document   : style
+    Created on : 20.9.2013, 17:16:25
+    Author     : JDC
+    Description:
+    Purpose of the stylesheet follows.
+*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    background-image: url("../img/header_playlist.png");
+    background-position: top center;
+    background-repeat: no-repeat;
+    color: #333333;
+	font-family: RobotoRegular;
+}
+
+header {
+    padding-top: 15px;
+}
+
+header h1 {
+    color: purple;
+    font-family: RobotoMedium;
+    font-weight: normal;
+}
+
+.webwidth {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+menu ul {
+    background: #000;
+}
+
+menu ul li {
+	overflow: hidden;
+	float: left;
+	padding: 0px;
+	display: inline-block;
+	line-height: 25px;
+	margin-top: 48px;
+}
+
+
+menu ul li a {
+    color: #fff;
+    width: 210px;
+    position: relative;
+    font-family: RobotoBold;
+    letter-spacing: 3px;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 100;
+    top: 0px;
+    display: block;
+    text-align: center;
+    margin: 0px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #753841;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+menu ul li:last-child a {
+    border-right: none;
+    width: 210px;
+}
+
+menu ul li a:hover {
+	text-decoration: none;
+	letter-spacing: 5px;
+	color: #fff;
+}
+
+menu .selected {
+    background-color: #40b2e4;
+}
+
+.admin {
+    margin-top: 30px;
+}
+
+.admin h1 {
+    font-size: 24px;
+    color: #fff;
+}
+
+.admin a {
+    color: #fff;
+}
+
+.admin a:hover {
+    color: #fff;
+}
+
+.admin h1 a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.content {
+    margin-top: 30px;
+    position: relative;
+	font-family: RobotoRegular;
+}
+
+.content h2 {
+    margin-bottom: 10px;
+}
+
+.content p {
+    padding-bottom: 10px;
+}
+
+.content ul {
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
+footer {
+    margin-top: 32px;
+    position: relative;
+    font-family: RobotoRegular;
+    color: #666666;
+    margin-bottom: 2em;
+}
+
+footer .partners {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#levy {
+    display: inline-block;
+    position: relative;
+    width: 650px;
+    vertical-align: top;
+}
+
+#pravy {
+    display: inline-block;
+    position: relative;
+    width: 325px;
+}
+
+.devel {
+    font-size: 24px;
+    color: yellow;
+    text-decoration: underline;
+    font-family: RobotoBold;
+    position: absolute;
+    top: 132px;
+    margin-left: 180px;
+}
+
+.status {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding-top: 1px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 1px;
+    margin: 2px;
+    font-family: RobotoMedium;
+    color: white;
+    position: relative;
+    display: block;
+    text-align: center;
+}
+
+.waiting {
+    background-color: #ffcc00;
+}
+
+.approved {
+    background-color: #66cc00;
+}
+
+.rejected {
+    background-color: #ff0000;
+}
+
+.cmd a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.heart {
+	color: #B50900;
+	cursor: default;
+}
+
+.stav {
+    display: inline-block;
+    width: 72px;
+}
+
+.adminbar {
+    font-family: RobotoMedium;
+    font-size: 18px;
+    padding-top: 15px;
+}
+
+.adminbar a {
+    color: inherit;
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.adminbar a:hover {
+    color: #de358d;
+}
+
+a {
+    color: #40b2e4;
+}
+
+a:hover {
+    color: #de358d;
+}
+
+.marked {
+    background-color: #c9e9f7;
+}
+
+.nesys-table thead a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.nesys-table thead a:hover {
+    text-decoration: underline;
+}
+
+a.lighted {
+    font-family: RobotoMedium;
+}
+
+.instro {
+    color: #146c93;
+    cursor: default;
+}
+
+.dj-note {
+    color: #7f007f;
+    cursor: default;
+}
+
+.pecka {
+    color: gold;
+    cursor: default;
+}
+
+h2 small {
+    font-size: 12px;
+}
+
+.small {
+    font-size: 12px;
+}
+
+.hledat {
+    position: absolute;
+    right: 0;
+}
+
+.hledat input {
+    padding: 3px;
+}
+
+.hledat input[type=text] {
+    height: 22px;
+    width: 255px;
+}
+
+.ui-autocomplete-loading{background:url('../img/ajax-loader.gif') no-repeat right center;}
+
+#existujici {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-radius: 15px;
+    background-color: #fffaea;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+}
+
+#existujici h4 {
+    color: #7f007f;
+    padding-bottom: .5em;
+}
+
+#existujici p {
+    color: #66cc00;
+    padding-bottom: 0;
+    font-family: RobotoMedium;
+}
+
+#matched p {
+    margin-top: .25em;
+    margin-bottom: .25em;
+    font-family: RobotoMedium;
+    color: #7f007f;
+}
+
+#matched a {
+    font-family: RobotoMedium;
+}
+
+table th {
+    vertical-align: text-top;
+}
+
+.footmenu ul li {
+    display: inline-block;
+    list-style: none;
+    margin-right: .2em;
+}
+.footmenu ul li a {
+    color: inherit;
+}
+
+ul.interpreti div {
+    display: inline-block;
+    vertical-align: text-top;
+    width: 33%;
+    margin-bottom: 2em;
+}
+
+ul.interpreti, ul.interpreti li  {
+    list-style: none;
+}
+
+ul.interpreti {
+    padding-left: 3em;
+}
+
+ul.interpreti ul li {
+    padding-left: 2em;
+}
+
+ul.interpreti li.big {
+    font-size: 24px;
+    list-style: none;
+}
+
+.interpret-valid {
+	color: #51a300;
+	padding: .5em;
+	font-family: RobotoMedium;
+}
+
+.valid {
+    font-family: RobotoMedium;
+    color: #000000;
+}
+
+.valid a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.valid a:hover {
+    text-decoration: underline;
+}
+
+.fs16 {
+    font-size: 16px;
+}
+
+.box {
+    display: inline-block;
+    vertical-align: text-top;
+    margin-right: .25em;
+}
+
+.box ul li {
+    list-style: none;
+}
+
+ul.interpreti ul li a {
+    color: inherit;
+    font-family: RobotoMedium;
+    text-decoration: none;
+}
+
+ul.interpreti ul li a:hover {
+    text-decoration: underline;
+}
+
+a.toolicon {
+    color: inherit;
+    text-decoration: none;
+}
+
+a.toolicon:hover {
+    color: #ffcc00;
+}
+
+.verified {
+    float: right;
+    clear: left;
+    color: #51a300;
+    margin-right: .32em;
+}
+
+.verified:before {
+    color: #51a300;
+    font-family: FontAwesome;
+    content: "\f058";
+    cursor: default;
+}
+
+.song-status {
+    display: table-cell;
+    height: 100%;
+    width: 3px;
+    vertical-align: top;
+}
+
+.song-info {
+    display: table-cell;
+    height: 100%;
+    padding-left: .5em;
+}
+
+.song {
+    height: 100%;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    display: table;
+    font-size: 95%;
+}
+
+.song-zanr {
+    margin-bottom: .25em;
+    font-style: oblique;
+    color: #666666;
+    margin-left: .5em;
+}
+
+.song-cell {
+    margin-left: 1em;
+}
+
+.songy {
+    margin: 1em;
+}
+
+.tojdc {
+    background: #FFF6BF;
+}
+
+.tip {
+    padding: .5em 1em;
+    background: #FFF6BF;
+    border-radius: 5px;
+    margin: 1em;
+    width: 55%;
+}
+
+.pull {
+    color: #444;
+    opacity: .75;
+}
+
+.pull .valid {
+    color: #444;
+}

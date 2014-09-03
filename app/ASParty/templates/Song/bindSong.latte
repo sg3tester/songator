@@ -1,0 +1,13 @@
+{layout none}
+{block content}
+{if $songy->count() > 0}
+<h4>Nalezené songy v playlistu</h4>
+<ul>
+    {foreach $songy as $song}
+    <li>{$song->interpret} - {$song->song}</li>
+    {/foreach}
+</ul>
+<a n:if="!$more" n:href="bindSong $interpret, $song, 'more' => true" onclick="window.open(this.href,'1384443567617','width=700,height=500,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=0,top=0');return false;">Zobrazit všechny</a>
+{else}
+<p>Žádný podobný song není zařazen v playlistu</p>
+{/if}

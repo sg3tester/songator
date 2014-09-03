@@ -1,0 +1,21 @@
+
+{block content}
+<div class="nadpis">
+    <h1>{$titulek}</h1>
+</div>
+<div class='page-obsah' id="dialog">
+    <br />
+    <span class="icon-warning-sign fleft" style="font-size: 64px"></span><p class="message fleft">{$zprava}</p>
+    <div id="buttons">
+	<a class="button-master {if $ajax}ajax{/if}" n:href="$action $param, confirm => 'ok'">{$oklabel}</a> <a class="button-normal {if $ajax}ajax{/if}" n:href="$zpet">Zrušit</a>
+    </div>
+</div>
+{/block}
+
+{block downmenu}
+<ul>
+	<li><a n:href="$action $param, confirm => 'ok'" id="i1"><span class="icon-circle"></span>{$oklabel}</a></li>
+	<li><a n:href="$zpet" id="i2"><span class="icon-circle"></span>Zrušit akci</a></li>
+	<li><a n:href="homepage:help $id = 'sns'" id="i3"><span class="icon-circle"></span>Help</a></li>
+</ul>
+{/block}

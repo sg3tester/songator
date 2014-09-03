@@ -1,0 +1,14 @@
+{* This is the welcome page, you can delete it *}
+
+{block content}
+
+<div id="content">
+    <div id='levy'>
+	<div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
+	{!$page->content}
+    </div>
+    <div id='pravy'>
+	<iframe width="320" height="240" src="//www.youtube.com/embed/yEqDOBZ7DK8?feature=player_detailpage" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,21 @@
+
+{block content}
+<div id="lside">
+    <h2>2NE1.cz - Administrace</h2>
+    Vítej, <b>{$user->getIdentity()->user}</b>!<br />
+    Jste v roli oprávnění <b>{$perms->getRoleName($role)}</b><br /><br />
+    Aktuálně tu je registrováno <b>{$usrcount}</b> uživatelů, z toho:
+    <p class="usercounts"><b>{$admincount}</b> adminů<br />
+	<b>{$sefredaktorcount}</b> šéfredaktorů<br />
+	<b>{$redaktorcount}</b> redaktorů<br />
+	<b>{$bjcount}</b> registrovných Black Jacků<br />
+	<b>{$regusercount}</b> běžných uživatelů.</p>
+</div>
+<div id="rside">
+    <h2>Online uživatelé</h2>
+    <small style="color: #999999"><center>(za posledních 5 minut)</center></small>
+    {foreach $online as $usr}
+    <span n:class="$usr->pohlavi == 'M' ? male, $usr->pohlavi == 'F' ? female" style="font-weight: bold"><span n:if="$usr->role == 'admin'" class="icon-star"></span><span n:if="$usr->role == 'editor'" class="icon-star-empty"></span><span n:if="$usr->role == 'author'" class="icon-star-half"></span>{$usr->user}</span>&nbsp;
+    {/foreach}
+</div>
+{/block}
