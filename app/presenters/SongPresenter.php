@@ -8,12 +8,11 @@ use Nette,
 	\Nette\Application\UI\Form,
 	App\Model;
 
-
 /**
  * Song presenter.
  */
-class SongPresenter extends PrimePresenter
-{
+class SongPresenter extends PrimePresenter {
+
 	/** @var \App\Model\SongRepository @inject */
 	public $songList;
 
@@ -22,7 +21,6 @@ class SongPresenter extends PrimePresenter
 
 	/** @var \App\Model\ZanrRepository @inject */
 	public $zanry;
-
 	protected $songy;
 
 	/** @var \Nette\Http\Url */
@@ -30,7 +28,7 @@ class SongPresenter extends PrimePresenter
 
 	/** @var  \App\Model\Lastfm\Lastfm @inject */
 	public $lastfm;
-	
+
 	/** @persistent */
 	public $back;
 
@@ -40,17 +38,17 @@ class SongPresenter extends PrimePresenter
 			$this->songy = $this->songList->findByStatus($status);
 		else
 			$this->songy = $this->songList->findAll();
-		
+
 		//Simple song searching
-		if($q) {
+		if ($q) {
 			$searcher = new \Searcher();
 			$searcher->setModel($this->songy);
 			$searcher->setMask("%?%");
-			$searcher->setColumns(array("name","interpret_name"));
+			$searcher->setColumns(array("name", "interpret_name"));
 			$searcher->search($q);
 			$this->template->q = $q;
 		}
-		
+
 		//Filtering by flags
 		if ($flags) {
 			$this->setFilterDefaults($flags);
@@ -76,7 +74,6 @@ class SongPresenter extends PrimePresenter
 		$this->template->status = $status;
 	}
 
-
 	public function actionView($id) {
 		$song = $this->songList->find($id);
 		$this->playUrl = new \Nette\Http\Url($song->link);
@@ -87,19 +84,20 @@ class SongPresenter extends PrimePresenter
 
 	public function renderAdd() {
 		$rules = $this->settings->get("page_rules");
-		if($rules) {
+		if ($rules) {
 			try {
 				$this->template->rules = $this->getPage($rules, true);
+			} catch (Nette\Application\BadRequestException $e) {
+				
 			}
-			catch (Nette\Application\BadRequestException $e) {}
 		}
 	}
 
-	/*********************** Approve/Reject & play ****************************/
+	/*	 * ********************* Approve/Reject & play *************************** */
 
 	public function actionReject($id) {
 		$this->checkPermissions("song", "reject");
-		
+
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
@@ -111,7 +109,7 @@ class SongPresenter extends PrimePresenter
 
 	public function actionApprove($id) {
 		$this->checkPermissions("song", "approve");
-		
+
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
@@ -121,7 +119,7 @@ class SongPresenter extends PrimePresenter
 
 	public function actionPlay($id) {
 		$this->checkPermissions("song", "play", false);
-		
+
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
@@ -129,8 +127,7 @@ class SongPresenter extends PrimePresenter
 		$this->playUrl = new \Nette\Http\Url($song->link);
 	}
 
-
-	/***************************** Bindings ***********************************/
+	/*	 * *************************** Bindings ********************************** */
 
 	public function actionBindInterpret($term) {
 		$complete = $this->interpreti->bind($term, false);
@@ -139,14 +136,14 @@ class SongPresenter extends PrimePresenter
 	}
 
 	public function actionMatchInterpret($match) {
-		$this->sendJson($this->interpreti->match($match,10,0));
+		$this->sendJson($this->interpreti->match($match, 10, 0));
 	}
-	
+
 	public function actionMatchSong($interpret, $song) {
 		$this->sendJson($this->songList->match($interpret, $song));
 	}
 
-	/****************************** Add song **********************************/
+	/*	 * **************************** Add song ********************************* */
 
 	protected function createComponentAddSong() {
 		$form = new Form();
@@ -163,28 +160,27 @@ class SongPresenter extends PrimePresenter
 		//This field only if user is NOT logged in
 		if (!$this->user->isLoggedIn())
 			$form->addText("zadatel", "Žadatel")
-				->setRequired("Musíte zadat svou přezdívku!");
+					->setRequired("Musíte zadat svou přezdívku!");
 
 		$form->addCheckbox("private_vzkaz", "Označit vzkaz pro DJe jako soukromý");
-		$form->addCheckbox("remix","Tento song je remix!");
-		$form->addCheckbox("terms","Souhlasím s podmínkami")
+		$form->addCheckbox("remix", "Tento song je remix!");
+		$form->addCheckbox("terms", "Souhlasím s podmínkami")
 				->setRequired("Musíte souhlasit s podmínkami");
-		
+
 		$form->addTextArea("vzkaz");
 
 		$form->addSubmit("add");
 
 		$form->setRenderer(new \Nextras\Forms\Rendering\Bs3FormRenderer());
-	
+
 		$form->onValidate[] = function ($form) {
 			$val = $form->getValues();
-			
-			if ($val->private_vzkaz && !$this->user->isAllowed("privateMsg","add"))
-					$form->addError("Nemáte oprávnění označit zprávu pro DJe jako soukromou!");
-			
-			if (($this->settings->get('songator_status', 'enabled') != 'enabled' || $this->settings->get('songator_wip', false))
-					&& !$this->user->isAllowed("wip","switch"))
-					$form->addError("Omlouváme se, Songator je dočasně vypnut. Nelze přidat song.");
+
+			if ($val->private_vzkaz && !$this->user->isAllowed("privateMsg", "add"))
+				$form->addError("Nemáte oprávnění označit zprávu pro DJe jako soukromou!");
+
+			if (($this->settings->get('songator_status', 'enabled') != 'enabled' || $this->settings->get('songator_wip', false)) && !$this->user->isAllowed("wip", "switch"))
+				$form->addError("Omlouváme se, Songator je dočasně vypnut. Nelze přidat song.");
 		};
 		$form->onSuccess[] = $this->addSongSuccess;
 
@@ -193,7 +189,7 @@ class SongPresenter extends PrimePresenter
 
 	public function addSongSuccess(Form $form) {
 		$val = $form->getValues();
-		
+
 		if (!$this->checkPermissions("song", "draft", FALSE))
 			$this->redirect("add");
 
@@ -202,9 +198,10 @@ class SongPresenter extends PrimePresenter
 		try {
 			$lfm = $this->lastfm;
 			$image = $lfm->call('Track.getInfo', ['artist' => $val->interpret, 'track' => $val->name])
-				->track->album->image;
+					->track->album->image;
+		} catch (Model\Lastfm\LastfmException $e) {
+			
 		}
-		catch (Model\Lastfm\LastfmException $e) {}
 
 		//Fill main data
 		$data = array(
@@ -217,16 +214,15 @@ class SongPresenter extends PrimePresenter
 			"private_vzkaz" => $val->private_vzkaz,
 			"image" => json_encode($image)
 		);
-		
+
 		if (!$this->user->isAllowed("privateMsg", "add"))
-				$data["private_vzkaz"] = false;
+			$data["private_vzkaz"] = false;
 
 		//Add user information
 		if ($this->user->isLoggedIn()) {
 			$data["zadatel"] = $this->user->getIdentity()->username;
 			$data["user_id"] = $this->user->getId();
-		}
-		else
+		} else
 			$data["zadatel"] = $val->zadatel;
 
 		try {
@@ -242,10 +238,9 @@ class SongPresenter extends PrimePresenter
 				"song" => $val->name,
 				"vzkaz" => $val->vzkaz
 					), $zadatel);
-		
+
 			$this->redirect("this");
-		}
-		catch (\UnexpectedValueException $e){
+		} catch (\UnexpectedValueException $e) {
 			$msg = $this->flashMessage("Tento song už někdo přidal před tebou", "danger");
 			$msg->title = "Ooops!";
 		}
@@ -253,17 +248,16 @@ class SongPresenter extends PrimePresenter
 
 	////////////////////////////////////////////////////////////////////////////
 
-	/****************************** Song list *********************************/
+	/*	 * **************************** Song list ******************************** */
 
-	protected function createComponentSongList($name)
-	{
+	protected function createComponentSongList($name) {
 		$grid = new Grido\Grid($this, $name);
 		$grid->setModel($this->songy);
 
 		$grid->addColumnDate("datum", "Datum", "d.m.y")
 				->setSortable();
 		$grid->addColumnText("interpret_name", "Interpret")
-				->setCustomRender(function($item){
+				->setCustomRender(function($item) {
 					$template = $this->createTemplate();
 					$template->setFile(__DIR__ . "/../templates/components/Grid/interpret.latte");
 					$template->song = $item;
@@ -274,7 +268,7 @@ class SongPresenter extends PrimePresenter
 				->setSuggestion();
 
 		$grid->addColumnText("name", "Song")
-				->setCustomRender(function($item){
+				->setCustomRender(function($item) {
 					$template = $this->createTemplate();
 					$template->setFile(__DIR__ . "/../templates/components/Grid/song.latte");
 					$template->song = $item;
@@ -287,13 +281,13 @@ class SongPresenter extends PrimePresenter
 		$filter = array('' => 'Všechny');
 		$filter = \Nette\Utils\Arrays::mergeTree($filter, $this->zanry->getList());
 		$grid->addColumnText("zanr_id", "Žánr")
-				->setCustomRender(function($item){
+				->setCustomRender(function($item) {
 					return $item->zanr ? $item->zanr->name : null;
 				})
 				->setFilterSelect($filter);
 
 		$grid->addColumnText("zadatel", "Přidal(a)")
-				->setCustomRender(function($item){
+				->setCustomRender(function($item) {
 					$template = $this->createTemplate();
 					$template->setFile(__DIR__ . "/../templates/components/Grid/zadatel.latte");
 					$template->song = $item;
@@ -308,41 +302,41 @@ class SongPresenter extends PrimePresenter
 			'approved' => 'Zařazené',
 			'rejected' => 'Vyřazené',
 			'waiting' => 'Čekající'
-			);
+		);
 		$grid->addColumnText("status", "Status")
-				->setCustomRender(function($item){
+				->setCustomRender(function($item) {
 					$status = $item->status;
 
-					$revizor = $item->revisor ? $item->ref("user","revisor")->username : "neznámý";
+					$revizor = $item->revisor ? $item->ref("user", "revisor")->username : "neznámý";
 					switch ($status) {
 						case "approved":
-							return Html::el("span",array(
-								"class" => "label label-success",
-								"title" => "Schválil(a) ". $revizor
-								))
-								->setText("Zařazen");
+							return Html::el("span", array(
+										"class" => "label label-success",
+										"title" => "Schválil(a) " . $revizor
+									))
+									->setText("Zařazen");
 						case "waiting":
-							return Html::el("span",array(
-								"class" => "label label-warning",
-								"title" => "Čeká ve frontě ke schválení"
-								))
-								->setText("Čeká");
+							return Html::el("span", array(
+										"class" => "label label-warning",
+										"title" => "Čeká ve frontě ke schválení"
+									))
+									->setText("Čeká");
 						case "rejected":
-							return Html::el("span",array(
-								"class" => "label label-danger",
-								"title" => "Zamítl(a) ". $revizor
-								))
-								->setText("Vyřazen");
+							return Html::el("span", array(
+										"class" => "label label-danger",
+										"title" => "Zamítl(a) " . $revizor
+									))
+									->setText("Vyřazen");
 						default:
 							return Html::el("i")
-								->setText("Neznámý");
+									->setText("Neznámý");
 					}
 				})
 				->setSortable()
 				->setFilterSelect($statuses);
-				
+
 		$grid->addColumnText("vzkaz", "Vzkaz DJovi")
-				->setCustomRender(function($item){
+				->setCustomRender(function($item) {
 					$elm = Html::el("span");
 					if ($item->private_vzkaz) {
 						if (!$this->user->isAllowed("privateMsg", "view") && $this->user->id != $item->user_id) {
@@ -352,43 +346,54 @@ class SongPresenter extends PrimePresenter
 						}
 						$elm->addAttributes(array("class" => "msg-private", "title" => "Tento vzkaz je určen pouze pro DJe"));
 						$elm->setText($item->vzkaz);
-					}
-					else
+					} else
 						return $item->vzkaz;
 					return $elm;
 				});
+				
+		$myLikes = $this->songList->getMyLikes($this->user);
+		$grid->addColumnText("likes", "")
+				->setCustomRender(function($item) use ($myLikes) {
+					$likes = count($item->related('song_likes'));
+					$isLiked = isset($myLikes[$item->id]) ?: false;
+					$el = Html::el('a')->addAttributes(['class' => 'like' . ($isLiked ? ' liked' : '')]);
+					$el->add(Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-heart']));
+					$el->add(Html::el()->setText(' '.$likes));
+					$el->href('#');
+					return $el;
+				});
 
-		if ($this->user->isAllowed("song","approve"))
+		if ($this->user->isAllowed("song", "approve"))
 			$grid->addActionHref("approve", "")
 					->setIcon("ok")
-					->setElementPrototype(Html::el("a",array(
-						"class" => "btn btn-success",
-						"data-toggle" => "modal",
-						"data-target" => ".modal"
-						)));
-		
-		if ($this->user->isAllowed("song","reject"))
+					->setElementPrototype(Html::el("a", array(
+								"class" => "btn btn-success",
+								"data-toggle" => "modal",
+								"data-target" => ".modal"
+			)));
+
+		if ($this->user->isAllowed("song", "reject"))
 			$grid->addActionHref("reject", "")
 					->setIcon("remove")
-					->setElementPrototype(Html::el("a",array(
-						"class" => "btn btn-danger",
-						"data-toggle" => "modal",
-						"data-target" => ".modal"
-						)));
+					->setElementPrototype(Html::el("a", array(
+								"class" => "btn btn-danger",
+								"data-toggle" => "modal",
+								"data-target" => ".modal"
+			)));
 
-		if ($this->user->isAllowed("song","play"))
+		if ($this->user->isAllowed("song", "play"))
 			$grid->addActionHref("play", "")
-					->setDisable(function($item){
+					->setDisable(function($item) {
 						if ($item->link)
 							return false;
 						return true;
 					})
 					->setIcon("play")
-					->setElementPrototype(Html::el("a",array(
-						"class" => "btn btn-info",
-						"data-toggle" => "modal",
-						"data-target" => ".modal"
-						)));
+					->setElementPrototype(Html::el("a", array(
+								"class" => "btn btn-info",
+								"data-toggle" => "modal",
+								"data-target" => ".modal"
+			)));
 
 		$grid->setFilterRenderType(\Grido\Components\Filters\Filter::RENDER_OUTER);
 		$grid->setDefaultSort(array("datum" => "DESC"));
@@ -402,7 +407,7 @@ class SongPresenter extends PrimePresenter
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-	/************************* Song approve ***********************************/
+	/*	 * *********************** Song approve ********************************** */
 
 	protected function createComponentApprove() {
 		$form = new Form();
@@ -423,7 +428,7 @@ class SongPresenter extends PrimePresenter
 
 	public function approveSuccess(Form $form) {
 		$val = $form->getValues();
-		
+
 		if (!$this->checkPermissions("song", "approve"))
 			$this->redirect("list");
 
@@ -444,8 +449,8 @@ class SongPresenter extends PrimePresenter
 			"id" => $val->id,
 			"name" => $song->name,
 			"interpret" => $song->interpret_name));
-		
-		if($this->back) {
+
+		if ($this->back) {
 			$back = $this->back;
 			$this->back = null;
 			$this->redirect($back, array("id" => $val->id));
@@ -455,7 +460,7 @@ class SongPresenter extends PrimePresenter
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-	/************************* Song reject ************************************/
+	/*	 * *********************** Song reject *********************************** */
 
 	protected function createComponentReject() {
 		$form = new Form();
@@ -479,7 +484,7 @@ class SongPresenter extends PrimePresenter
 
 		if (!$this->checkPermissions("song", "reject"))
 			$this->redirect("list");
-		
+
 		$this->songList->reject($val->id, $this->user->getId(), $val->note, $val->reason_code);
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
@@ -491,8 +496,8 @@ class SongPresenter extends PrimePresenter
 			"name" => $song->name,
 			"interpret" => $song->interpret_name
 		));
-		
-		if($this->back) {
+
+		if ($this->back) {
 			$back = $this->back;
 			$this->back = null;
 			$this->redirect($back, array("id" => $val->id));
@@ -502,41 +507,41 @@ class SongPresenter extends PrimePresenter
 	}
 
 	////////////////////////////////////////////////////////////////////////////
-	/************************* Song player ************************************/
+	/*	 * *********************** Song player *********************************** */
 
 	public function createComponentPlayer() {
-		
-		$host = explode(".",$this->playUrl->getHost());
+
+		$host = explode(".", $this->playUrl->getHost());
 		$provider = Nette\Utils\Strings::lower($host[count($host) - 2]);
-		$handler = "\\App\\Controls\\".ucfirst($provider)."Player";
-		
-		if(class_exists($handler))
+		$handler = "\\App\\Controls\\" . ucfirst($provider) . "Player";
+
+		if (class_exists($handler))
 			$player = new $handler($this->playUrl);
 		else
 			$player = new \App\Controls\NoPlayer($this->playUrl);
 
 		return $player;
 	}
-	
+
 	////////////////////////////////////////////////////////////////////////////
-	/************************* Song filter ************************************/
-	
+	/*	 * *********************** Song filter *********************************** */
+
 	protected function createComponentFilter() {
 		$form = new Form();
-		
+
 		$form->addCheckbox("remix");
 		$form->addCheckbox("instro");
 		$form->addCheckbox("pecka");
 		$form->addCheckbox("note");
 		$form->addCheckbox("wishlist_only");
-		
+
 		$form->addSubmit("filtruj");
-		
+
 		$form->onSuccess[] = function($form) {
 			$val = $form->getValues();
-			
+
 			$flags = "";
-			
+
 			//Mapping
 			$val->remix ? $flags .= "r" : null;
 			$val->instro ? $flags .= "i" : null;
@@ -544,17 +549,17 @@ class SongPresenter extends PrimePresenter
 			$val->note ? $flags .= "n" : null;
 			$val->wishlist_only ? $flags .= "w" : null;
 
-			$this->redirect("this",array("flags" => $flags));
+			$this->redirect("this", array("flags" => $flags));
 		};
-		
+
 		return $form;
 	}
 
 	protected function setFilterDefaults($flags) {
 		$form = $this["filter"];
-		
+
 		$defaults = array();
-		foreach(str_split($flags) as $flag) {
+		foreach (str_split($flags) as $flag) {
 			//Backmapping
 			$flag == "r" ? $defaults["remix"] = true : null;
 			$flag == "i" ? $defaults["instro"] = true : null;
@@ -562,24 +567,24 @@ class SongPresenter extends PrimePresenter
 			$flag == "n" ? $defaults["note"] = true : null;
 			$flag == "w" ? $defaults["wishlist_only"] = true : null;
 		}
-		
+
 		$form->setDefaults($defaults);
 	}
 
 	public function handleLike($id) {
-		if (!$this->checkPermissions("song","like"))
+		if (!$this->checkPermissions("song", "like"))
 			$this->flashMessage("Pro lajkování songu se musíte přihlásit", "warning");
 		else {
 			try {
 				$this->songList->like($id, $this->user->id);
-				$msg = $this->flashMessage("Hlasovat můžeš každých 24 hodin","success");
+				$msg = $this->flashMessage("Hlasovat můžeš každých 24 hodin", "success");
 				$msg->title = "Tvůj hlas byl zaznamenán!";
-			}
-			catch (\Nette\IOException $e) {
+			} catch (\Nette\IOException $e) {
 				$msg = $this->flashMessage("Hlasovat lze jen jednou za 24 hodin", "warning");
 				$msg->title = "Pro tento song jsi již hlasoval(a)!";
 			}
 		}
 		$this->redirect("this");
 	}
+
 }

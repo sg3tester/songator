@@ -231,5 +231,12 @@ class SongRepository extends Repository {
 			return true;
 		return false;
 	}
+	
+	public function getMyLikes($user) {
+		$related = $this->database->table(self::TABLE_LIKES);
+		$related->select('song.*');
+		$related->where("song_likes.user_id", $user->id)->where("song_likes.date >= ?", new SqlLiteral("NOW() - INTERVAL 24 hour"));
+		return $related->where('song.id')->fetchAll();
+	}
 
 }
