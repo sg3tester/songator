@@ -20,6 +20,11 @@ class RouterFactory
 	public function createRouter()
 	{
 		$router = new RouteList();
+		$router[] = new Route('admin/<presenter>/<action>[/<id>]', [
+			'module' => 'Admin',
+			'presenter' => 'Dashboard',
+			'action' => 'default'
+		]);
 		$router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
 		return $router;
 	}
