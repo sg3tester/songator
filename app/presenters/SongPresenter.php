@@ -359,7 +359,7 @@ class SongPresenter extends PrimePresenter {
 					$el = Html::el('a')->addAttributes(['class' => 'like' . ($isLiked ? ' liked' : '')]);
 					$el->add(Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-heart']));
 					$el->add(Html::el()->setText(' '.$likes));
-					$el->href('#');
+					$el->href($this->link('like!', ['id' => $item->id]));
 					return $el;
 				});
 
