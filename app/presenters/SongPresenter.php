@@ -103,6 +103,8 @@ class SongPresenter extends PrimePresenter
 		if ($this->isAjax())
 			$this->setLayout(false);
 		$song = $this->songList->find($id);
+		$song = $song->toArray();
+		$song['reason_code'] = array_key_exists($song['reason_code'], \Rejections::$reasons) ? $song['reason_code'] : null;
 		$this["reject"]->SetDefaults($song);
 		$this->template->song = $song;
 	}
@@ -460,6 +462,9 @@ class SongPresenter extends PrimePresenter
 
 		$form->addTextArea("note")
 				->setRequired("Musíte udat důvod zamítnutí!");
+		$form->addSelect('reason_code', 'Kód zamítnutí', \Rejections::$reasons)
+				->setPrompt('Vyberte kód zamítnutí')
+				->setRequired("Vyberte kód zamítnutí.");
 		$form->addHidden("id");
 
 		$form->addSubmit("reject");
@@ -475,7 +480,7 @@ class SongPresenter extends PrimePresenter
 		if (!$this->checkPermissions("song", "reject"))
 			$this->redirect("list");
 		
-		$this->songList->reject($val->id, $this->user->getId(), $val->note);
+		$this->songList->reject($val->id, $this->user->getId(), $val->note, $val->reason_code);
 
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
 		$msg->title = "A je ze hry!";

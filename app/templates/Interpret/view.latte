@@ -10,7 +10,6 @@
 			{include '../components/flashes.latte'}
 			{var $songy = $interpret->related("song")}
 			{ifset $status}{var $songy = $songy->where("status", $status)}{/ifset}
-			{if count($songy)}
 			{default $status = ''}
 			<ul class="nav nav-tabs">
 			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
@@ -53,7 +52,6 @@
 					</div>
 				</div>
 			{/foreach}
-			{/if}
 		</div>
 		<div class="col-md-3">
 			<div class="profile-pic">

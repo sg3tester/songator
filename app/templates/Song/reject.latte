@@ -8,18 +8,21 @@
 	{include '../components/flashes.latte'}
 	<form n:if="$user->isAllowed('song','reject')" n:name="reject" role="form">
 		<div class="modal-body">
-			<p class="lead">Zamítnout '{$song->interpret_name} - {$song->name}' <small class="text-muted">{$song->zadatel}</small></p>
-			<p n:ifcontent>{$song->vzkaz}</p>
+			<p class="lead">Zamítnout '{$song['interpret_name']} - {$song['name']}' <small class="text-muted">{$song['zadatel']}</small></p>
+			<p n:ifcontent>{$song['vzkaz']}</p>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Důvod zamítnutí</label>
 				<textarea n:name="note" id="reason" class="form-control" rows="3" placeholder="Zadejte důvod zamítnutí"></textarea>
+				<label for="exampleInputEmail1">Kód zamítnutí</label>
+				<select n:name="reason_code" id="code" class="form-control"></select>
 				<input type="hidden" n:name="id" />
 			</div>
 			<strong>Nejčastější důvody:</strong>
-			<a href="#" class="label label-warning reason">Není taneční song</a>
-			<a href="#" class="label label-danger reason">Není k dispozici v požadované kvalitě</a>
-			<a href="#" class="label label-info reason">Nehodí se na párty</a>
-			<a href="#" class="label label-default reason">Zamítnut managementem AsianStyle.cz</a>
+			<a href="#" class="label label-warning reason" data-code="R10_GENERAL">Není taneční song</a>
+			<a href="#" class="label label-danger reason" data-code="R21_QUALITY">Není k dispozici v požadované kvalitě</a>
+			<a href="#" class="label label-info reason" data-code="R10_GENERAL">Nehodí se na párty</a>
+			<a href="#" class="label label-default reason" data-code="R22_UNACCEPTABLE">Zamítnut managementem AsianStyle.cz</a>
+			<a href="#" class="label label-danger reason" data-code="R20_DUPLICITY">Duplicita</a>
 		</div>
 		<div class="modal-footer">
 			<button n:if="$presenter->isAjax()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -28,6 +31,7 @@
 			<script>
 				$(".reason").click(function(){
 					$("#reason").val($(this).text());
+					$("#code").val($(this).data('code'));
 					return false;
 				});
 			</script>

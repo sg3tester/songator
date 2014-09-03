@@ -112,8 +112,10 @@ class SongRepository extends Repository {
 
 	}
 
-	public function reject($song, $revizor, $reason, $additional = null) {
-
+	public function reject($song, $revizor, $reason, $code, $additional = null) {
+		if (!$additional)
+			$additional = array();
+		$additional['reason_code'] = $code;
 		$this->setStatus($song, self::STATUS_REJECTED, $revizor, $reason, $additional);
 
 	}
