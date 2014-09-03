@@ -211,7 +211,7 @@ class SongRepository extends Repository {
 		$table = $this->database->table(self::TABLE_LIKES);
 
 		if($this->isLiked($song, $user))
-			throw new \Nette\IOException("This user liked it", 77);
+			throw new \Nette\InvalidStateException("This user liked it", 77);
 		
 		return $table->insert(array(
 				'user_id' => $user,

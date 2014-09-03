@@ -579,7 +579,7 @@ class SongPresenter extends PrimePresenter {
 				$this->songList->like($id, $this->user->id);
 				$msg = $this->flashMessage("Hlasovat můžeš každých 24 hodin", "success");
 				$msg->title = "Tvůj hlas byl zaznamenán!";
-			} catch (\Nette\IOException $e) {
+			} catch (\Nette\InvalidStateException $e) {
 				$msg = $this->flashMessage("Hlasovat lze jen jednou za 24 hodin", "warning");
 				$msg->title = "Pro tento song jsi již hlasoval(a)!";
 			}
