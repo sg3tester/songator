@@ -43,6 +43,7 @@
 
 				<!-- List group -->
 				<div class="list-group">
+					<a n:class="list-group-item, $filter == 'last-day' ? active" n:href="this 'last-day'">Posledního dne</a>
 					<a n:class="list-group-item, $filter == 'last-week' ? active" n:href="this 'last-week'">Posledního týdne</a>
 					<a n:class="list-group-item, $filter == 'last-month' ? active" n:href="this 'last-month'">Posledního měsíce</a>
 					<a n:class="list-group-item, $filter == 'forever' ? active" n:href="this 'forever'">Od počátku věků</a>

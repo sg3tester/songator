@@ -29,6 +29,9 @@ class HitparadePresenter extends BasePresenter {
 			case 'last-week':
 				$filter = '1 week';
 				break;
+			case 'last-day':
+				$filter = '24 hour';
+				break;
 			default:
 				$filter = null;
 		}
