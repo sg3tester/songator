@@ -1,13 +1,13 @@
-<li class="dropdown">
-	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-		<i class="glyphicon glyphicon-music"></i> Playlist <span n:if="$waiting" class="badge">{$waiting}</span> <b class="caret"></b>
+<li>
+	<a href="{plink song:list}" {*class="dropdown-toggle" data-toggle="dropdown"*}>
+		<i class="glyphicon glyphicon-music"></i> Playlist <span n:if="$waiting" class="badge">{$waiting}</span> {*<b class="caret"></b>*}
 	</a>
-	<ul class="dropdown-menu">
+	{*<ul class="dropdown-menu">
 		<li><a href="{plink song:add}">Přidat song</a></li>
 		<li><a href="{plink song:list}">Procházet playlist <span n:if="$waiting" class="badge">{$waiting}</span></a></li>
-		{ifset $pages}
-		<li class="divider"></li>
-		<li n:foreach="$pages as $link"><a href="{if $link->presenter}{plink $link->link}{else}{$link->link}{/if}">{$link->title}</a></li>
-		{/ifset}
-	</ul>
+				{ifset $pages}
+			<li class="divider"></li>
+			<li n:foreach="$pages as $link"><a href="{if $link->presenter}{plink $link->link}{else}{$link->link}{/if}">{$link->title}</a></li>
+			{/ifset}
+	</ul>*}
 </li>
