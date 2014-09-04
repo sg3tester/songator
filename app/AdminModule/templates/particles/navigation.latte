@@ -1,47 +1,47 @@
 <!-- sidebar: style can be found in sidebar.less -->
-				<section class="sidebar">
-			<!-- Sidebar user panel -->
-					<div class="user-panel">
- <div class="pull-left image">
-							<img src="img/avatar3.png" class="img-circle" alt="User Image" />
-						</div>
-						<div class="pull-left info">
-							<p>Ave, {$user->identity->username}</p>
+<section class="sidebar">
+	<!-- Sidebar user panel -->
+	<div class="user-panel">
+		<div class="pull-left image">
+			<img src="{$user->identity->avatar}" class="img-circle" alt="User Image" />
+		</div>
+		<div class="pull-left info">
+			<p>Ave, {$user->identity->username}</p>
 
-							<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-						</div>
-					</div>
-					{*<!-- search form -->
-					<form action="#" method="get" class="sidebar-form">
-						<div class="input-group">
-							<input type="text" name="q" class="form-control" placeholder="Search..."/>
-							<span class="input-group-btn">
-								<button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-							</span>
-						</div>
-					</form>
-					<!-- /.search form -->*}
-					<!-- sidebar menu: : style can be found in sidebar.less -->
-					<ul class="sidebar-menu">
-					{foreach $navigation->buildNavigation() as $area => $item}
-						{dump $presenter->name}
-						<li class="{if $presenter->name == 'Admin:'.ucfirst($area)}active{/if}{ifset $item['menu']} treeview{/ifset}">
-							<a n:href=":admin:$area:">
-								<i class="{$item['icon']}"></i>
-								<span>{$item['text']}</span>
-								<i n:ifset="$item['menu']" class="fa fa-angle-left pull-right"></i>
-								<small n:if="isset($item['badge']) && $item['badge']" class="badge pull-right bg-{$item['badge']['color']}">{$item['badge']['text']}</small>
-							</a>
-							<ul n:ifset="$item['menu']" class="treeview-menu">
-								<li n:foreach="$item['menu'] as $view => $subitem" {if $presenter->name == "Admin:".ucfirst($area) && $presenter->action == $view}class="active"{/if}>
-									<a n:href=":admin:$area:$view">
-										<i class="fa fa-angle-double-right"></i> {$subitem['text']}
-										<small n:if="isset($subitem['badge']) && $subitem['badge']" class="badge pull-right bg-{$subitem['badge']['color']}">{$subitem['badge']['text']}</small>
-									</a>
-								</li>
-							</ul>
-						</li>
-						{/foreach}
-					</ul>
-				</section>
-				<!-- /.sidebar -->
+			<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+		</div>
+	</div>
+	{*<!-- search form -->
+	<form action="#" method="get" class="sidebar-form">
+		<div class="input-group">
+			<input type="text" name="q" class="form-control" placeholder="Search..."/>
+			<span class="input-group-btn">
+				<button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+			</span>
+		</div>
+	</form>
+	<!-- /.search form -->*}
+	<!-- sidebar menu: : style can be found in sidebar.less -->
+	<ul class="sidebar-menu">
+		{foreach $navigation->buildNavigation() as $area => $item}
+			{dump $presenter->name}
+			<li class="{if $presenter->name == 'Admin:'.ucfirst($area)}active{/if}{ifset $item['menu']} treeview{/ifset}">
+				<a n:href=":admin:$area:">
+					<i class="{$item['icon']}"></i>
+					<span>{$item['text']}</span>
+					<i n:ifset="$item['menu']" class="fa fa-angle-left pull-right"></i>
+					<small n:if="isset($item['badge']) && $item['badge']" class="badge pull-right bg-{$item['badge']['color']}">{$item['badge']['text']}</small>
+				</a>
+				<ul n:ifset="$item['menu']" class="treeview-menu">
+					<li n:foreach="$item['menu'] as $view => $subitem" {if $presenter->name == "Admin:".ucfirst($area) && $presenter->action == $view}class="active"{/if}>
+						<a n:href=":admin:$area:$view">
+							<i class="fa fa-angle-double-right"></i> {$subitem['text']}
+							<small n:if="isset($subitem['badge']) && $subitem['badge']" class="badge pull-right bg-{$subitem['badge']['color']}">{$subitem['badge']['text']}</small>
+						</a>
+					</li>
+				</ul>
+			</li>
+		{/foreach}
+	</ul>
+</section>
+<!-- /.sidebar -->

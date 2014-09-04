@@ -5,7 +5,9 @@
  *
  * License information you can find in LICENSE.md
  */
+
 namespace App\Model;
+
 use Nette\Database\Table\ActiveRow;
 
 /**
@@ -22,7 +24,7 @@ class InterpretRepository extends Repository {
 	 * @return \Nette\Database\Table\ActiveRow|false|null
 	 */
 	public function getByName($name, $follow = true) {
-		$r = $this->getTable()->where("nazev",$name)->fetch();
+		$r = $this->getTable()->where("nazev", $name)->fetch();
 
 		if ($r && $follow)
 			return $this->follow($r);
@@ -36,7 +38,7 @@ class InterpretRepository extends Repository {
 	 * @return array
 	 */
 	public function bind($interpret, $noaliases = true) {
-		$s = $this->findAll()->where("nazev LIKE ?",$interpret."%");
+		$s = $this->findAll()->where("nazev LIKE ?", $interpret . "%");
 
 		if ($noaliases)
 			$s->where("interpret_id", null);
@@ -70,8 +72,7 @@ class InterpretRepository extends Repository {
 			$alias = $this->follow($match);
 			$result["alias"] = $alias->nazev != $match->nazev ? $alias->nazev : false;
 			$result["other"] = $this->iterateMatches($matches, $limit);
-		}
-		else
+		} else
 			$result["match"] = false;
 
 		return $result;
@@ -94,25 +95,35 @@ class InterpretRepository extends Repository {
 	 * @return \Nette\Database\Table\Selection
 	 */
 	protected function levenshtein($keyword, $distance) {
-	return $this->getTable()->select("*,levenshtein(nazev, ?) AS distance", $keyword)
-		->where("levenshtein(nazev, ?) < $distance",$keyword)
-		->order("distance ASC");
-    }
+		return $this->getTable()->select("*,levenshtein(nazev, ?) AS distance", $keyword)
+						->where("levenshtein(nazev, ?) < $distance", $keyword)
+						->order("distance ASC");
+	}
 
 	private function iterateMatches($matches, $max) {
 		$iterator = 0;
 		$result = array();
 		foreach ($matches as $row) {
-				if ($iterator > 0) {
-					$m["interpret"] = $row->nazev;
-					$m["distance"] = $row->distance;
-					$result[] = $m;
-				}
-				if ($iterator == $max)
-					break;
-				$iterator++;
+			if ($iterator > 0) {
+				$m["interpret"] = $row->nazev;
+				$m["distance"] = $row->distance;
+				$result[] = $m;
 			}
+			if ($iterator == $max)
+				break;
+			$iterator++;
+		}
 		return $result;
+	}
+
+	public function add($name, $desc, $alias = null, $user = null) {
+		return $this->getTable()->insert([
+					'nazev' => $name,
+					'desc' => $desc,
+					'interpret_id' => $alias,
+					'user_id' => !is_string($user) ? $user->id : null,
+					'pridal' => is_string($user) ? $user : $user->identity->username
+		]);
 	}
 
 }
