@@ -14,7 +14,7 @@
 				<span>V této hitparádě není žádný song</span>
 			</div>
 			{foreach $songs as $song}
-				<div class="song-wrapper toplist">
+				<div n:class="song-wrapper, toplist, $iterator->counter == 1 ? first, $iterator->counter == 2 ? second, $iterator->counter == 3 ? third">
 					<a n:href="song:view $song->id"><img src="{if json_decode($song->image)}{json_decode($song->image)[1]->{'#text'}}{else}{$basePath}/img/song.png{/if}" class="song-image" /></a>
 					<div class="song-box">
 						<h4>
@@ -27,7 +27,7 @@
 							</small>
 						</h4>
 						<div class="place pull-right">
-							<span>{$iterator->counter}</span>
+							<span n:class="$iterator->counter == 1 ? first, $iterator->counter == 2 ? second, $iterator->counter == 3 ? third">{$iterator->counter}</span>
 						</div>
 						<div class="bottom-row">
 							<i class="glyphicon glyphicon-heart"></i> {$song->score} | <i class="glyphicon glyphicon-time"></i> {$song->datum|date:'d.m.Y'}
