@@ -30,7 +30,7 @@
 							<span n:class="$iterator->counter == 1 ? first, $iterator->counter == 2 ? second, $iterator->counter == 3 ? third">{$iterator->counter}</span>
 						</div>
 						<div class="bottom-row">
-							<i class="glyphicon glyphicon-heart"></i> {$song->score} | <i class="glyphicon glyphicon-time"></i> {$song->datum|date:'d.m.Y'}
+							<i class="glyphicon glyphicon-heart"></i> {$song->score} <span n:if="$filter != 'forever'" title="Celkový počet hlasů od zařazení" class="lighter">({count($song->related('song_likes'))})</span> | <i class="glyphicon glyphicon-time"></i> {$song->datum|date:'d.m.Y'}
 						</div>
 					</div>
 				</div>
