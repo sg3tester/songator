@@ -1,0 +1,74 @@
+{* Latte template *}
+
+{block content}
+<div class="container content">
+	<div class="page-header">
+		<h2>Hitparáda <small>Žebříček TOP{if count($songs)}{count($songs)}{/if} tracků</small></h2>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<div n:if="!count($songs)" class="no-songs">
+				<div class="empty-icon">
+					<i class="glyphicon glyphicon-fire"></i>
+				</div>
+				<span>V této hitparádě není žádný song</span>
+			</div>
+			{foreach $songs as $song}
+				<div class="song-wrapper toplist">
+					<a n:href="song:view $song->id"><img src="{if json_decode($song->image)}{json_decode($song->image)[1]->{'#text'}}{else}{$basePath}/img/song.png{/if}" class="song-image" /></a>
+					<div class="song-box">
+						<h4>
+							<a n:href="song:view $song->id">{$song->interpret_name} - {$song->name}</a>
+							<small>
+								<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
+								<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
+								<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
+								<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
+							</small>
+						</h4>
+						<div class="place pull-right">
+							<span>{$iterator->counter}</span>
+						</div>
+						<div class="bottom-row">
+							<i class="glyphicon glyphicon-heart"></i> {$song->score} | <i class="glyphicon glyphicon-time"></i> {$song->datum|date:'d.m.Y'}
+						</div>
+					</div>
+				</div>
+			{/foreach}
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">Hitparáda</div>
+
+				<!-- List group -->
+				<div class="list-group">
+					<a n:class="list-group-item, $filter == 'last-week' ? active" n:href="this 'last-week'">Posledního týdne</a>
+					<a n:class="list-group-item, $filter == 'last-month' ? active" n:href="this 'last-month'">Posledního měsíce</a>
+					<a n:class="list-group-item, $filter == 'forever' ? active" n:href="this 'forever'">Od počátku věků</a>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<!-- Default panel contents -->
+				<div class="panel-heading">Nejnovější songy</div>
+
+				<!-- List group -->
+				<ul class="list-group">
+					<li n:foreach="$newest as $new" class="list-group-item">
+						<div class="cover-image">
+							<a n:href="Song:view $new->id" target="_blank"><img src="{if json_decode($new->image)}{json_decode($new->image)[1]->{'#text'}}{else}{$basePath}/img/song.png{/if}" class="song-image" width="42" height="42" /></a>
+						</div>
+						<div class="song-info">
+							<a n:href="Song:view $new->id" target="_blank">
+								{$new->interpret_name} - {$new->name}
+							</a>
+							<div class="ranking">
+								<i class="glyphicon glyphicon-heart"></i> {count($new->related('song_likes'))} | <i class="glyphicon glyphicon-time"></i> {$new->datum|date:'d.m.Y'}
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

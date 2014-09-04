@@ -238,5 +238,14 @@ class SongRepository extends Repository {
 		$related->where("song_likes.user_id", $user->id)->where("song_likes.date >= ?", new SqlLiteral("NOW() - INTERVAL 24 hour"));
 		return $related->where('song.id')->fetchAll();
 	}
+	
+	public function getTopSongs($limit = null, $season = null) {
+		$sel = $this->getTable()->select('song.*, count(:song_likes.song_id) AS score')->group(':song_likes.song_id')->order('score DESC');
+		if ($limit)
+			$sel->limit($limit);
+		if ($season)
+			$sel->where('song.datum >= NOW() - INTERVAL ?', new SqlLiteral($season));
+		return $sel->fetchAll();
+	}
 
 }
