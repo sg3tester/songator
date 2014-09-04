@@ -7,6 +7,7 @@
  */
 
 namespace App\Model;
+
 use Nette\Database\IRow;
 use Nette\Database\SqlLiteral;
 use Nette\Utils\Arrays;
@@ -21,7 +22,9 @@ class SongRepository extends Repository {
 	const STATUS_APPROVED = "approved",
 			STATUS_REJECTED = "rejected",
 			STATUS_WAITING = "waiting",
-			TABLE_LIKES = "song_likes";
+			TABLE_LIKES = "song_likes",
+			SEASON_RANKED = "ranked",
+			SEASON_ADDED = "added";
 
 	/** @var \App\Model\InterpretRepository */
 	protected $interpreti;
@@ -45,14 +48,14 @@ class SongRepository extends Repository {
 
 		//Assign interpret (if registered)
 		$ri = $this->interpreti->getByName($interpret);
-		if($ri)
+		if ($ri)
 			$song["interpret_id"] = $ri->id;
 
 		return $this->getTable()->insert($song);
 	}
 
 	public function edit($id, array $data) {
-		return $this->getTable()->where('id',$id)->update($data);
+		return $this->getTable()->where('id', $id)->update($data);
 	}
 
 	/**
@@ -66,7 +69,7 @@ class SongRepository extends Repository {
 		if (is_string($interpret)) {
 			$ri = $this->interpreti->getByName($interpret);
 			if ($ri)
-				return $this->setInterpret ($songId, $ri->id);
+				return $this->setInterpret($songId, $ri->id);
 			return false;
 		}
 		elseif (is_integer($interpret))
@@ -82,7 +85,7 @@ class SongRepository extends Repository {
 	 * @return \Nette\Database\Table\Selection
 	 */
 	public function findByStatus($status) {
-		$allowed = array("approved","waiting","rejected");
+		$allowed = array("approved", "waiting", "rejected");
 		if ($status && in_array($status, $allowed))
 			return $this->findBy(array("status" => $status));
 		return $status;
@@ -109,7 +112,6 @@ class SongRepository extends Repository {
 	public function approve($song, $revizor, $note = "", $additional = null) {
 
 		$this->setStatus($song, self::STATUS_APPROVED, $revizor, $note, $additional);
-
 	}
 
 	public function reject($song, $revizor, $reason, $code, $additional = null) {
@@ -117,9 +119,8 @@ class SongRepository extends Repository {
 			$additional = array();
 		$additional['reason_code'] = $code;
 		$this->setStatus($song, self::STATUS_REJECTED, $revizor, $reason, $additional);
-
 	}
-	
+
 	/**
 	 * 
 	 * @param string $interpret
@@ -127,23 +128,23 @@ class SongRepository extends Repository {
 	 * @return \Nette\Database\Table\Selection
 	 */
 	public function match($interpret, $song) {
-		
+
 		$matching = array();
 		$matching["matching"]["interpret"] = $interpret;
 		$matching["matching"]["song"] = $song;
 		$matching["match"] = false;
-		
+
 		if (!$song)
 			return $matching;
-		
+
 		$matches = $this->levenshtein($song, 10);
-		
+
 		if ($interpret)
-			$matches->where ("interpret_name LIKE ?",$interpret."%");
+			$matches->where("interpret_name LIKE ?", $interpret . "%");
 		$result = array();
-		
-		
-		
+
+
+
 		foreach ($matches as $match) {
 			$song = array();
 			$song["id"] = $match->id;
@@ -159,10 +160,9 @@ class SongRepository extends Repository {
 			$matching["similar"] = $result;
 		}
 
-		
+
 		return $matching;
 	}
-	
 
 	////////////////////////////////////////////////////////////////////////////
 
@@ -172,11 +172,11 @@ class SongRepository extends Repository {
 	 * @return \Nette\Database\Table\Selection
 	 */
 	protected function levenshtein($keyword, $distance = 10) {
-	return $this->getTable()->select("*,levenshtein(name, ?) AS distance", $keyword)
-		->where("levenshtein(name, ?) < $distance",$keyword)
-		->order("distance ASC");
-    }
-	
+		return $this->getTable()->select("*,levenshtein(name, ?) AS distance", $keyword)
+						->where("levenshtein(name, ?) < $distance", $keyword)
+						->order("distance ASC");
+	}
+
 	private function setInterpret($songId, $interpret) {
 		return $this->getTable()->get($songId)->update(array("interpret_id" => $interpret));
 	}
@@ -189,7 +189,7 @@ class SongRepository extends Repository {
 			$data = array();
 
 		//Check status validity
-		$allowed = array ("approved","rejected","waiting");
+		$allowed = array("approved", "rejected", "waiting");
 		if (!in_array($status, $allowed))
 			throw new \Nette\InvalidArgumentException(72, "Invalid status. '$status' is unknown");
 
@@ -199,7 +199,7 @@ class SongRepository extends Repository {
 
 		$this->getTable()->get($song)->update($data); //Update song
 	}
-	
+
 	/**
 	 * User likes a song
 	 * @param int $song
@@ -210,13 +210,13 @@ class SongRepository extends Repository {
 	public function like($song, $user) {
 		$table = $this->database->table(self::TABLE_LIKES);
 
-		if($this->isLiked($song, $user))
+		if ($this->isLiked($song, $user))
 			throw new \Nette\InvalidStateException("This user liked it", 77);
-		
+
 		return $table->insert(array(
-				'user_id' => $user,
-				'song_id' => $song
-			));
+					'user_id' => $user,
+					'song_id' => $song
+		));
 	}
 
 	/**
@@ -227,24 +227,36 @@ class SongRepository extends Repository {
 	 */
 	public function isLiked($song, $user) {
 		$table = $this->database->table(self::TABLE_LIKES);
-		if($table->where("user_id", $user)->where("song_id", $song)->where("date >= ?", new SqlLiteral("NOW() - INTERVAL 24 hour"))->fetch())
+		if ($table->where("user_id", $user)->where("song_id", $song)->where("date >= ?", new SqlLiteral("NOW() - INTERVAL 24 hour"))->fetch())
 			return true;
 		return false;
 	}
-	
+
 	public function getMyLikes($user) {
 		$related = $this->database->table(self::TABLE_LIKES);
 		$related->select('song.*');
 		$related->where("song_likes.user_id", $user->id)->where("song_likes.date >= ?", new SqlLiteral("NOW() - INTERVAL 24 hour"));
 		return $related->where('song.id')->fetchAll();
 	}
-	
-	public function getTopSongs($limit = null, $season = null) {
+
+	public function getTopSongs($limit = null, $season = null, $seasonMode = self::SEASON_RANKED) {
 		$sel = $this->getTable()->select('song.*, count(:song_likes.song_id) AS score')->group(':song_likes.song_id')->order('score DESC');
 		if ($limit)
 			$sel->limit($limit);
+
+		switch ($seasonMode) {
+			case self::SEASON_RANKED:
+				$seasonQuery = ':song_likes.date >= NOW() - INTERVAL ?';
+				break;
+			case self::SEASON_ADDED:
+				$seasonQuery = 'song.datum >= NOW() - INTERVAL ?';
+				break;
+			default:
+				throw new \Nette\InvalidArgumentException("Invalid season mode");
+		}
+
 		if ($season)
-			$sel->where('song.datum >= NOW() - INTERVAL ?', new SqlLiteral($season));
+			$sel->where ($seasonQuery, new SqlLiteral($season));
 		return $sel->fetchAll();
 	}
 
