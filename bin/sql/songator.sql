@@ -71,6 +71,7 @@ CREATE TABLE `interpret` (
   `picture` varchar(255) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `pridal` varchar(255) NOT NULL,
+  `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `interpret_id` (`interpret_id`),
   KEY `user_id` (`user_id`),
@@ -78,21 +79,28 @@ CREATE TABLE `interpret` (
   CONSTRAINT `interpret_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `interpret` (`id`, `nazev`, `desc`, `interpret_id`, `valid`, `picture`, `user_id`, `pridal`) VALUES
-(1,	'2NE1',	'2NE1,21',	NULL,	0,	'',	NULL,	''),
-(2,	'21',	'2NE1 alias',	1,	0,	'',	NULL,	''),
-(3,	'BIGBANG',	'',	NULL,	0,	'',	NULL,	''),
-(4,	'2PM',	'',	NULL,	0,	'',	NULL,	''),
-(5,	'Girls\' Generation',	'',	NULL,	0,	'',	NULL,	''),
-(6,	'SNSD',	'',	5,	0,	'',	NULL,	''),
-(7,	'Miss A',	'',	NULL,	0,	'',	NULL,	''),
-(8,	'EvoL',	'',	NULL,	0,	'',	NULL,	''),
-(9,	'Super Junior',	'',	NULL,	0,	'',	NULL,	''),
-(10,	'f(x)',	'',	NULL,	0,	'',	NULL,	''),
-(11,	'G-Dragon',	'',	NULL,	0,	'',	NULL,	''),
-(12,	'GD',	'',	11,	0,	'',	NULL,	''),
-(13,	'CL',	'',	NULL,	0,	'',	NULL,	''),
-(14,	'Sistar',	'',	NULL,	0,	'',	NULL,	'');
+INSERT INTO `interpret` (`id`, `nazev`, `desc`, `interpret_id`, `valid`, `picture`, `user_id`, `pridal`, `datum`) VALUES
+(1,	'2NE1',	'2NE1 ( korejsky 투애니원 se vyslovuje „To anyone“ nebo „Twenty-one“ ) je čtyřčlenná jihokorejská dívčí skupina vytvořená YG Entertainment. Nejprve jste je mohli vidět v obchodní kampani pro LG spolu s chlapeckou skupinou Big Bang. Jejich první debutový singl „Fire“, který byl (a pořád je) úspěšný, vyšel 6. května 2009. Hned na to 17. května 2009 skupina vystoupila se svým prvním singlem na Inkigayo SBS. Název skupiny 2NE1 je zkratka pro „Nový vývoj 21. století“.',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(2,	'21',	'2NE1 alias',	1,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(3,	'BIGBANG',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(4,	'2PM',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(5,	'Girls\' Generation',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(6,	'SNSD',	'',	5,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(7,	'Miss A',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(8,	'이블',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(9,	'Super Junior',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(10,	'f(x)',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(11,	'G-Dragon',	'GD je king',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(12,	'GD',	'blablabla GD je king',	11,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(13,	'CL',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(14,	'Sistar',	'',	NULL,	0,	'',	NULL,	'',	'2014-09-06 00:38:31'),
+(15,	'Brown Eyed Girls',	'BEG',	NULL,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31'),
+(16,	'EXO',	'',	NULL,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31'),
+(17,	'BEG',	'',	15,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31'),
+(21,	'EvoL',	'',	8,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31'),
+(23,	'Johohohoooo',	'',	NULL,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31'),
+(24,	'Pokusník',	'',	NULL,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31'),
+(25,	'smrdíš',	'',	NULL,	0,	'',	1,	'JDC',	'2014-09-06 00:38:31');
 
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
@@ -267,7 +275,14 @@ INSERT INTO `log` (`id`, `media`, `event`, `user_id`, `who`, `resource`, `datum`
 (156,	'song',	'add',	1,	'JDC',	'{\"id\":50,\"interpret\":\"2NE1\",\"song\":\"Be mine\",\"vzkaz\":\"2NE1 Be mine\"}',	'2014-08-17 10:48:38'),
 (157,	'song',	'approve',	1,	'JDC',	'{\"id\":\"21\",\"name\":\"Crush\",\"interpret\":\"2NE1\"}',	'2014-08-17 11:41:32'),
 (158,	'song',	'reject',	1,	'JDC',	'{\"id\":\"47\",\"reason\":\"Duplicita\",\"name\":\"hate you\",\"interpret\":\"2NE1\"}',	'2014-09-03 10:08:34'),
-(159,	'song',	'reject',	1,	'JDC',	'{\"id\":\"47\",\"reason\":\"Duplicita\",\"name\":\"hate you\",\"interpret\":\"2NE1\"}',	'2014-09-03 10:13:37');
+(159,	'song',	'reject',	1,	'JDC',	'{\"id\":\"47\",\"reason\":\"Duplicita\",\"name\":\"hate you\",\"interpret\":\"2NE1\"}',	'2014-09-03 10:13:37'),
+(160,	'song',	'add',	1,	'JDC',	'{\"id\":51,\"interpret\":\"test\",\"song\":\"lolk\",\"vzkaz\":\"\"}',	'2014-09-03 12:33:30'),
+(161,	'song',	'add',	1,	'JDC',	'{\"id\":52,\"interpret\":\"EvoL\",\"song\":\"Get Up\",\"vzkaz\":\"\"}',	'2014-09-05 16:18:20'),
+(162,	'song',	'add',	1,	'JDC',	'{\"id\":53,\"interpret\":\"이블\",\"song\":\"Get Up\",\"vzkaz\":\"\"}',	'2014-09-05 16:41:56'),
+(163,	'song',	'add',	1,	'JDC',	'{\"id\":54,\"interpret\":\"pokus\",\"song\":\"lokus\",\"vzkaz\":\"\"}',	'2014-09-05 19:40:37'),
+(164,	'song',	'add',	1,	'JDC',	'{\"id\":55,\"interpret\":\"pokus\",\"song\":\"mehehel\",\"vzkaz\":\"\"}',	'2014-09-05 19:41:15'),
+(165,	'song',	'add',	1,	'JDC',	'{\"id\":56,\"interpret\":\"Johohohoooo\",\"song\":\"hovnononoooooo\",\"vzkaz\":\"\"}',	'2014-09-05 19:50:14'),
+(166,	'song',	'add',	1,	'JDC',	'{\"id\":57,\"interpret\":\"smrdíš\",\"song\":\"Muhehehe\",\"vzkaz\":\"\"}',	'2014-09-05 19:51:29');
 
 DROP TABLE IF EXISTS `navbar`;
 CREATE TABLE `navbar` (
@@ -341,7 +356,7 @@ CREATE TABLE `song` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `zanr_id`, `user_id`, `zadatel`, `link`, `note`, `pecka`, `instro`, `remix`, `wishlist_only`, `reason_code`, `revisor`, `datum`, `vzkaz`, `private_vzkaz`, `image`) VALUES
-(1,	'Pokus',	'Pokusník',	NULL,	'approved',	1,	NULL,	'anonymous',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-17 16:54:54',	'',	0,	''),
+(1,	'Pokus',	'Pokusník',	24,	'approved',	1,	NULL,	'anonymous',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-17 16:54:54',	'',	0,	''),
 (2,	'dgdgf',	'cvbxcvb',	NULL,	'approved',	2,	NULL,	'me',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-17 16:58:04',	'lorem ipsum...',	0,	''),
 (3,	'Do you love me',	'2NE1',	1,	'approved',	1,	NULL,	'JDC',	'',	'2NE1 <3',	1,	0,	0,	0,	'0',	1,	'2014-02-19 12:07:45',	'I love 2NE1 <3',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/92137737.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/92137737.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/92137737.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/92137737.png\",\"size\":\"extralarge\"}]'),
 (5,	'stsddg',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-20 18:49:48',	'',	0,	''),
@@ -351,7 +366,7 @@ INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `z
 (9,	'zutzu',	'21',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-20 19:04:06',	'',	0,	''),
 (11,	'xxb',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-20 19:07:39',	'',	0,	''),
 (12,	'dfgdfg',	'dfgdf',	NULL,	'rejected',	1,	1,	'JarDacan',	'',	'Není taneční song',	0,	0,	1,	0,	'0',	1,	'2014-02-20 23:53:33',	'',	0,	''),
-(13,	'Ugly',	'2NE1',	NULL,	'approved',	1,	1,	'JarDacan',	'',	'I love 2NE1',	1,	1,	0,	0,	'0',	1,	'2014-02-21 13:24:20',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/91321991.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/91321991.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/91321991.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/91321991.png\",\"size\":\"extralarge\"}]'),
+(13,	'Ugly',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'I love 2NE1',	1,	1,	0,	0,	'0',	1,	'2014-02-21 13:24:20',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/91321991.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/91321991.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/91321991.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/91321991.png\",\"size\":\"extralarge\"}]'),
 (14,	'Lonely',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'jkhkjhk',	0,	1,	0,	0,	'0',	1,	'2014-02-21 13:25:27',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/91321991.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/91321991.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/91321991.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/91321991.png\",\"size\":\"extralarge\"}]'),
 (15,	'Can\'t nobody',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-02-23 12:38:09',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/98580719.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/98580719.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/98580719.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/98580719.png\",\"size\":\"extralarge\"}]'),
 (16,	'Fantastic baby',	'BIGBANG',	3,	'approved',	1,	NULL,	'JDC',	'',	'',	1,	0,	0,	0,	'0',	1,	'2014-02-23 12:40:29',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/74978658.jpg\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/74978658.jpg\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/74978658.jpg\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/74978658.jpg\",\"size\":\"extralarge\"}]'),
@@ -364,14 +379,14 @@ INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `z
 (23,	'Gotta be you',	'2NE1',	1,	'approved',	1,	1,	'JarDacan',	'https://www.youtube.com/watch?v=pbQP9Q2tNoU',	'',	0,	0,	0,	0,	'0',	1,	'2014-03-19 14:49:09',	'2NE1 <3',	1,	'null'),
 (24,	'Beautiful Hangover',	'BIGBANG',	3,	'waiting',	1,	1,	'JarDacan',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-03-19 14:53:33',	'twertwert',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/50585459.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/50585459.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/50585459.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/50585459.png\",\"size\":\"extralarge\"}]'),
 (25,	'We are a bit different',	'EvoL',	8,	'waiting',	1,	NULL,	'Lolek',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-03-19 14:56:23',	'',	0,	'null'),
-(26,	'High High',	'GD&TOP',	NULL,	'rejected',	1,	1,	'JDC',	'',	'Není taneční song',	0,	0,	0,	0,	'0',	1,	'2014-03-20 11:25:58',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/72210402.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/72210402.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/72210402.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/72210402.png\",\"size\":\"extralarge\"}]'),
+(26,	'High High',	'GD&TOP',	3,	'rejected',	1,	1,	'JDC',	'',	'Není taneční song',	0,	0,	0,	0,	'0',	1,	'2014-03-20 11:25:58',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/72210402.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/72210402.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/72210402.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/72210402.png\",\"size\":\"extralarge\"}]'),
 (28,	'Happy',	'2NE1',	1,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-04-06 22:21:17',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/99287009.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/99287009.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/99287009.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/99287009.png\",\"size\":\"extralarge\"}]'),
 (29,	'Oh my friend',	'BIGBANG',	3,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-04-06 22:21:47',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/81637739.jpg\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/81637739.jpg\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/81637739.jpg\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/81637739.jpg\",\"size\":\"extralarge\"}]'),
 (30,	'saasfsadf',	'sfsf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-04-09 23:57:45',	'Lol tajnej vzkaz',	1,	''),
 (31,	'dsgfsdf',	'ddgf',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-04-09 23:59:16',	'veřejný',	0,	''),
 (32,	'tst',	'test',	NULL,	'rejected',	3,	NULL,	'lolokol',	'',	'Není k dispozici v požadované kvalitě',	0,	0,	0,	0,	'0',	1,	'2014-04-11 21:10:02',	'ffgdfgv cxvb dgfdg dgf ',	0,	'null'),
 (33,	'sfsfcx',	'ssdf',	NULL,	'approved',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-04-11 21:23:58',	'xcvxcvxcv',	1,	''),
-(34,	'asdasd',	'adasd',	NULL,	'approved',	2,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-04-12 09:53:42',	'',	0,	'null'),
+(34,	'asdasd',	'adasd',	5,	'approved',	2,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-04-12 09:53:42',	'',	0,	'null'),
 (35,	'aasas',	'asasd',	NULL,	'rejected',	2,	1,	'JDC',	'',	'Není k dispozici v požadované kvalitě',	0,	0,	0,	0,	'0',	1,	'2014-04-12 09:58:28',	'sadasd',	0,	''),
 (36,	'sdsdsdsd',	'sdsdds',	NULL,	'approved',	4,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-04-12 10:02:40',	'',	0,	''),
 (37,	'asdasd',	'2NE1',	1,	'approved',	3,	NULL,	'lolk',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-04-12 10:03:46',	'',	0,	''),
@@ -385,9 +400,15 @@ INSERT INTO `song` (`id`, `name`, `interpret_name`, `interpret_id`, `status`, `z
 (45,	'lljjk',	'2NE1',	1,	'approved',	1,	NULL,	'test',	'',	'',	0,	0,	0,	0,	'0',	1,	'2014-06-15 23:25:15',	'',	0,	''),
 (46,	'I am the best',	'2NE1',	1,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-06-22 16:10:29',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/78068228.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/78068228.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/78068228.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/78068228.png\",\"size\":\"extralarge\"}]'),
 (47,	'hate you',	'2NE1',	1,	'rejected',	1,	1,	'JDC',	'',	'Duplicita',	0,	0,	0,	0,	'R20_DUPLICITY',	1,	'2014-06-22 16:15:09',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/91321991.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/91321991.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/91321991.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/91321991.png\",\"size\":\"extralarge\"}]'),
-(48,	'Kill Bill',	'Brown Eyed Girls',	NULL,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-07-18 21:21:08',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/91890905.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/91890905.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/91890905.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/91890905.png\",\"size\":\"extralarge\"}]'),
+(48,	'Kill Bill',	'Brown Eyed Girls',	15,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-07-18 21:21:08',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/91890905.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/91890905.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/91890905.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/91890905.png\",\"size\":\"extralarge\"}]'),
 (49,	'test',	'test',	NULL,	'approved',	2,	4,	'test2',	'',	'',	0,	0,	1,	1,	'0',	1,	'2014-07-23 22:22:15',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/53193637.jpg\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/53193637.jpg\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/53193637.jpg\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/53193637.jpg\",\"size\":\"extralarge\"}]'),
-(50,	'Be mine',	'2NE1',	1,	'waiting',	1,	1,	'JDC',	'http://www.youtube.com/watch?v=vZtd_m3VDJI',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-08-17 10:48:37',	'2NE1 Be mine',	1,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/78477882.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/78477882.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/78477882.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/78477882.png\",\"size\":\"extralarge\"}]');
+(50,	'Be mine',	'2NE1',	1,	'waiting',	1,	1,	'JDC',	'http://www.youtube.com/watch?v=vZtd_m3VDJI',	'',	0,	0,	0,	0,	'0',	NULL,	'2014-08-17 10:48:37',	'2NE1 Be mine',	1,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/78477882.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/78477882.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/78477882.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/78477882.png\",\"size\":\"extralarge\"}]'),
+(51,	'lolk',	'test',	NULL,	'waiting',	3,	1,	'JDC',	'http://www.youtube.com/watch?v=vZtd_m3VDJI',	'',	0,	0,	0,	0,	'',	NULL,	'2014-09-03 12:33:30',	'',	0,	'null'),
+(53,	'Get Up',	'이블',	8,	'waiting',	1,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'',	NULL,	'2014-09-05 16:41:55',	'',	0,	'[{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/64s\\/98365711.png\",\"size\":\"small\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/126\\/98365711.png\",\"size\":\"medium\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/174s\\/98365711.png\",\"size\":\"large\"},{\"#text\":\"http:\\/\\/userserve-ak.last.fm\\/serve\\/300x300\\/98365711.png\",\"size\":\"extralarge\"}]'),
+(54,	'lokus',	'pokus',	NULL,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'',	NULL,	'2014-09-05 19:40:37',	'',	0,	'null'),
+(55,	'mehehel',	'pokus',	NULL,	'waiting',	3,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'',	NULL,	'2014-09-05 19:41:15',	'',	0,	'null'),
+(56,	'hovnononoooooo',	'Johohohoooo',	23,	'waiting',	4,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'',	NULL,	'2014-09-05 19:50:14',	'',	0,	'null'),
+(57,	'Muhehehe',	'smrdíš',	25,	'waiting',	2,	1,	'JDC',	'',	'',	0,	0,	0,	0,	'',	NULL,	'2014-09-05 19:51:29',	'',	0,	'null');
 
 DROP TABLE IF EXISTS `song_likes`;
 CREATE TABLE `song_likes` (
@@ -414,7 +435,24 @@ INSERT INTO `song_likes` (`id`, `song_id`, `user_id`, `date`) VALUES
 (11,	47,	1,	'2014-07-18 20:09:56'),
 (12,	49,	4,	'2014-07-23 22:22:57'),
 (13,	48,	1,	'2014-07-26 16:56:40'),
-(14,	21,	1,	'2014-08-17 11:40:26');
+(14,	21,	1,	'2014-08-17 11:40:26'),
+(15,	50,	1,	'2014-09-03 11:12:09'),
+(16,	46,	1,	'2014-09-03 12:15:28'),
+(17,	44,	1,	'2014-09-03 12:15:43'),
+(18,	48,	1,	'2014-09-03 12:21:57'),
+(19,	29,	1,	'2014-09-03 12:22:38'),
+(20,	21,	1,	'2014-09-03 12:23:03'),
+(21,	18,	1,	'2014-09-03 12:23:53'),
+(22,	45,	1,	'2014-09-03 13:05:36'),
+(23,	50,	1,	'2014-09-04 12:15:51'),
+(24,	22,	1,	'2014-09-04 12:16:17'),
+(25,	17,	1,	'2014-09-04 12:16:38'),
+(26,	3,	1,	'2014-09-04 12:16:55'),
+(27,	21,	1,	'2014-09-04 14:32:51'),
+(28,	50,	1,	'2014-09-05 23:23:24'),
+(29,	21,	1,	'2014-09-05 23:47:32'),
+(30,	17,	1,	'2014-09-05 23:48:46'),
+(31,	3,	1,	'2014-09-05 23:51:40');
 
 DROP TABLE IF EXISTS `storage`;
 CREATE TABLE `storage` (
@@ -474,13 +512,14 @@ CREATE TABLE `zanr` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `popis` text NOT NULL,
+  `datum` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `zanr` (`id`, `name`, `popis`) VALUES
-(1,	'K-POP',	'Korejská populární hudba'),
-(2,	'J-POP',	'Japonská populární hudba'),
-(3,	'J-ROCK',	'Japonský rock'),
-(4,	'C-POP',	'Čínská populární hudba');
+INSERT INTO `zanr` (`id`, `name`, `popis`, `datum`) VALUES
+(1,	'K-POP',	'Korejská populární hudba',	'2014-09-06 00:39:22'),
+(2,	'J-POP',	'Japonská populární hudba',	'2014-09-06 00:39:22'),
+(3,	'J-ROCK',	'Japonský rock',	'2014-09-06 00:39:22'),
+(4,	'C-POP',	'Čínská populární hudba',	'2014-09-06 00:39:22');
 
--- 2014-09-03 10:46:19
+-- 2014-09-06 00:42:41
