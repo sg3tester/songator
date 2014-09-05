@@ -59,7 +59,7 @@ class InterpretPresenter extends BasePresenter {
 		$form->addText('nazev', 'Název interpreta')
 			->setRequired('Je třeba zadat jméno interpreta.');
 		
-		$form->addSelect('interpret_id', 'Alias pro', $this->interpreti->findAll()->fetchPairs('id', 'nazev'))
+		$form->addSelect('interpret_id', 'Alias pro', $this->interpreti->findAll()->order('nazev')->fetchPairs('id', 'nazev'))
 				->setPrompt('Vyberte alias');
 		
 		$form->addTextArea('desc', 'About');
