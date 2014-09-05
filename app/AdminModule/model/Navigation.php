@@ -63,6 +63,9 @@ class Navigation extends \Nette\Object {
 					"text" => 6,
 					"color" => "yellow"
 				)*/
+			),
+			"genre" => array(
+				"text" => "Žánry"
 			)
 		);
 	}

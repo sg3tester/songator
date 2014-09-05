@@ -1,0 +1,14 @@
+{form genreEditor}
+	{default $isEdit = false}
+	<div class="form-group">
+		{label name /}
+		{input name class => 'form-control', placeholder => 'Zadejte název žánru'}
+	</div>
+	<div class="form-group">
+		{label popis /}
+		{input popis class => 'form-control', placeholder => 'Sem můžete zadat rátký popis'}
+	</div>
+	{input id}
+	{input send class => 'btn btn-primary'}
+	<a n:if="$isEdit" n:href="this null" class="btn btn-default">Vytvořit žánr</a>
+{/form}

@@ -20,5 +20,8 @@ class ZanrRepository extends Repository {
 	public function getList() {
 		return $this->findAll()->fetchPairs("id", "name");
 	}
-
+	
+	public function add($genre) {
+		return $this->getTable()->insert($genre);
+	}
 }

@@ -3408,3 +3408,7 @@ fieldset[disabled] .btn-vk.active {
     width: 100px;
     margin-left: 5px;
 }
+
+.box-tools a {
+	color: #fff !important;
+}
