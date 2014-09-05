@@ -1,0 +1,5 @@
+<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} alert-dismissable">
+	<i n:ifset="$flash->icon" class="fa fa-{$flash->icon}"></i>
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<b n:ifset="$flash->title">{$flash->title}</b> {$flash->message} {ifset $flash->html}{$flash->html|noescape}{/ifset}
+</div>

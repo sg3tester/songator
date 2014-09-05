@@ -69,7 +69,7 @@ class Navigation extends \Nette\Object {
 
 	public function buildInterpretMenu() {
 		return array(
-			"add" => array(
+			"editor" => array(
 				"text" => "Přidat interpreta"
 			),
 			"list" => array(

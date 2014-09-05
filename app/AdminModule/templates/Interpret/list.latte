@@ -3,11 +3,7 @@
 {block sectionDesc}Registrovaní interpreti v systému{/block}
 {block content}
 
-<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type} alert-dismissable">
-	<i n:ifset="$flash->icon" class="fa fa-check"></i>
-	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-	<b n:ifset="$flash->title">{$flash->title}</b> {$flash->message}
-</div>
+{include '../components/flash.latte'}
 
 <div class="box box-success">
 	<div class="box-header">
