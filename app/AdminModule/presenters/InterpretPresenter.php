@@ -18,7 +18,7 @@ class InterpretPresenter extends BasePresenter {
 
 	/** @var \App\Model\InterpretRepository @inject */
 	public $interpreti;
-	
+
 	/** @var App\Model\Lastfm\Lastfm @inject */
 	public $lastfm;
 
@@ -41,7 +41,9 @@ class InterpretPresenter extends BasePresenter {
 				->setCustomRender(function($item) {
 					return !$item->interpret_id ? Html::el('b')->setText($item->nazev) : $item->nazev;
 				})
-				->setFilterText();
+				->setSortable()
+				->setFilterText()
+				->setSuggestion();
 
 		$grid->addColumnText("alias", "Alias pro")
 				->setColumn(function($item) {
@@ -95,7 +97,7 @@ class InterpretPresenter extends BasePresenter {
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
 				$msg->html = Html::el('a')->setText('Přidat další')->setHref($this->link('editor'));
-				if($this->action == 'editor')
+				if ($this->action == 'editor')
 					$this->redirect('this', [$r->id]);
 			}
 			$this->redirect('this');
