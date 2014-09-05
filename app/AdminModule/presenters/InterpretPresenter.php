@@ -78,4 +78,26 @@ class InterpretPresenter extends BasePresenter {
 		return $form;
 		
 	}
+	
+	public function handleDelete($id) {
+		try {
+			$interpret = $this->interpreti->find($id);
+			if (!$interpret)
+				throw new \PDOException("Row #$id not exists!");
+			
+			$name = $interpret->nazev;
+			$interpret->delete();
+			$msg = $this->flashMessage("Interpret '$name' smazán", 'success');
+			$msg->title = 'A je venku!';
+			$msg->icon = 'trash-o';
+		}
+		catch (\PDOException $e) {
+			$msg = $this->flashMessage("Interpreta se nepodařilo odstranit", 'danger');
+			$msg->title = 'Oh shit!';
+			$msg->icon = 'exclamation-triangle';
+			\Nette\Diagnostics\Debugger::log($e, \Nette\Diagnostics\Debugger::ERROR);
+		}
+		
+		$this->redirect('this');
+	}
 }
