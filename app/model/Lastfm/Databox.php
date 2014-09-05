@@ -25,7 +25,7 @@ class Databox extends \Nette\Object {
 			$lfm = $this->api;
 			return $lfm->call('Track.getInfo', ['artist' => $interpret, 'track' => $track])
 					->track->album->image;
-		} catch (Model\Lastfm\LastfmException $e) {
+		} catch (\App\Model\Lastfm\LastfmException $e) {
 			if (!$this->silentMode)
 				throw $e;
 		}
