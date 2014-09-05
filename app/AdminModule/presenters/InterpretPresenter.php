@@ -13,6 +13,7 @@ use Grido\Components\Filters\Filter;
 use Grido\Grid;
 use Nette\Utils\Html;
 use Nette\Application\UI\Form;
+use \Nette\Utils\Strings;
 
 class InterpretPresenter extends BasePresenter {
 
@@ -58,7 +59,9 @@ class InterpretPresenter extends BasePresenter {
 
 		$grid->addFilterCheck('interpret_id', 'Jen aliasy');
 
-		$grid->addColumnText("desc", "Popis");
+		$grid->addColumnText("desc", "Popis")->setCustomRender(function($item){
+			return Strings::truncate($item->desc, 256);
+		});
 
 		$grid->addActionHref('edit', 'Editovat', 'editor')
 				->setIcon('pencil');
