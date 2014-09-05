@@ -3,11 +3,10 @@
 {block content}
 <div class="container content">
 	<h1>{$interpret->nazev} <small n:if="$interpret->interpret_id" title="Alias pro {$interpret->interpret->nazev}"><a n:href="this $interpret->interpret->id"><i class="glyphicon glyphicon-flash"></i>{$interpret->interpret->nazev}</a></small></h1>
-	<p n:ifcontent>{$interpret->desc}</p>
-	<br />
 	<div class="row">
 		<div class="col-md-8">
 			{include '../components/flashes.latte'}
+			<p n:ifcontent>{$interpret->desc}</p>
 			{var $songy = $interpret->related("song")}
 			{ifset $status}{var $songy = $songy->where("status", $status)}{/ifset}
 			{default $status = ''}
