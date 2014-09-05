@@ -35,6 +35,9 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 	/** @var \Status */
 	public $status;
 	
+	/** @var \App\Model\Lastfm\Databox @inject */
+	public $databox;
+	
 	public $wip;
 
 	protected $conf;

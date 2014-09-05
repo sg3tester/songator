@@ -193,15 +193,7 @@ class SongPresenter extends PrimePresenter {
 		if (!$this->checkPermissions("song", "draft", FALSE))
 			$this->redirect("add");
 
-		//Fetch song album image form Last.fm
-		$image = null;
-		try {
-			$lfm = $this->lastfm;
-			$image = $lfm->call('Track.getInfo', ['artist' => $val->interpret, 'track' => $val->name])
-					->track->album->image;
-		} catch (Model\Lastfm\LastfmException $e) {
-			
-		}
+		$image = $this->databox->getTrackImage($val->interpret, $val->name);
 
 		//Fill main data
 		$data = array(

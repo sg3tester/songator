@@ -65,4 +65,5 @@ services:
 	settings: Settings
 	- App\Model\Permissions
 	- App\Model\Lastfm\Lastfm(%lastfm.apikey%)
+	- App\Model\Lastfm\Databox
 	- Navigation
