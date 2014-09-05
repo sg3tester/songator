@@ -1,0 +1,60 @@
+{block title}Associace interpretů{/block}
+{block sectionHeading}Associace interpretů{/block}
+{block sectionDesc}Associace interpretů v registru a playlistu{/block}
+{block content}
+{include '../components/flash.latte'}
+
+<div class="box box-danger">
+	<div class="box-body table-responsive">
+		{form associator}
+			<div class="callout callout-warning">
+				<h4>Bacha, náročná operace!</h4>
+				<p>
+					Tento proces je velmi užitečný, ale náročný jak hovado. 
+					Někdy bývá pomalý jak šnek na asfaltce, takže mějte prosím 
+					strpení a nezavírejte prohlížeč, dokud proces 
+					nebude dokončen.
+				</p>
+			</div>
+			<div class="form-group">
+				{input make class => 'btn btn-danger'} <span class="text-maroon">&nbsp; Kliknutím na toto tlačítko zahájíte proces asociace</span>
+				<span class="pull-right text-blue">Nalezeno celkem <b>{count($interpreti)}</b> osiřelých interpretů</span>
+			</div>
+			<table class="table table-striped table-hover">
+				<tr>
+					<th>Interpret</th>
+					<th>Songy v playlistu</th>
+					<th>Asociovat s</th>
+					<th></th>
+				</tr>
+				<tr n:foreach="$interpreti as $interpret">
+					<td width="35%">{$interpret->interpret_name}</td>
+					<td>{$interpret->amount}</td>
+					<td width="35%">
+						<select name="assoc[{$interpret->interpret_name}]" class="form-control">
+							<option value="">- Vynechat asociaci -</option>
+							<option n:foreach="$registry as $reg" value="{$reg->id}">{$reg->nazev}</option>
+						</select>
+					</td>
+					<td>
+						<input type="checkbox" class="checkbox-inline" name="create[{$interpret->interpret_name}]"> <label for="create[{$interpret->interpret_name}]">Vytvořit</label>
+					</td>
+				</tr>
+			</table>
+			<br/>
+			<div class="callout callout-warning">
+				<h4>Bacha, náročná operace!</h4>
+				<p>
+					Tento proces je velmi užitečný, ale náročný jak hovado. 
+					Někdy bývá pomalý jak šnek na asfaltce, takže mějte prosím 
+					strpení a nezavírejte prohlížeč, dokud proces 
+					nebude dokončen.
+				</p>
+			</div>
+			<div class="form-group">
+				{input make class => 'btn btn-danger'} <span class="text-maroon">&nbsp; Kliknutím na toto tlačítko zahájíte proces asociace</span>
+				<span class="pull-right text-blue">Nalezeno celkem <b>{count($interpreti)}</b> osiřelých interpretů</span>
+			</div>
+		{/form}
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

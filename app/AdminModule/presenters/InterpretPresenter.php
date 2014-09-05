@@ -33,6 +33,12 @@ class InterpretPresenter extends BasePresenter {
 		}
 	}
 
+	public function actionAssoc() {
+		$interpreti = $this->songy->findAll()->select('interpret_name, COUNT(id) AS amount')->where('interpret_id IS NULL')->group('interpret_name');
+		$this->template->interpreti = $interpreti;
+		$this->template->registry = $this->interpreti->findAll();
+	}
+
 	protected function createComponentInterpretList($name) {
 		$grid = new Grid($this, $name);
 		$grid->setModel($this->interpreti->findAll());
@@ -125,6 +131,51 @@ class InterpretPresenter extends BasePresenter {
 		}
 
 		$this->redirect('this');
+	}
+
+	protected function createComponentAssociator() {
+		$form = new Form();
+
+		$form->addSubmit('make', 'Proveď');
+
+		$form->onSuccess[] = function (Form $frm) {
+			$data = $frm->getHttpData(Form::DATA_TEXT);
+			
+			$created = 0;
+			if(isset($data['create'])) {
+				foreach ($data['create'] as $toCreate => $on) {
+					$r = $this->interpreti->add($toCreate, '', null, $this->user);
+					$data['assoc'][$toCreate] = $r->id;
+					$created++;
+				}
+			}
+			
+			$this->songy->beginTransaction();
+			$count = 0;
+			foreach ($data['assoc'] as $key => $value) {
+				if ($value) {
+					$this->songy->findBy(['interpret_name' => $key])
+							->where('interpret_id IS NULL')
+							->update(['interpret_id' => $value]);
+					$count++;
+				}
+			}
+			if (!$count) {
+				$msg = $this->flashMessage("V seznamu níže vyberte interprety, které chcete asociovat s registrem a ze seznamu položek daného interpreta určete, "
+						. "se kterým interpretem v registru má být asociován, nebo zaškrtněte možnost 'vytvořit' pro přidání "
+						. "interpreta do registru a jeho následnou asociaci.", 'info');
+				$msg->title = 'Vyberte interprety k asociaci';
+				$msg->icon = 'ticket';
+				$this->redirect('this');
+			}
+			$this->songy->commit();
+			$msg = $this->flashMessage("$count interpretů bylo úspěšně asiciováno s registrem. ($created vytvořeno)", 'success');
+			$msg->title = 'Oh yeah!';
+			$msg->icon = 'check';
+			$this->redirect('this');
+		};
+
+		return $form;
 	}
 
 }
