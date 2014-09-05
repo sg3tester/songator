@@ -22,9 +22,12 @@ class SongPresenter extends BasePresenter {
 
 	public function actionGenre($id) {
 		if ($id) {
-			$this['genreEditor']->setDefaults($this->zanry->find($id));
-			$this['genreEditor']['send']->caption = 'Upravit';
-			$this->template->isEdit = true;
+			$genre = $this->zanry->find($id);
+			if ($genre) {
+				$this['genreEditor']->setDefaults(genre);
+				$this['genreEditor']['send']->caption = 'Upravit';
+				$this->template->isEdit = true;
+			}
 		}
 	}
 
