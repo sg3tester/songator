@@ -42,13 +42,14 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 	public function authenticate(array $credentials)
 	{
 		list($username, $password) = $credentials;
-		$password = self::removeCapsLock($password);
 
 		$row = $this->database->table(self::TABLE_NAME)
 				->where(self::AUTH_SERVICE, "songator")
 				->where(self::COLUMN_NAME.' = ? OR '.self::COLUMN_EMAIL.' = ?', $username, $username)
 				->fetch();
-
+		$hash = Passwords::hash($password);
+		/*dump($hash);
+		dump(Passwords::verify($password, $hash));*/
 		if (!$row) {
 			throw new Nette\Security\AuthenticationException('Uživatelské jméno nebo email nejsou platné', self::IDENTITY_NOT_FOUND);
 
@@ -88,7 +89,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		}
 		$this->database->table(self::TABLE_NAME)->insert(array(
 			self::COLUMN_NAME => $username,
-			self::COLUMN_PASSWORD_HASH => Passwords::hash(self::removeCapsLock($password)),
+			self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
 			self::COLUMN_ROLE => "user",
 			self::AUTH_SERVICE => "songator",
 			self::COLUMN_EMAIL => $email

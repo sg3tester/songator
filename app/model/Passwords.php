@@ -30,7 +30,7 @@ class Passwords
 	public static function hash($password, array $options = NULL)
 	{
 		$cost = isset($options['cost']) ? (int) $options['cost'] : self::BCRYPT_COST;
-		$salt = isset($options['salt']) ? (string) $options['salt'] : Nette\Utils\Strings::random(22, '0-9A-Za-z./');
+		$salt = isset($options['salt']) ? (string) $options['salt'] : 'xVd1050eeXIGABlp.qCbb.';
 
 		if (PHP_VERSION_ID < 50307) {
 			throw new Nette\NotSupportedException(__METHOD__ . ' requires PHP >= 5.3.7.');
