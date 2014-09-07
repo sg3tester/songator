@@ -14,21 +14,21 @@ namespace App\Model;
 class LogRepository extends Repository {
 	
 	/**
-	 * Adds a log record of event
+	 * Add a log to repository
 	 * @param string $media
 	 * @param string $event
+	 * @param string $message
 	 * @param string $who
 	 * @param int $user_id
-	 * @param mixed $resource
 	 * @return \Nette\Database\Table\ActiveRow
 	 */
-	public function addRecord($media, $event, $who, $user_id = null, $resource = null) {
+	public function addRecord($media, $event, $message ,$who, $user_id = null) {
 		return $this->getTable()->insert(array(
 			"media" => $media,
 			"event" => $event,
 			"who" => $who,
 			"user_id" => $user_id,
-			"resource" => $resource
+			"message" => $message
 		));
 	}
 	

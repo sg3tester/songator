@@ -29,7 +29,7 @@ class Logger extends \Nette\Object {
 		$this->user = $user;
 	}
 	
-	public function log($media, $event, $resource = null, $who = null) {
+	public function log($media, $event, $message, $who = null) {
 		
 		//Prepare identity
 		$user_id = null;
@@ -43,22 +43,17 @@ class Logger extends \Nette\Object {
 			$who = self::USR_ANONYMOUS;
 		}
 		
-		//Prepare resource
-		if ($resource)
-			$resource = \Nette\Utils\Json::encode($resource);
+		//Prepare message
+		$message = str_replace('%user%', $who, $message);
 		
 		//Add a record
-		$this->storage->addRecord($media, $event, $who, $user_id, $resource);
+		$this->storage->addRecord($media, $event, $message, $who, $user_id);
 	}
 	
-	public function systemLog($media, $event, $resource = null) {
-		
-		//Prepare resource
-		if ($resource)
-			$resource = \Nette\Utils\Json::encode($resource);
+	public function systemLog($media, $event, $message) {
 		
 		//Add a record
-		$this->storage->addRecord($media, $event, self::USR_SYSTEM, null, $resource);
+		$this->storage->addRecord($media, $event, $message, self::USR_SYSTEM);
 	}
 	
 }

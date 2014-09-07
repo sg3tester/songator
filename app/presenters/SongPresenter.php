@@ -224,12 +224,7 @@ class SongPresenter extends PrimePresenter {
 			$msg->title = "Yeah!";
 
 			$zadatel = isset($val->zadatel) ? $val->zadatel : null;
-			$this->logger->log("song", "add", array(
-				"id" => $song->id,
-				"interpret" => $val->interpret,
-				"song" => $val->name,
-				"vzkaz" => $val->vzkaz
-					), $zadatel);
+			$this->logger->log("song", "add", "%user% přidal(a) do playlistu song $val->interpret - $val->name", $zadatel);
 
 			$this->redirect("this");
 		} catch (\UnexpectedValueException $e) {
@@ -437,10 +432,7 @@ class SongPresenter extends PrimePresenter {
 		$msg = $this->flashMessage("Song schválen a zařazen do playlistu", "success");
 		$msg->title = "A je tam!";
 		$song = $this->songList->find($val->id);
-		$this->logger->log("song", "approve", array(
-			"id" => $val->id,
-			"name" => $song->name,
-			"interpret" => $song->interpret_name));
+		$this->logger->log("song", "approve", "%user% schválil(a) song $song->interpret_name - $song->name");
 
 		if ($this->back) {
 			$back = $this->back;
@@ -482,12 +474,7 @@ class SongPresenter extends PrimePresenter {
 		$msg = $this->flashMessage("Song zamítnut a vyřazen z playlistu", "success");
 		$msg->title = "A je ze hry!";
 		$song = $this->songList->find($val->id);
-		$this->logger->log("song", "reject", array(
-			"id" => $val->id,
-			"reason" => $val->note,
-			"name" => $song->name,
-			"interpret" => $song->interpret_name
-		));
+		$this->logger->log("song", "reject", "%user% zamítl(a) song $song->interpret_name - $song->name ($song->note)");
 
 		if ($this->back) {
 			$back = $this->back;
