@@ -25,9 +25,8 @@ You need a `composer`
 
 1. Clone this git repository `git clone https://github.com/JDCofficial/songator.git`
 2. From command prompt: `composer update` in directory with sources (downloads dependencies)
-3. Import SQL dump `/bin/sql/songator.sql` to your database
-4. Create new database and import SQL file
-5. Create file `config.local.neon` in directory `/app/config` and paste this:
+3. Create new database and import SQL dump `/bin/sql/songator.sql` to your database
+4. Create file `config.local.neon` in directory `/app/config` and paste this:
 
 ``` neon
 parameters:
