@@ -91,9 +91,6 @@ class Navigation extends \Nette\Object {
 			),
 			"list" => array(
 				"text" => "Seznam stránek",
-			),
-			"default" => array(
-				"text" => "Výchozí stránky"
 			)
 		);
 	}
