@@ -25,5 +25,9 @@ class ContentRepository extends Repository {
 			$page->where ("hidden", false);
 		return $page->fetch();
 	}
+	
+	public function create($page) {
+		return $this->getTable()->insert($page);
+	}
 
 }

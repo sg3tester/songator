@@ -1,0 +1,37 @@
+{* Latte template *}
+{block title}CMS editor{/block}
+{block sectionHeading}CMS editor{/block}
+{block sectionDesc}Editovat stránku{/block}
+{block content}
+{default $isEdit = false} 
+{include '../components/flash.latte'}
+
+<div class="box box-primary">
+	<div class="box-header">
+		<h3 n:if="!$isEdit" class="box-title">Vytvořit stránku</h3>
+		<h3 n:if="$isEdit" class="box-title">Upravit stránku</h3>
+	</div><!-- /.box-header -->
+	<div class="box-body table-responsive">
+		{include '../components/pageEditor.latte'}
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+{/block}
+
+{block scripts}
+{include #parent}
+<!-- Create a simple CodeMirror instance -->
+<link rel="stylesheet" href="lib/codemirror.css">
+<script src="{$basePath}/codemirror/lib/codemirror.js"></script>
+<script src="{$basePath}/codemirror/mode/xml/xml.js"></script>
+<script src="{$basePath}/codemirror/mode/javascript/javascript.js"></script>
+<script src="{$basePath}/codemirror/mode/css/css.js"></script>
+<script src="{$basePath}/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="{$basePath}/codemirror/mode/smarty/smarty.js"></script>
+<script src="{$basePath}/codemirror/mode/smartymixed/smartymixed.js"></script>
+<script>
+	var editor = CodeMirror.fromTextArea(placeEditor, {
+		mode: "smartymixed",
+		lineNumbers: true
+	});
+</script>
+{/block}

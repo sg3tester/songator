@@ -1,0 +1,15 @@
+{block title}Stránky CMS{/block}
+{block sectionHeading}Stránky{/block}
+{block sectionDesc}Správa stránek CMS{/block}
+{block content}
+{default $isEdit = false}
+{include '../components/flash.latte'}
+
+<div class="box box-primary">
+	<div class="box-header">
+		<h3 class="box-title">Seznam žánrů</h3>
+	</div><!-- /.box-header -->
+	<div class="box-body table-responsive">
+		{control pages}
+	</div><!-- /.box-body -->
+</div><!-- /.box -->

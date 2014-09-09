@@ -86,7 +86,7 @@ class Navigation extends \Nette\Object {
 
 	public function buildCmsMenu() {
 		return array(
-			"add" => array(
+			"editor" => array(
 				"text" => "Vytvořit stránku"
 			),
 			"list" => array(
