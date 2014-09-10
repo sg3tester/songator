@@ -31,6 +31,28 @@ class SongPresenter extends BasePresenter {
 		}
 	}
 
+	public function handleDeleteSong($id) {
+		$song = $this->songy->find($id);
+		if (!$song) {
+			$msg = $this->flashMessage("Tenhle song neexistuje.", 'danger');
+			$msg->title = 'Oh shit!';
+			$msg->icon = 'warning';
+			$this->redirect('this');
+		}
+		try {
+			$song->delete();
+			$msg = $this->flashMessage("Song '$song->name' úspěšně smazán.", 'success');
+			$msg->title = 'Yehet!';
+			$msg->icon = 'check';
+		} catch (\PDOException $ex) {
+			\Nette\Diagnostics\Debugger::log($ex);
+			$msg = $this->flashMessage("Něco se podělalo. Zkuzte to prosím později.", 'danger');
+			$msg->title = 'Oh shit!';
+			$msg->icon = 'warning';
+		}
+		$this->redirect('this');
+	}
+
 	public function handleDeleteGenre($id) {
 		$genre = $this->zanry->find($id);
 		if (!$genre) {
@@ -45,6 +67,7 @@ class SongPresenter extends BasePresenter {
 			$msg->title = 'Yehet!';
 			$msg->icon = 'check';
 		} catch (\PDOException $ex) {
+			\Nette\Diagnostics\Debugger::log($ex);
 			$msg = $this->flashMessage("Něco se podělalo. Zkuzte to prosím později.", 'danger');
 			$msg->title = 'Oh shit!';
 			$msg->icon = 'warning';
@@ -142,8 +165,12 @@ class SongPresenter extends BasePresenter {
 			return $item->related("song_likes")->count();
 		});
 
-		$grid->addActionHref("edit", "Editovat")
+		$grid->addActionHref("editor", "Editovat")
 				->setIcon("pencil");
+
+		$grid->addActionHref('delete', 'Smazat', 'deleteSong!')
+				->setIcon('trash')
+				->setConfirm('Opravdu chcete smazat tento song?');
 
 		$grid->setFilterRenderType(Filter::RENDER_OUTER);
 
