@@ -34,6 +34,30 @@ class SystemPresenter extends BasePresenter {
 
 		$form->onSuccess[] = function(Form $f) {
 			$values = $f->getHttpData();
+
+			try {
+				if (isset($values['setting'])) {
+					foreach ($values['setting'] as $key => $value) {
+						$this->settings->set($key, $value);
+					}
+				}
+				if (isset($values['clear'])) {
+					foreach ($values['clear'] as $key => $value) {
+						$this->settings->clear($key);
+					}
+				}
+
+				$this->settings->push(); //Write
+				$msg = $this->flashMessage("Všechny změny byly uloženy", 'success');
+				$msg->title = 'Yehet!';
+				$msg->icon = 'check';
+				$this->redirect('this');
+			} catch (\PDOException $e) {
+				\Nette\Diagnostics\Debugger::log($e);
+				$msg = $this->flashMessage("Něco se podělalo. Zkuste to prosím později.", 'danger');
+				$msg->title = 'Oh shit!';
+				$msg->icon = 'warning';
+			}
 		};
 
 		return $form;
