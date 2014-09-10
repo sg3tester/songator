@@ -28,6 +28,18 @@ class SongPresenter extends BasePresenter {
 
 	/** @var \App\Model\Lastfm\Databox @inject */
 	public $lfm;
+	protected $playUrl;
+
+	public function actionEditor($id) {
+		if ($id && $song = $this->songy->find($id)) {
+			$song_arr = $song->toArray();
+			$song_arr['reason_code'] = array_key_exists($song_arr['reason_code'], \Rejections::$reasons) ? $song_arr['reason_code'] : null;
+			$this['songEditor']->setDefaults($song_arr);
+			$this->template->isEdit = true;
+			$this->template->song = $song;
+			$this->playUrl = new \Nette\Http\UrlScript($song->link);
+		}
+	}
 
 	public function actionGenre($id) {
 		if ($id) {
@@ -283,6 +295,9 @@ class SongPresenter extends BasePresenter {
 			'wishlist_only' => 'Pouze na přání'
 		]);
 
+		$form->addText('link', 'URL k poslechu')
+				->addRule(Form::URL, 'URL není v platném formátu');
+
 		$form->addTextArea('note', 'Poznámka DJe');
 
 		$form->addTextArea('vzkaz', 'Vzkaz pro DJe');
@@ -300,13 +315,12 @@ class SongPresenter extends BasePresenter {
 				$val[$flag] = true;
 			}
 			unset($val['flags']); //clear bordel
-			
 			//If requester not filled => assign to you
-			if(!$val['zadatel'] && $val['user_id']) {
+			if (!$val['zadatel'] && $val['user_id']) {
 				$val['zadatel'] = $this->user->identity->username;
 				$val['user_id'] = $this->user->id;
 			}
-			
+
 			//If requester not filled BUT USER ID engaged => fetch username for requester name
 			if (!$val['zadatel'] && $val['user_id']) {
 				$val['zadatel'] = $this->users->getUser($val['user_id'])->username;
@@ -318,7 +332,7 @@ class SongPresenter extends BasePresenter {
 					$msg->title = 'A je tam!';
 					$msg->icon = 'check';
 				} else {
-					$val['image'] = $this->lfm->getTrackImage($val['interpret_name'], $val['name']) ?: '';
+					$val['image'] = $this->lfm->getTrackImage($val['interpret_name'], $val['name']) ? : '';
 					$this->songy->add($val);
 					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' přidán.", 'success');
 					$msg->title = 'A je tam!';
@@ -332,6 +346,20 @@ class SongPresenter extends BasePresenter {
 		};
 
 		return $form;
+	}
+
+	public function createComponentPlayer() {
+
+		$host = explode(".", $this->playUrl->getHost());
+		$provider = \Nette\Utils\Strings::lower($host[count($host) - 2]);
+		$handler = "\\App\\Controls\\" . ucfirst($provider) . "Player";
+
+		if (class_exists($handler))
+			$player = new $handler($this->playUrl);
+		else
+			$player = new \App\Controls\NoPlayer($this->playUrl);
+
+		return $player;
 	}
 
 }
