@@ -1,15 +1,75 @@
 {form songEditor}
+	<div n:if="$form->hasErrors()" class="callout callout-danger">
+		<h4>Formulář obsahuje chyby</h4>
+		<ul>
+			<li n:foreach="$form->errors as $error">{$error}</li>
+		</ul>
+	</div>
 	<div class="form-group">
-		{label nazev /}
-		{input nazev class => 'form-control', placeholder => 'Zadejte název interpreta'}
+		{label name /}
+		{input name class => 'form-control', placeholder => 'Název songu'}
+	</div>
+	<div class="form-group">
+		{label interpret_name /}
+		{input interpret_name class => 'form-control', placeholder => 'Jméno interpreta'}
 	</div>
 	<div class="form-group">
 		{label interpret_id /}
 		{input interpret_id class => 'form-control'}
 	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+				{label zanr_id /}
+				{input zanr_id class => 'form-control'}
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				{label status /}
+				{input status class => 'form-control'}
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="form-group">
+				{label reason_code /}
+				{input reason_code class => 'form-control'}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				{label zadatel /}
+				{input zadatel class => 'form-control', placeholder => 'Anonymní jméno'}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{label user_id /}
+				{input user_id class => 'form-control'}
+			</div>
+		</div>
+	</div>
 	<div class="form-group">
-		{label desc /}
-		{input desc class => 'form-control', rows => 6}
+		{label link /}
+		{input link class => 'form-control', placeholder => 'http://'}
+	</div>
+	<div class="form-group">
+		<div n:foreach="$form['flags']->getItems() as $name => $label" class="checkbox-inline">
+			{input flags:$name} {label flags:$name /}
+		</div>
+	</div>
+	<div class="form-group">
+		{label note /}
+		{input note class => 'form-control', placeholder => 'Komentář DJe nebo důvod zamítnutí'}
+	</div>
+	<div class="form-group">
+		{label vzkaz /}
+		{input vzkaz class => 'form-control', placeholder => 'Vzkaz pro DJe od žadatele'}
+	</div>
+	<div class="checkbox">
+		{input private_vzkaz} {label private_vzkaz /}
 	</div>
 	{input id}
 	{input send class => 'btn btn-primary'}

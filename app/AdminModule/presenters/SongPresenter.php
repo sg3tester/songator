@@ -292,6 +292,7 @@ class SongPresenter extends BasePresenter {
 				->addRule(Form::FILLED, 'Musíte udat kód zamítnutí');
 
 		$form->addText('zadatel', 'Přezdívka žadatele')
+				->addCondition(Form::FILLED)
 				->addRule(Form::MIN_LENGTH, 'Přezdívka žadatele musí mít minimálně %s znaků', 3);
 
 		$form->addSelect('user_id', 'Účet žadatele', $this->users->getUsers()->fetchPairs('id', 'username'))
@@ -305,6 +306,7 @@ class SongPresenter extends BasePresenter {
 		]);
 
 		$form->addText('link', 'URL k poslechu')
+				->addCondition(Form::FILLED)
 				->addRule(Form::URL, 'URL není v platném formátu');
 
 		$form->addTextArea('note', 'Poznámka DJe');
@@ -325,7 +327,7 @@ class SongPresenter extends BasePresenter {
 			}
 			unset($val['flags']); //clear bordel
 			//If requester not filled => assign to you
-			if (!$val['zadatel'] && $val['user_id']) {
+			if (!$val['zadatel'] && !$val['user_id']) {
 				$val['zadatel'] = $this->user->identity->username;
 				$val['user_id'] = $this->user->id;
 			}
