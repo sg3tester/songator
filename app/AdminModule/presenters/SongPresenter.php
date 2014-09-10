@@ -34,15 +34,20 @@ class SongPresenter extends BasePresenter {
 		if ($id && $song = $this->songy->find($id)) {
 			$song_arr = $song->toArray();
 			$song_arr['reason_code'] = array_key_exists($song_arr['reason_code'], \Rejections::$reasons) ? $song_arr['reason_code'] : null;
-			
+
 			//Load flags
 			$song_arr['flags'] = [];
 			foreach ($this['songEditor']['flags']->getItems() as $key => $item) {
 				if ($song->$key)
 					$song_arr['flags'][] = $key;
 			}
-			
+
 			$this['songEditor']->setDefaults($song_arr);
+			$this['songImageEditor']->setDefaults([
+				'interpret' => $song->interpret_name,
+				'song' => $song->name,
+				'id' => $song->id
+			]);
 			$this['songEditor']['send']->caption = 'Uložit';
 			$this->template->isEdit = true;
 			$this->template->song = $song;
@@ -377,6 +382,45 @@ class SongPresenter extends BasePresenter {
 			$player = new \App\Controls\NoPlayer($this->playUrl);
 
 		return $player;
+	}
+
+	protected function createComponentSongImageEditor() {
+		$form = new Form();
+
+		$form->addText('interpret', 'Interpret')
+				->setRequired('Musíte zadat název interpreta');
+
+		$form->addText('song', 'Song')
+				->setRequired('Musíte zadat název songu');
+
+		$form->addHidden('id');
+		$form->addSubmit('send', 'Update');
+
+		$form->onSuccess[] = function(Form $f) {
+			$val = $f->values;
+			try {
+				$image = $this->lfm->getTrackImage($val->interpret, $val->song);
+				$song = $this->songy->find($val->id);
+				
+				if (!$song)
+					throw new \UnexpectedValueException('Unexisted song');
+				
+				$song->update([
+					'image' => json_encode($image)
+				]);
+				$msg = $this->flashMessage("Song obrázek aktualizován přidán.", 'success');
+				$msg->title = 'A je tam!';
+				$msg->icon = 'check';
+				$this->redirect('this');
+			} catch (\UnexpectedValueException $e) {
+				\Nette\Diagnostics\Debugger::log($e);
+				$msg = $this->flashMessage('Něco se posralo. '.$e->getMessage(), 'danger');
+				$msg->title = 'Oh shit!';
+				$msg->icon = 'exclamation';
+			}
+		};
+
+		return $form;
 	}
 
 }
