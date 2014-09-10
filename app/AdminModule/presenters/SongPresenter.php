@@ -34,7 +34,16 @@ class SongPresenter extends BasePresenter {
 		if ($id && $song = $this->songy->find($id)) {
 			$song_arr = $song->toArray();
 			$song_arr['reason_code'] = array_key_exists($song_arr['reason_code'], \Rejections::$reasons) ? $song_arr['reason_code'] : null;
+			
+			//Load flags
+			$song_arr['flags'] = [];
+			foreach ($this['songEditor']['flags']->getItems() as $key => $item) {
+				if ($song->$key)
+					$song_arr['flags'][] = $key;
+			}
+			
 			$this['songEditor']->setDefaults($song_arr);
+			$this['songEditor']['send']->caption = 'Uložit';
 			$this->template->isEdit = true;
 			$this->template->song = $song;
 			$this->playUrl = new \Nette\Http\UrlScript($song->link);
