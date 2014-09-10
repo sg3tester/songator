@@ -84,4 +84,23 @@ class CmsPresenter extends BasePresenter {
 		}
 	}
 	
+	public function handleDelete($id) {
+		try {
+			$page = $this->pages->find($id);
+			if (!$page)
+				throw new \PDOException("Row #$id not exists!");
+
+			$page->delete();
+			$msg = $this->flashMessage("Stránka smazána", 'success');
+			$msg->title = 'A je venku!';
+			$msg->icon = 'trash-o';
+		} catch (\PDOException $e) {
+			$msg = $this->flashMessage("Někde nastala chyba.", 'danger');
+			$msg->title = 'Oh shit!';
+			$msg->icon = 'exclamation-triangle';
+			\Nette\Diagnostics\Debugger::log($e, \Nette\Diagnostics\Debugger::ERROR);
+		}
+
+		$this->redirect('this');
+	}
 }
