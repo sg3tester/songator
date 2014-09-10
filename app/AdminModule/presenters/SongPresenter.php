@@ -22,9 +22,12 @@ class SongPresenter extends BasePresenter {
 
 	/** @var \App\Model\InterpretRepository @inject */
 	public $interpreti;
-	
+
 	/** @var \App\UserManager @inject */
 	public $users;
+
+	/** @var \App\Model\Lastfm\Databox @inject */
+	public $lfm;
 
 	public function actionGenre($id) {
 		if ($id) {
@@ -261,7 +264,7 @@ class SongPresenter extends BasePresenter {
 					'rejected' => 'Zamítnut'
 				])
 				->setRequired('Zadejte stav songu');
-		
+
 		$form->addSelect('reason_code', 'Kód zamítnutí', \Rejections::$reasons)
 				->setPrompt('Vyberte kód zamítnutí')
 				->addConditionOn($form['status'], Form::EQUAL, 'rejected')
@@ -269,27 +272,63 @@ class SongPresenter extends BasePresenter {
 
 		$form->addText('zadatel', 'Přezdívka žadatele')
 				->addRule(Form::MIN_LENGTH, 'Přezdívka žadatele musí mít minimálně %s znaků', 3);
-		
+
 		$form->addSelect('user_id', 'Účet žadatele', $this->users->getUsers()->fetchPairs('id', 'username'))
 				->setPrompt('Vyberte uživatele');
-		
+
 		$form->addCheckboxList('flags', 'Flagy', [
 			'pecka' => 'Pecka',
 			'instro' => 'Má instro',
 			'remix' => 'Remix',
 			'wishlist_only' => 'Pouze na přání'
 		]);
-		
+
 		$form->addTextArea('note', 'Poznámka DJe');
-		
+
 		$form->addTextArea('vzkaz', 'Vzkaz pro DJe');
-		
+
 		$form->addCheckbox('private_vzkaz', 'Vzkaz je soukromý');
-		
+
+		$form->addHidden('id');
+
 		$form->addSubmit('send', 'Přidat');
-		
+
 		$form->onSuccess[] = function(Form $f) {
-			dump($f->values);
+			$val = $f->getValues(true);
+
+			foreach ($val['flags'] as $flag) {
+				$val[$flag] = true;
+			}
+			unset($val['flags']); //clear bordel
+			
+			//If requester not filled => assign to you
+			if(!$val['zadatel'] && $val['user_id']) {
+				$val['zadatel'] = $this->user->identity->username;
+				$val['user_id'] = $this->user->id;
+			}
+			
+			//If requester not filled BUT USER ID engaged => fetch username for requester name
+			if (!$val['zadatel'] && $val['user_id']) {
+				$val['zadatel'] = $this->users->getUser($val['user_id'])->username;
+			}
+
+			try {
+				if ($val['id']) {
+					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' upraven.", 'success');
+					$msg->title = 'A je tam!';
+					$msg->icon = 'check';
+				} else {
+					$val['image'] = $this->lfm->getTrackImage($val['interpret_name'], $val['name']) ?: '';
+					$this->songy->add($val);
+					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' přidán.", 'success');
+					$msg->title = 'A je tam!';
+					$msg->icon = 'check';
+				}
+			} catch (\UnexpectedValueException $e) {
+				$msg = $this->flashMessage($e->getMessage(), 'danger');
+				$msg->title = 'Oh shit!';
+				$msg->icon = 'exclamation';
+			}
 		};
 
 		return $form;
