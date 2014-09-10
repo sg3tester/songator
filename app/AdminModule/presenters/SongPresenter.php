@@ -328,11 +328,16 @@ class SongPresenter extends BasePresenter {
 
 			try {
 				if ($val['id']) {
+					$original = $this->songy->find($val['id']);
+					if ($original->status != $val['status'])
+						$val['revisor'] = $this->user->id;
+					$original->update($val);
 					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' upraven.", 'success');
 					$msg->title = 'A je tam!';
 					$msg->icon = 'check';
 				} else {
 					$val['image'] = $this->lfm->getTrackImage($val['interpret_name'], $val['name']) ? : '';
+					$val['revisor'] = $this->user->id;
 					$this->songy->add($val);
 					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' přidán.", 'success');
 					$msg->title = 'A je tam!';
@@ -343,6 +348,7 @@ class SongPresenter extends BasePresenter {
 				$msg->title = 'Oh shit!';
 				$msg->icon = 'exclamation';
 			}
+			$this->redirect('this');
 		};
 
 		return $form;
