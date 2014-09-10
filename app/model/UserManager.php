@@ -149,6 +149,10 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 			? Strings::lower($password)
 			: $password;
 	}
+	
+	public function getUsers() {
+		return $this->database->table(self::TABLE_NAME);
+	}
 
 }
 

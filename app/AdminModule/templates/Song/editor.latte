@@ -1,0 +1,43 @@
+{* Latte template *}
+{block title}Song editor{/block}
+{block sectionHeading}Editor songů{/block}
+{block sectionDesc}Přidat upravit nebo revidovat song a další jeho informace{/block}
+{block content}
+{default $isEdit = false} 
+{include '../components/flash.latte'}
+
+<div n:if="!$isEdit" class="box box-primary">
+	<div class="box-header">
+		<h3 class="box-title">Přidat song</h3>
+	</div><!-- /.box-header -->
+	<div class="box-body table-responsive">
+		{control songEditor}
+		{*include '../components/songEditor.latte'*}
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+
+<div n:if="$isEdit" class="row">
+	<div class="col-md-8">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">Upravit song</h3>
+			</div><!-- /.box-header -->
+			<div class="box-body table-responsive">
+				{include '../components/songEditor.latte'}
+			</div><!-- /.box-body -->
+		</div><!-- /.box -->
+	</div>
+	<div class="col-md-4">
+		<div class="box box-info">
+			<div class="box-body table-responsive">
+				{dump $lastfm->similar->artist}
+				{foreach $lastfm->image as $image}
+					{if $image->size == 'mega'}
+						{var $image_src = (array)$image}
+						<img src="{$image_src['#text']}" alt="{$interpret->nazev}" class="img-thumbnail" />
+					{/if}
+				{/foreach}
+			</div><!-- /.box-body -->
+		</div><!-- /.box -->
+	</div>
+</div>

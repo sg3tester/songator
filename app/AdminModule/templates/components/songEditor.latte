@@ -1,0 +1,16 @@
+{form songEditor}
+	<div class="form-group">
+		{label nazev /}
+		{input nazev class => 'form-control', placeholder => 'Zadejte název interpreta'}
+	</div>
+	<div class="form-group">
+		{label interpret_id /}
+		{input interpret_id class => 'form-control'}
+	</div>
+	<div class="form-group">
+		{label desc /}
+		{input desc class => 'form-control', rows => 6}
+	</div>
+	{input id}
+	{input send class => 'btn btn-primary'}
+{/form}

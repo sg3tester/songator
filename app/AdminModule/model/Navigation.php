@@ -54,7 +54,7 @@ class Navigation extends \Nette\Object {
 
 	public function buildSongMenu() {
 		return array(
-			"add" => array(
+			"editor" => array(
 				"text" => "Přidat song"
 			),
 			"list" => array(

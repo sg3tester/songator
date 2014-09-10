@@ -20,6 +20,12 @@ class SongPresenter extends BasePresenter {
 	/** @var  \App\Model\ZanrRepository @inject */
 	public $zanry;
 
+	/** @var \App\Model\InterpretRepository @inject */
+	public $interpreti;
+	
+	/** @var \App\UserManager @inject */
+	public $users;
+
 	public function actionGenre($id) {
 		if ($id) {
 			$genre = $this->zanry->find($id);
@@ -228,6 +234,62 @@ class SongPresenter extends BasePresenter {
 			}
 
 			$this->redirect('this');
+		};
+
+		return $form;
+	}
+
+	protected function createComponentSongEditor() {
+		$form = new Form();
+
+		$form->addText('name', 'Song')
+				->setRequired('Zadejte název songu');
+
+		$form->addText('interpret_name', 'Interpret')
+				->setRequired('Zadejte jméno interpreta');
+
+		$form->addSelect('interpret_id', 'Asociovat s', $this->interpreti->findAll()->fetchPairs('id', 'nazev'))
+				->setPrompt('Vyberte asociaci');
+
+		$form->addSelect('zanr_id', 'Žánr', $this->zanry->findAll()->fetchPairs('id', 'name'))
+				->setPrompt('Vyberte žánr')
+				->setRequired('Vyberte žánr songu');
+
+		$form->addSelect('status', 'Status', [
+					'waiting' => 'Čeká na schválení',
+					'approved' => 'Schválen',
+					'rejected' => 'Zamítnut'
+				])
+				->setRequired('Zadejte stav songu');
+		
+		$form->addSelect('reason_code', 'Kód zamítnutí', \Rejections::$reasons)
+				->setPrompt('Vyberte kód zamítnutí')
+				->addConditionOn($form['status'], Form::EQUAL, 'rejected')
+				->addRule(Form::FILLED, 'Musíte udat kód zamítnutí');
+
+		$form->addText('zadatel', 'Přezdívka žadatele')
+				->addRule(Form::MIN_LENGTH, 'Přezdívka žadatele musí mít minimálně %s znaků', 3);
+		
+		$form->addSelect('user_id', 'Účet žadatele', $this->users->getUsers()->fetchPairs('id', 'username'))
+				->setPrompt('Vyberte uživatele');
+		
+		$form->addCheckboxList('flags', 'Flagy', [
+			'pecka' => 'Pecka',
+			'instro' => 'Má instro',
+			'remix' => 'Remix',
+			'wishlist_only' => 'Pouze na přání'
+		]);
+		
+		$form->addTextArea('note', 'Poznámka DJe');
+		
+		$form->addTextArea('vzkaz', 'Vzkaz pro DJe');
+		
+		$form->addCheckbox('private_vzkaz', 'Vzkaz je soukromý');
+		
+		$form->addSubmit('send', 'Přidat');
+		
+		$form->onSuccess[] = function(Form $f) {
+			dump($f->values);
 		};
 
 		return $form;
