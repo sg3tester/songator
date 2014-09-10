@@ -347,7 +347,7 @@ class SongPresenter extends BasePresenter {
 					$msg->title = 'A je tam!';
 					$msg->icon = 'check';
 				} else {
-					$val['image'] = $this->lfm->getTrackImage($val['interpret_name'], $val['name']) ? : '';
+					$val['image'] = json_encode($this->lfm->getTrackImage($val['interpret_name'], $val['name'])) ? : '';
 					$val['revisor'] = $this->user->id;
 					$this->songy->add($val);
 					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' přidán.", 'success');
