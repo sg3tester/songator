@@ -63,4 +63,35 @@ class SystemPresenter extends BasePresenter {
 		return $form;
 	}
 
+	protected function createComponentAddSetting() {
+		$form = new Form();
+
+		$form->addText('key', 'Klíč')
+				->setRequired('Zadejte klíč nastavení');
+
+		$form->addText('value', 'Hodnota')
+				->setRequired('Zadejte hodnotu nastavení');
+
+		$form->addSubmit('send', 'Zapsat');
+
+		$form->onSuccess[] = function (Form $f) {
+			try {
+				$val = $f->values;
+				$this->settings->set($val->key, $val->value);
+				$this->settings->push(); //Write
+				$msg = $this->flashMessage("Nastavení bylo zapsáno", 'success');
+				$msg->title = 'Yehet!';
+				$msg->icon = 'check';
+				$this->redirect('this');
+			} catch (\PDOException $e) {
+				\Nette\Diagnostics\Debugger::log($e);
+				$msg = $this->flashMessage("Něco se podělalo. Zkuste to prosím později.", 'danger');
+				$msg->title = 'Oh shit!';
+				$msg->icon = 'warning';
+			}
+		};
+
+		return $form;
+	}
+
 }
