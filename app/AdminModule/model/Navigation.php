@@ -36,6 +36,11 @@ class Navigation extends \Nette\Object {
 				"icon" => "fa fa-file",
 				"menu" => $this->buildCmsMenu()
 			),
+			"user" => array(
+				"text" => "Uživatelé",
+				"icon" => "fa fa-group",
+				"menu" => $this->buildUserMenu()
+			),
 			"system" => array(
 				"text" => "Systém",
 				"icon" => "fa fa-cogs",
@@ -92,6 +97,17 @@ class Navigation extends \Nette\Object {
 			"list" => array(
 				"text" => "Seznam stránek",
 			)
+		);
+	}
+	
+	public function buildUserMenu() {
+		return array(
+			"editor" => array(
+				"text" => "Vytvořit uživatele"
+			),
+			"list" => array(
+				"text" => "Uživatelé",
+			),
 		);
 	}
 

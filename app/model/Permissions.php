@@ -61,4 +61,9 @@ class Permissions extends \Nette\Security\Permission {
 		$this->allow("admin", self::ALL, self::ALL); //Admin can all
 	}
 	
+	public function getRoles() {
+		$roles = parent::getRoles();
+		return array_combine($roles, $roles);
+	}
+	
 }

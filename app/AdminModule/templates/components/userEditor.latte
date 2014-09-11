@@ -1,0 +1,67 @@
+{form userEditor}
+	<div n:if="$form->hasErrors()" class="callout callout-danger">
+		<h4>Formulář obsahuje chyby</h4>
+		<ul>
+			<li n:foreach="$form->errors as $error">{$error}</li>
+		</ul>
+	</div>
+	<div class="form-group">
+		{label username /}
+		{input username class => 'form-control', placeholder => 'Přihlašovací jméno'}
+	</div>
+	<div class="form-group">
+		{label realname /}
+		{input realname class => 'form-control', placeholder => 'Jméno interpreta'}
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				{label email /}
+				{input email class => 'form-control', placeholder => 'Kontaktní email'}
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{label role /}
+				{input role class => 'form-control'}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				{label password /}
+				{input password class => 'form-control', placeholder => 'Heslo'}
+				<p class="help-block">Pokud nechcete měnit heslo, nechte toto pole prázdné</p>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{label password_verify /}
+				{input password_verify class => 'form-control', placeholder => 'Kontrola'}
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				{label twitter_acc /}
+				{input twitter_acc class => 'form-control', placeholder => 'Twitter name'}
+				<p class="help-block">Jméno Twitter účtu bez @ na začátku</p>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				{label www /}
+				{input www class => 'form-control', placeholder => 'http://'}
+				<p class="help-block">Nezapomeňte http:// na začátku</p>
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		{label about /}
+		{input about class => 'form-control', rows => 6}
+	</div>
+	{input id}
+	{input send class => 'btn btn-primary'}
+{/form}

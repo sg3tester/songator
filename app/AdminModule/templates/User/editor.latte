@@ -1,0 +1,53 @@
+{* Latte template *}
+{block title}Editor uživatelů{/block}
+{block sectionHeading}Editor uživatelů{/block}
+{block sectionDesc}Přidat nebo upravit uživatelský profil{/block}
+{block content}
+{default $isEdit = false} 
+{include '../components/flash.latte'}
+
+<div class="row">
+	<div class="col-md-8">
+		<div class="box box-primary">
+			<div class="box-header">
+				<h3 class="box-title">Upravit profil</h3>
+			</div><!-- /.box-header -->
+			<div class="box-body table-responsive">
+				{*control songEditor*}
+				{include '../components/userEditor.latte'}
+			</div><!-- /.box-body -->
+		</div><!-- /.box -->
+	</div>
+	<div class="col-md-4">
+		<div class="box box-success">
+			<div class="box-body table-responsive">
+				<div class="box-header">
+					<h3 class="box-title">Informace</h3>
+					<img n:if="$profile->avatar" src="{$profile->avatar}" alt="Avatar" class="img-thumbnail pull-right">
+				</div><!-- /.box-header -->
+				<table class="table table-condensed">
+					<tr>
+						<td>Registrován(a)</td>
+						<td>{$profile->registered|date:'d.m.Y h:i:s'}</td>
+					</tr>
+					<tr>
+						<td>Autorizační služba</td>
+						<td>{$profile->auth_service}</td>
+					</tr>
+					<tr>
+						<td>Výchozí IP (registrace)</td>
+						<td>{$profile->ip}</td>
+					</tr>
+					<tr>
+						<td>Verifikován(a) přihlášením</td>
+						<td>{if $profile->first_login}NE{else}ANO{/if}</td>
+					</tr>
+					<tr>
+						<td>Heslo</td>
+						<td>{if empty($profile->password)}NE{else}ANO{/if}</td>
+					</tr>
+				</table>
+			</div><!-- /.box-body -->
+		</div><!-- /.box -->
+	</div>
+</div>

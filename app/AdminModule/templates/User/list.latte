@@ -1,0 +1,21 @@
+{block title}Správa uživatelů{/block}
+{block sectionHeading}Uživatelé{/block}
+{block sectionDesc}Správa registrovaných uživatelů v Songatoru{/block}
+{block content}
+
+{include '../components/flash.latte'}
+
+<div class="box">
+	<div class="box-header">
+		<h3 class="box-title">Seznam uživatelů</h3>
+	</div><!-- /.box-header -->
+	<div class="box-body table-responsive">
+		{control userList}
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
+{/block}
+
+{block css}
+{include #parent}
+<link rel="stylesheet" href="{$basePath}/css/grido.css">
+{/block}

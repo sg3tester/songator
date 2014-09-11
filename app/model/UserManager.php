@@ -154,6 +154,11 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		return $this->database->table(self::TABLE_NAME);
 	}
 
+	public function changePassword($id, $password) {
+		return $this->getUser($id)->update([
+			self::COLUMN_PASSWORD_HASH => Passwords::hash($password)
+		]);
+	}
 }
 
 class UserManagerException extends Nette\InvalidStateException {}
