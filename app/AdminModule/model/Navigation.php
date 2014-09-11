@@ -102,7 +102,7 @@ class Navigation extends \Nette\Object {
 	
 	public function buildUserMenu() {
 		return array(
-			"editor" => array(
+			"create" => array(
 				"text" => "Vytvořit uživatele"
 			),
 			"list" => array(

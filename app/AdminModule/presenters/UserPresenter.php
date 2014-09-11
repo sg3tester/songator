@@ -111,7 +111,7 @@ class UserPresenter extends BasePresenter {
 				->setRequired('Vyžadován identifikátor');
 
 		$form->onSuccess[] = function (Form $f) {
-			$val= $f->values;
+			$val = $f->values;
 			if (empty($val->password))
 				unset($val->password);
 			else {
@@ -127,6 +127,46 @@ class UserPresenter extends BasePresenter {
 		};
 
 		$form->addSubmit('send', 'Uložit');
+
+		return $form;
+	}
+
+	protected function createComponentUserAdd() {
+		$form = new Form();
+
+		$form->addText('username', 'Uživatelské jméno')
+				->setRequired('Zadejte uživatelské jméno');
+
+		$form->addText('email', 'Email')
+				->setRequired('Zadejte platnou emailovou adresu')
+				->addRule(Form::EMAIL, 'Zadaná emailová adresa je neplatná');
+
+		$form->addPassword('password', 'Heslo')
+				->setRequired('Zadejte heslo')
+				->addRule(Form::MIN_LENGTH, 'Heslo musí mít minimálně %s znaků', 6);
+
+		$form->addPassword('password_verify', 'Ověření hesla')
+				->setOmitted()
+				->addConditionOn($form['password'], Form::FILLED)
+				->addRule(Form::EQUAL, 'Hesla se neshodují', $form['password']);
+
+		$form->addSubmit('send', 'Vytvořit účet');
+
+		$form->onSuccess[] = function (Form $f) {
+			try {
+				$val = $f->values;
+				$r = $this->users->add($val->username, $val->password, $val->email);
+				$this->logger->log('User', 'edit', "%user% editoval(a) profil uživatele {$val->username}");
+				$msg = $this->flashMessage("Profil uživatele '$val->username' upraven.", 'success');
+				$msg->title = 'A je tam!';
+				$msg->icon = 'check';
+				$this->redirect('editor', [$r->id]);
+			} catch (\App\UserManagerException $e) {
+				$msg = $this->flashMessage($e->getMessage(), 'danger');
+				$msg->title = 'Oh shit!';
+				$msg->icon = 'warning';
+			}
+		};
 
 		return $form;
 	}

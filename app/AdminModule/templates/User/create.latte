@@ -1,0 +1,17 @@
+{* Latte template *}
+{block title}Vytvořit účet{/block}
+{block sectionHeading}Nový uživatel{/block}
+{block sectionDesc}Vytvořit nový uživatelský účet{/block}
+{block content}
+{default $isEdit = false} 
+{include '../components/flash.latte'}
+
+<div class="box box-primary">
+	<div class="box-header">
+		<h3 class="box-title">Vytvořit účet</h3>
+	</div><!-- /.box-header -->
+	<div class="box-body table-responsive">
+		{*control songEditor*}
+		{include '../components/userAdd.latte'}
+	</div><!-- /.box-body -->
+</div><!-- /.box -->
