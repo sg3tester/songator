@@ -48,6 +48,7 @@ class SystemPresenter extends BasePresenter {
 				}
 
 				$this->settings->push(); //Write
+				$this->logger->log('System', 'edit', "%user% změnila(a) nastavení");
 				$msg = $this->flashMessage("Všechny změny byly uloženy", 'success');
 				$msg->title = 'Yehet!';
 				$msg->icon = 'check';
@@ -79,6 +80,7 @@ class SystemPresenter extends BasePresenter {
 				$val = $f->values;
 				$this->settings->set($val->key, $val->value);
 				$this->settings->push(); //Write
+				$this->logger->log('System', 'edit', "%user% změnila(a) nastavení");
 				$msg = $this->flashMessage("Nastavení bylo zapsáno", 'success');
 				$msg->title = 'Yehet!';
 				$msg->icon = 'check';

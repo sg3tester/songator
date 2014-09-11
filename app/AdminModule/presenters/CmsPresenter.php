@@ -59,6 +59,7 @@ class CmsPresenter extends BasePresenter {
 				$msg = $this->flashMessage("Stránka byla upravena", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
+				$this->logger->log('CMS', 'edit', "%user% uprvila(a) stránku {$val->name}");
 			}
 			else {
 				$r = $this->pages->create($val);
@@ -66,6 +67,7 @@ class CmsPresenter extends BasePresenter {
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
 				$this->redirect('this',['id' => $r->id]);
+				$this->logger->log('CMS', 'create', "%user% vytvořil(a) stránku {$val->name}");
 			}
 			$this->redirect('this');
 			
@@ -91,6 +93,7 @@ class CmsPresenter extends BasePresenter {
 				throw new \PDOException("Row #$id not exists!");
 
 			$page->delete();
+			$this->logger->log('CMS', 'delete', "%user% smazala(a) stránku {$page->name}");
 			$msg = $this->flashMessage("Stránka smazána", 'success');
 			$msg->title = 'A je venku!';
 			$msg->icon = 'trash-o';

@@ -97,11 +97,13 @@ class InterpretPresenter extends BasePresenter {
 			$values = $frm->values;
 			if ($values->id) {
 				$this->interpreti->find($values->id)->update($values);
+				$this->logger->log('Interpret', 'edit', "%user% upravila(a) interpreta {$values->nazev}");
 				$msg = $this->flashMessage("Interpret '$values->nazev' editován.", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
 			} else {
 				$r = $this->interpreti->add($values->nazev, $values->desc, $values->interpret_id, $this->user);
+				$this->logger->log('Interpret', 'create', "%user% vytvořila(a) interpreta {$values->nazev}");
 				$msg = $this->flashMessage("Interpret '$values->nazev' přidán.", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
@@ -123,6 +125,7 @@ class InterpretPresenter extends BasePresenter {
 
 			$name = $interpret->nazev;
 			$interpret->delete();
+			$this->logger->log('Interpret', 'delete', "%user% smazala(a) interpreta {$name}");
 			$msg = $this->flashMessage("Interpret '$name' smazán", 'success');
 			$msg->title = 'A je venku!';
 			$msg->icon = 'trash-o';
@@ -171,6 +174,7 @@ class InterpretPresenter extends BasePresenter {
 				$msg->icon = 'ticket';
 				$this->redirect('this');
 			}
+			$this->logger->log('Interpret', 'assoc', "%user% provedla asociace interpretů");
 			$this->songy->commit();
 			$msg = $this->flashMessage("$count interpretů bylo úspěšně asiciováno s registrem. ($created vytvořeno)", 'success');
 			$msg->title = 'Oh yeah!';

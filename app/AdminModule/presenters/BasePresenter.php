@@ -20,6 +20,9 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter {
 
 	/** @var  \Navigation @inject */
 	public $navigation;
+	
+	/** @var \App\Model\Logging\Logger @inject */
+	public $logger;
 
 	protected function startup() {
 		//Nejsi-li admin, vyfič!

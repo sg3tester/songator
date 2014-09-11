@@ -76,6 +76,7 @@ class SongPresenter extends BasePresenter {
 		}
 		try {
 			$song->delete();
+			$this->logger->log('Song', 'delete', "%user% smazala(a) song {$song->name}");
 			$msg = $this->flashMessage("Song '$song->name' úspěšně smazán.", 'success');
 			$msg->title = 'Yehet!';
 			$msg->icon = 'check';
@@ -98,6 +99,7 @@ class SongPresenter extends BasePresenter {
 		}
 		try {
 			$genre->delete();
+			$this->logger->log('Genre', 'delete', "%user% smazala(a) žánr {$genre->name}");
 			$msg = $this->flashMessage("Žánr '$genre->name' úspěšně smazán.", 'success');
 			$msg->title = 'Yehet!';
 			$msg->icon = 'check';
@@ -252,11 +254,13 @@ class SongPresenter extends BasePresenter {
 
 			if ($values->id) {
 				$this->zanry->find($values->id)->update($values);
+				$this->logger->log('Genre', 'edit', "%user% upravila(a) žánr {$val->name}");
 				$msg = $this->flashMessage("Žánr '$values->name' editován.", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
 			} else {
 				$this->zanry->add($values);
+				$this->logger->log('Genre', 'add', "%user% přidala(a) žánr {$val->name}");
 				$msg = $this->flashMessage("Žánr '$values->name' přidán.", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
@@ -348,13 +352,15 @@ class SongPresenter extends BasePresenter {
 					if ($original->status != $val['status'])
 						$val['revisor'] = $this->user->id;
 					$original->update($val);
+					$this->logger->log('Song', 'edit', "%user% upravila(a) song {$original->name}");
 					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' upraven.", 'success');
 					$msg->title = 'A je tam!';
 					$msg->icon = 'check';
 				} else {
 					$val['image'] = json_encode($this->lfm->getTrackImage($val['interpret_name'], $val['name'])) ? : '';
 					$val['revisor'] = $this->user->id;
-					$this->songy->add($val);
+					$song = $this->songy->add($val);
+					$this->logger->log('Song', 'create', "%user% vytvořila(a) song {$song->name}");
 					$msg = $this->flashMessage("Song '{$val['interpret_name']} - {$val['name']}' přidán.", 'success');
 					$msg->title = 'A je tam!';
 					$msg->icon = 'check';
