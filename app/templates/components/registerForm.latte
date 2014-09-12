@@ -1,11 +1,23 @@
- <form n:name="registerForm" class="form-signin" role="form">
+<form n:name="registerForm" class="form-signin" role="form">
 	<h2 class="form-signin-heading">Vytvořit účet</h2>
 	{include 'flashes.latte'}
 	<div n:foreach="$form->errors as $error" class="alert alert-danger">{$error}</div>
-	<input n:name="username" class="form-control" placeholder="Uživatelské jméno" required autofocus>
-	<input n:name="email" class="form-control" placeholder="Váš Email" required>
-	<input n:name="password" type="password" class="form-control" placeholder="Heslo" required>
-	<input n:name="verify" type="password" class="form-control" placeholder="Kontrola hesla" required>
+	<div class="form-group">
+		<label for="username">Uživatel</label>
+		<input n:name="username" class="form-control" placeholder="Uživatelské jméno" required autofocus>
+	</div>
+	<div class="form-group">
+		<label for="username">Email</label>
+		<input n:name="email" class="form-control" placeholder="Váš Email" required>
+	</div>
+	<div class="form-group">
+		<label for="username">Heslo</label>
+		<input n:name="password" type="password" class="form-control" placeholder="Heslo" required>
+	</div>
+	<div class="form-group">
+		<label for="username">Heslo znovu</label>
+		<input n:name="verify" type="password" class="form-control" placeholder="Kontrola hesla" required>
+	</div>
 	<button n:name="send" class="btn btn-lg btn-primary btn-block" type="submit">Vytvořit účet</button>
 	<div class="sns-login">
 		<a class="zocial twitter" style="font-size: 12px; width: 175px" n:href="twitterLogin">Login with Twitter</a>
