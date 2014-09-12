@@ -3421,3 +3421,7 @@ fieldset[disabled] .btn-vk.active {
 	border-color: #3C8DBC !important;
 	box-shadow: none;
 }
+
+.s3-logo {
+	margin: 1em 0 2em;
+}
