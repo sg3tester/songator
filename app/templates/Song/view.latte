@@ -1,6 +1,18 @@
 {* Latte template *}
 
 {block content}
+<div id="fb-root"></div>
+<script>
+	(function(d, s, id) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id))
+			return;
+		js = d.createElement(s);
+		js.id = id;
+		js.src = "//connect.facebook.net/cs_CZ/sdk.js#xfbml=1&version=v2.0";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="container content">
 	<h1 class="stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
 		{$song->interpret_name} - {$song->name}
@@ -27,7 +39,7 @@
 	<br />
 	<div class="row">
 		<div class="col-md-7">
-		    {include '../components/flashes.latte'}
+			{include '../components/flashes.latte'}
 			<p n:if="$song->note" class="well"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
 			<table class="table table-hover">
 				<tr>
@@ -77,20 +89,31 @@
 					<td><strong>{if $song->revisor}{$song->ref("user","revisor")->username}{else}-{/if}</strong></td>
 				</tr>
 			</table>
-				<div n:ifcontent class="btn-group">
-					<a n:if="$user->isAllowed('song','like')" n:href="like!" class="btn {if $liked}btn-danger{else}btn-default{/if}"><i class="glyphicon glyphicon-heart"></i> Líbí se mi</a>
-					<a n:if="$user->isAllowed('song','approve')" n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
-					<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
-					<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
-					<a n:if="$user->isAllowed('song','remove')" n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></a>
-				</div>
+			<div n:ifcontent class="btn-group">
+				<a n:if="$user->isAllowed('song','like')" n:href="like!" class="btn {if $liked}btn-danger{else}btn-default{/if}"><i class="glyphicon glyphicon-heart"></i> Líbí se mi</a>
+				<a n:if="$user->isAllowed('song','approve')" n:href="approve 'id' => $song->id, 'back' => 'view'" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Schválit</a>
+				<a n:if="$user->isAllowed('song','reject')" n:href="reject 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> Zamítnout</a>
+				<a n:if="$user->isAllowed('song','edit')" n:href="edit 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i></a>
+				<a n:if="$user->isAllowed('song','remove')" n:href="remove 'id' => $song->id, 'back' => 'view'" class="btn btn-default"><i class="glyphicon glyphicon-trash"></i></a>
+			</div>
 		</div>
 		<div class="col-md-5">
 			{if $song->link && $user->isAllowed('song','play')}
-			{control player}
+				{control player}
 			{else}
 				<div class="noplayer">Song není k dispozici</div>
 			{/if}
+			<div class="social-share">
+				<a class="zocial facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={plink //this}">Sdílet na FB</a>
+				<a class="zocial twitter" target="_blank" href="https://twitter.com/home?status=I%20like%20a%20song%20{plink //this}%20on%20Songator%203">Tweetnout</a>
+				<a class="zocial googleplus" target="_blank" href="https://plus.google.com/share?url={plink //this}">Google+</a>
+			</div>
 		</div>
 	</div>
 </div>
+{/block}
+
+{block css}
+	{include #parent}
+	<link rel="stylesheet" href="{$basePath}/zocial/zocial.css">
+{/block}
