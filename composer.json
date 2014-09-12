@@ -16,7 +16,8 @@
 		"dg/adminer-custom": "1.*",
 		"leafo/lessphp": "0.4.0",
 		"o5/grido": "1.0.5",
-		"kdyby/console": "~2.1"
+		"kdyby/console": "~2.1",
+		"kdyby/events": "~2.1.1"
 	},
 	"require-dev": {
 		"nette/tester": "~1.0.0"
