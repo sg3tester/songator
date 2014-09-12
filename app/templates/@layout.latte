@@ -4,68 +4,76 @@
  * @param string   $basePath web base path
  * @param string   $robots   tell robots how to index the content of a page (optional)
  * @param array    $flashes  flash messages
- *}
+*}
 
 <!DOCTYPE html>
 <html lang="cs">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{block title|striptags}DJ's open playlist{/block} - Songátor 3</title>
+	<head>
+		<meta charset="utf-8">
+		<title>{block title|striptags}{$title}{/block} - {$sitename}</title>
+		<meta name="description" content="{$description}">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="{$robots}">
+		<meta name="author" content="{$author}">
+		<meta name="generator" content="Songator v{\Songator::VERSION}">
+		<meta property="og:title" content="{include title}">
+		<meta property="og:description" content="{$description}">
+		<meta property="og:type" content="website">
+		<meta property="og:site_name" content="{$sitename}"/>
+		<meta property="og:image" content="{block ogimage}{$ogimage}{/block}">
+		{block css}
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css">
 
-	{block css}
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="{$basePath}/css/bootstrap.min.css">
+		<!-- Bootstrap theme -->
+		<link rel="stylesheet" href="{$basePath}/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{$basePath}/css/ui/jquery-ui.min.css">
 
-    <!-- Bootstrap theme -->
-    <link rel="stylesheet" href="{$basePath}/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="{$basePath}/css/ui/jquery-ui.min.css">
+		<link rel="stylesheet" href="{$basePath}/css/typehead.css">
+		<link rel="stylesheet" href="{$basePath}/zocial/zocial.css">
+		<link rel="stylesheet" href="{$basePath}/css/font-awesome.min.css">
 
-	<link rel="stylesheet" href="{$basePath}/css/typehead.css">
-	<link rel="stylesheet" href="{$basePath}/zocial/zocial.css">
-	<link rel="stylesheet" href="{$basePath}/css/font-awesome.min.css">
+		<!-- The style -->
+		<link rel="stylesheet" href="{$basePath}/css/style.css">
+		{/block}
 
-    <!-- The style -->
-    <link rel="stylesheet" href="{$basePath}/css/style.css">
-    {/block}
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	</head>
+	<body role="document">
 
-  </head>
-  <body role="document">
+		{control navbar}
 
-    {control navbar}
+		{include content}
 
-    {include content}
+		<footer class="sg-footer">
+			<div class="container text-center">
+				<iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; height:35px;" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FofficialJDC&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35"></iframe>
+				<p><small><a href="https://github.com/JDCofficial/songator" target="_blank">Songátor v{=Songator::VERSION}</a> &copy; 2013-2014 <a href="http://www.jdcent.cz" target="_blank">JDC Entertainment</a> - All rights reserved | Template by JDC</small></p>
+			</div>
+		</footer>
 
-    <footer class="sg-footer">
-      <div class="container text-center">
-      <iframe scrolling="no" frameborder="0" allowtransparency="true" style="border:none; overflow:hidden; height:35px;" src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FofficialJDC&amp;width&amp;layout=button&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35"></iframe>
-      <p><small><a href="https://github.com/JDCofficial/songator" target="_blank">Songátor v{=Songator::VERSION}</a> &copy; 2013-2014 <a href="http://www.jdcent.cz" target="_blank">JDC Entertainment</a> - All rights reserved | Template by JDC</small></p>
-      </div>
-    </footer>
-
-	{block scripts}
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{$basePath}/js/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{$basePath}/js/bootstrap.min.js"></script>
-	<script src="{$basePath}/js/netteForms.js"></script>
-	<script src="{$basePath}/js/jquery.hashchange.min.js"></script>
-	<script src="{$basePath}/js/jquery.maskedinput.min.js"></script>
-	<script src="{$basePath}/js/typeahead.min.js"></script>
-	<script src="{$basePath}/js/grido.js"></script>
-	<script src="{$basePath}/js/grido.ext.js"></script>
-	<script src="{$basePath}/js/main.js"></script>
-	<script>
-		$('.grido').grido();
-	</script>
-	{/block}
-  </body>
+		{block scripts}
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="{$basePath}/js/jquery.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="{$basePath}/js/bootstrap.min.js"></script>
+		<script src="{$basePath}/js/netteForms.js"></script>
+		<script src="{$basePath}/js/jquery.hashchange.min.js"></script>
+		<script src="{$basePath}/js/jquery.maskedinput.min.js"></script>
+		<script src="{$basePath}/js/typeahead.min.js"></script>
+		<script src="{$basePath}/js/grido.js"></script>
+		<script src="{$basePath}/js/grido.ext.js"></script>
+		<script src="{$basePath}/js/main.js"></script>
+		<script>
+			$('.grido').grido();
+		</script>
+		{/block}
+	</body>
 </html>

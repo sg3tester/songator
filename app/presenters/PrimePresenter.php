@@ -136,5 +136,11 @@ abstract class PrimePresenter extends Nette\Application\UI\Presenter
 	protected function beforeRender() {
 		parent::beforeRender();
 		$this->template->portal = $this->status;
+		$this->template->robots = $this->settings->get('meta_robots', 'index, follow');
+		$this->template->description = $this->settings->get('meta_description', 'Songator 3 je otevřený DJ\'s playlist a hitparáda v jednom');
+		$this->template->sitename = $this->settings->get('meta_sitename', 'Songator 3');
+		$this->template->ogimage = $this->settings->get('meta_ogimage', '/img/songator3-logo.png');
+		$this->template->title = $this->settings->get('meta_title', 'DJ\'s open playlist');
+		$this->template->author = $this->settings->get('meta_author', 'JDC Entertainment');
 	}
 }

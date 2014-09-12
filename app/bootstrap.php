@@ -23,4 +23,10 @@ $configurator->addConfig(__DIR__ . '/config/config.local.neon');
 
 $container = $configurator->createContainer();
 //$container->application->catchExceptions = true;
+
+//Send songator identify header
+@header('X-Powered-By: Songator 3'); 
+@header('X-Version: '.Songator::VERSION_ID);
+@header('X-Runtime: Nette Framework'); 
+
 return $container;
