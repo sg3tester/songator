@@ -49,5 +49,3 @@ nette:
 In case of a problem, please contact jdc@2ne1.cz
 
 You find a bug? Report it in [Issue Tracker](https://github.com/JDCofficial/songator/issues?state=open)
-
-[![Build Status](https://travis-ci.org/JDCofficial/songator.png?branch=master)](https://travis-ci.org/JDCofficial/songator)
