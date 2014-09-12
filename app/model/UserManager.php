@@ -25,6 +25,13 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
 	/** @var Nette\Database\Context */
 	private $database;
 
+	/** @event 
+	 *  @param $userManager 
+	 *  @param $user
+	 *  @param $service
+	 */
+	public $onUserAdd = [];
+
 	public function __construct(Nette\Database\Context $database) {
 		$this->database = $database;
 	}
@@ -77,13 +84,15 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
 				throw new UserManagerException("Email $email již někdo používá", 44);
 			throw new UserManagerException("Chyba při registraci uživatele: Duplicitní uživatel", 45);
 		}
-		return $this->database->table(self::TABLE_NAME)->insert(array(
-					self::COLUMN_NAME => $username,
-					self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-					self::COLUMN_ROLE => "user",
-					self::AUTH_SERVICE => "songator",
-					self::COLUMN_EMAIL => $email
+		$user = $this->database->table(self::TABLE_NAME)->insert(array(
+			self::COLUMN_NAME => $username,
+			self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
+			self::COLUMN_ROLE => "user",
+			self::AUTH_SERVICE => "songator",
+			self::COLUMN_EMAIL => $email
 		));
+		$this->onUserAdd($this, $user, 'songator');
+		return $user;
 	}
 
 	/**
@@ -93,6 +102,7 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator 
 	 * @return \Nette\Database\Table\ActiveRow
 	 */
 	public function addViaTwitter($username, $token) {
+		//TODO: handle onUserAdd event with service Twitter
 		return $this->database->table(self::TABLE_NAME)->insert(array(
 					self::AUTH_SERVICE => "twitter",
 					self::COLUMN_NAME => $username,

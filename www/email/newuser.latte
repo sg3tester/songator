@@ -1,4 +1,16 @@
-{* Latte template *}
-
+{layout @email.latte}
+{block title}Děkujeme za registraci{/block}
 {block content}
-pokus lol
+<span style="font-size: 18px;font-weight: bold;">Vážený uživateli {$user->username}</span>
+<br/><br/>
+<span style="line-height: 24px">
+	Děkujeme Vám za registraci na portále Songator. Níže máte uvedeny Vaše přihlašovací údaje:
+	<br/><br/>
+	<b>Uživatelské jméno:</b> {$user->username}<br/>
+	<b>Email:</b> {$user->email}<br/>
+	<b>Heslo:</b> ********
+</span>
+<br/><br/>
+<span style="line-height: 24px">
+	Pokud neprovedete první přihlášení do 24 hodin od registrace, bude Váš účet smazán.
+</span>

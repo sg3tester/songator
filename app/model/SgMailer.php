@@ -33,6 +33,7 @@ class SgMailer extends \Nette\Object {
 		$template->registerHelperLoader('\Nette\Templating\Helpers::loader');
 		$template->setFile($dir . '/' . $message . '.latte');
 		$template->setParameters($args);
+		$template->recipient = $to;
 
 		$mail->setHtmlBody($template);
 		$this->mailer->send($mail);

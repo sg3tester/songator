@@ -16,6 +16,9 @@ php:
 	date.timezone: Europe/Prague
 	# zlib.output_compression: yes
 
+events:
+	subscribers:
+		- App\Events\MailEventSubscriber
 
 nette:
 	application:
