@@ -254,13 +254,13 @@ class SongPresenter extends BasePresenter {
 
 			if ($values->id) {
 				$this->zanry->find($values->id)->update($values);
-				$this->logger->log('Genre', 'edit', "%user% upravila(a) žánr {$val->name}");
+				$this->logger->log('Genre', 'edit', "%user% upravila(a) žánr {$values->name}");
 				$msg = $this->flashMessage("Žánr '$values->name' editován.", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
 			} else {
 				$this->zanry->add($values);
-				$this->logger->log('Genre', 'add', "%user% přidala(a) žánr {$val->name}");
+				$this->logger->log('Genre', 'add', "%user% přidala(a) žánr {$values->name}");
 				$msg = $this->flashMessage("Žánr '$values->name' přidán.", 'success');
 				$msg->title = 'A je tam!';
 				$msg->icon = 'check';
