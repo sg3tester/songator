@@ -83,6 +83,8 @@ class CmsPresenter extends BasePresenter {
 				$this->redirect ('list');
 			
 			$this['pageEditor']->setDefaults($r);
+			$this->template->page = $r;
+			$this->template->isEdit = true;
 		}
 	}
 	
