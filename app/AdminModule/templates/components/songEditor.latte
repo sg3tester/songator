@@ -16,6 +16,7 @@
 	<div class="form-group">
 		{label interpret_id /}
 		{input interpret_id class => 'form-control'}
+		<p class="help-block">Pokud nezadáte toto pole, asociace bude automaicky dohledána dle názvu interpreta, je-li tento interpret v registru.</p>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
@@ -34,6 +35,7 @@
 			<div class="form-group">
 				{label reason_code /}
 				{input reason_code class => 'form-control'}
+				<p class="help-block">Zadejte jen, pokud zamítáte song</p>
 			</div>
 		</div>
 	</div>
@@ -42,12 +44,14 @@
 			<div class="form-group">
 				{label zadatel /}
 				{input zadatel class => 'form-control', placeholder => 'Anonymní jméno'}
+				<p class="help-block">Necháte-li toto pole prázdné, bude automaticky doplněno dle ID uživatele</p>
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-group">
 				{label user_id /}
 				{input user_id class => 'form-control'}
+				<p class="help-block">Pokud nezadáte ani toto pole, jako žadatel songu budete označen(a) Vy.</p>
 			</div>
 		</div>
 	</div>
