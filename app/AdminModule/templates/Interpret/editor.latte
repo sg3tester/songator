@@ -20,6 +20,11 @@
 		<div class="box box-primary">
 			<div class="box-header">
 				<h3 class="box-title">Upravit interpreta</h3>
+				<div class="box-tools pull-right">
+					<a class="btn bg-blue btn-xs" n:href=":interpret:view $interpret->id" target="_blank">
+						<i class="fa fa-eye"></i> Náhled na interpreta
+					</a>
+				</div>
 			</div><!-- /.box-header -->
 			<div class="box-body table-responsive">
 				{include '../components/addInterpret.latte'}

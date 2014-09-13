@@ -337,15 +337,15 @@ class SongPresenter extends PrimePresenter {
 						return $item->vzkaz;
 					return $elm;
 				});
-				
+
 		$myLikes = $this->songList->getMyLikes($this->user);
 		$grid->addColumnText("likes", "")
 				->setCustomRender(function($item) use ($myLikes) {
 					$likes = count($item->related('song_likes'));
-					$isLiked = isset($myLikes[$item->id]) ?: false;
+					$isLiked = isset($myLikes[$item->id]) ? : false;
 					$el = Html::el('a')->addAttributes(['class' => 'like' . ($isLiked ? ' liked' : '')]);
 					$el->add(Html::el('i')->addAttributes(['class' => 'glyphicon glyphicon-heart']));
-					$el->add(Html::el()->setText(' '.$likes));
+					$el->add(Html::el()->setText(' ' . $likes));
 					$el->href($this->link('like!', ['id' => $item->id]));
 					return $el;
 				});
@@ -380,6 +380,14 @@ class SongPresenter extends PrimePresenter {
 								"class" => "btn btn-info",
 								"data-toggle" => "modal",
 								"data-target" => ".modal"
+			)));
+
+		if ($this->user->isAllowed("song", "edit"))
+			$grid->addActionHref("edit", "", "admin:song:editor")
+					->setIcon("pencil")
+					->setElementPrototype(Html::el("a", array(
+								"class" => "btn btn-default",
+								"target" => "_blank"
 			)));
 
 		$grid->setFilterRenderType(\Grido\Components\Filters\Filter::RENDER_OUTER);
