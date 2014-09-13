@@ -20,8 +20,9 @@ class Permissions extends \Nette\Security\Permission {
 		//Roles
 		$this->addRole("guest");
 		$this->addRole("user", "guest");
-		$this->addRole("asistent", "user");
-		$this->addRole("dj", "asistent");
+		$this->addRole("revizor", "user");
+		$this->addRole("asistent", "revizor");
+		$this->addRole("manager", "asistent");
 		$this->addRole("admin"); //Superuser
 		
 		//Admin areas
@@ -48,15 +49,16 @@ class Permissions extends \Nette\Security\Permission {
 		$this->allow("user", "ucp", array("view", "save"));
 		$this->allow("user", "privateMsg", "add");
 		
-		$this->allow("asistent", "admin", "view");
-		$this->allow("asistent", "song", array("approve", "reject"));
-		$this->allow("asistent", "wip", array("switch"));
-		$this->allow("asistent", "privateMsg", "view");
+		$this->allow("revizor", "song", array("approve", "reject"));
+		$this->allow("revizor", "wip", array("switch"));
+		$this->allow("revizor", "privateMsg", "view");
 		
-		$this->allow("dj", "song", array("manage", "add", "edit", "remove"));
-		$this->allow("dj", "interpret", array("manage", "add", "edit", "remove", "assoc", "approve"));
-		$this->allow("dj", "content", array("manage", "add", "edit", "remove"));
-		$this->allow("dj", "songator", "switch");
+		$this->allow("asistent", "admin", "view");
+		$this->allow("asistent", "song", array("manage", "add", "edit", "remove"));
+		$this->allow("asistent", "interpret", array("manage", "add", "edit", "remove", "assoc", "approve"));
+		
+		$this->allow("manager", "content", array("manage", "add", "edit", "remove"));
+		$this->allow("manager", "songator", "switch");
 		
 		$this->allow("admin", self::ALL, self::ALL); //Admin can all
 	}
