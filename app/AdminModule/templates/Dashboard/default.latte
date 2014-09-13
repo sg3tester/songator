@@ -12,7 +12,7 @@
                             <div class="small-box bg-aqua">
                                 <div class="inner">
                                     <h3>
-                                        {$songStats['all']}
+                                        {$songStats['all'] ?: '0'}
                                     </h3>
                                     <p>
                                         Songů v playlistu
@@ -31,7 +31,7 @@
                             <div class="small-box bg-green">
                                 <div class="inner">
                                     <h3>
-                                        {$songStats['approved']}
+                                        {$songStats['approved'] ?: '0'}
                                     </h3>
                                     <p>
                                         Schválených
@@ -50,7 +50,7 @@
                             <div class="small-box bg-yellow">
                                 <div class="inner">
                                     <h3>
-                                        {$songStats['waiting']}
+                                        {$songStats['waiting'] ?: '0'}
                                     </h3>
                                     <p>
                                         Čeká na schválení
@@ -69,7 +69,7 @@
                             <div class="small-box bg-red">
                                 <div class="inner">
                                     <h3>
-                                        {$songStats['rejected']}
+                                        {$songStats['rejected'] ?: '0'}
                                     </h3>
                                     <p>
                                         Zamítnutých
