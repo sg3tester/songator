@@ -31,6 +31,29 @@ class UserPresenter extends BasePresenter {
 		$this->template->profile = $user;
 	}
 
+	public function handleDelete($id) {
+		$user = $this->users->getUser($id);
+		if (!$user) {
+			$msg = $this->flashMessage("Tenhle uživatel neexistuje.", 'danger');
+			$msg->title = 'Oh shit!';
+			$msg->icon = 'warning';
+			$this->redirect('this');
+		}
+		try {
+			$user->delete();
+			$this->logger->log('User', 'delete', "%user% smazala(a) uživatele {$user->username}");
+			$msg = $this->flashMessage("Uživatel '$user->username' úspěšně smazán.", 'success');
+			$msg->title = 'Yehet!';
+			$msg->icon = 'check';
+		} catch (\PDOException $ex) {
+			\Nette\Diagnostics\Debugger::log($ex);
+			$msg = $this->flashMessage("Něco se podělalo. Zkuzte to prosím později.", 'danger');
+			$msg->title = 'Oh shit!';
+			$msg->icon = 'warning';
+		}
+		$this->redirect('this');
+	}
+
 	protected function createComponentUserList() {
 		$grid = new Grid();
 
