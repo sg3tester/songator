@@ -15,3 +15,4 @@ app/config/config.local.neon
 composer.lock
 /.idea
 /app/config/config.remote.neon
+/app/config/config.devel.neon
