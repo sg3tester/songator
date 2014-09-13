@@ -14,10 +14,10 @@
 final class Songator {
 
 	const NAME = "Songator",
-			VERSION = "3.0-dev",
+			VERSION = "3.0-beta",
 			VERSION_ID = 30000,
-			BUILD_DATE = "",
-			BUILD = "dev";
+			BUILD_DATE = "2014-09-13",
+			BUILD = "beta";
 
 
 	/**
