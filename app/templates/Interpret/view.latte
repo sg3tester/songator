@@ -8,9 +8,9 @@
 			{include '../components/flashes.latte'}
 			<p n:ifcontent>{$interpret->desc}</p>
 			{var $songy = $interpret->related("song")}
-			{ifset $status}{var $songy = $songy->where("status", $status)}{/ifset}
-			{default $status = ''}
-			<ul class="nav nav-tabs">
+		{ifset $status}{var $songy = $songy->where("status", $status)}{/ifset}
+		{default $status = ''}
+		<ul class="nav nav-tabs">
 			<li n:class="!$status ? active"><a n:href="this status => null">Vše</a></li>
 			<li n:class="$status == 'approved' ? active"><a n:href="this status => 'approved'">Zařazené</a></li>
 			<li n:class="$status == 'waiting' ? active"><a n:href="this status => 'waiting'">Čekající</a></li>
@@ -20,57 +20,67 @@
 					<a class="btn btn-success btn-sm" n:href="Song:add 'interpret' => $interpret->nazev"><i class="glyphicon glyphicon-plus"></i> Přidat song</a>
 				</div>
 			</li>
-			</ul>
-			<br/>
-			<p class="text-right">Interpret má v databázi <strong>{count($songy)}</strong> songů.</p>
-			{foreach $songy as $song}
-				<div class="song-wrapper stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
-					<a n:href="song:view $song->id"><img src="{if json_decode($song->image)}{json_decode($song->image)[1]->{'#text'}}{else}{$basePath}/img/song.png{/if}" class="song-image" /></a>
-					<div class="song-box">
-						<div class="page-header">
-							<h4>
-								<a n:href="song:view $song->id">{$song->interpret_name} - {$song->name}</a>
-								<small>
-									{$song->zadatel}
-									<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
-									<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
-									<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
-									<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
-								</small>
-								<small class="float-right">{$song->zanr->name}</small>
-							</h4>
-						</div>
-						<p n:ifcontent>{$song->vzkaz}</p>
-						<p n:if="$song->note"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
-						{*<div class="btn-group">
-							<a title="Detail" n:href="song:view $song->id" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-search"></i></a>
-							<a title="Schválit" n:href="song:approve $song->id" class="btn btn-success btn-sm" target="_blank"><i class="glyphicon glyphicon-ok"></i></a>
-							<a title="Zamítnout" n:href="song:reject $song->id" class="btn btn-danger btn-sm" target="_blank"><i class="glyphicon glyphicon-remove"></i></a>
-							<a title="Přehrát" n:href="song:play $song->id" class="btn btn-info btn-sm" target="_blank"><i class="glyphicon glyphicon-play"></i></a>
-						</div>*}
+		</ul>
+		<br/>
+		<p class="text-right">Interpret má v databázi <strong>{count($songy)}</strong> songů.</p>
+		{foreach $songy as $song}
+			<div class="song-wrapper stripe {if $song->status == 'approved'}stripe-success{/if}{if $song->status == 'waiting'}stripe-warning{/if}{if $song->status == 'rejected'}stripe-danger{/if}">
+				<a n:href="song:view $song->id"><img src="{if json_decode($song->image)}{json_decode($song->image)[1]->{'#text'}}{else}{$basePath}/img/song.png{/if}" class="song-image" /></a>
+				<div class="song-box">
+					<div class="page-header">
+						<h4>
+							<a n:href="song:view $song->id">{$song->interpret_name} - {$song->name}</a>
+							<small>
+								{$song->zadatel}
+								<i n:if="$song->pecka" class="glyphicon glyphicon-star pecka" title="Pecka"></i>
+								<i n:if="$song->instro" class="glyphicon glyphicon-music instro" title="K dispozici s instrumentálkou"></i>
+								<i n:if="$song->remix" class="glyphicon glyphicon-headphones remix" title="Tenhle song je v remixu!"></i>
+								<i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe: {$song->note}"></i>
+							</small>
+							<small class="float-right">{$song->zanr->name}</small>
+						</h4>
 					</div>
+					<p n:ifcontent>
+						{if $song->private_vzkaz}
+							{if $user->isAllowed('privateMsg','view') || $user->id == $song->user_id}
+								<i class="glyphicon glyphicon-eye-open" title="Tento vzkaz je soukromý"></i> {$song->vzkaz}
+							{else}
+								<span class="msg-hidden"><i class="glyphicon glyphicon-eye-close"></i> Vzkaz pro DJe je soukromý</span>
+							{/if}
+						{else}
+							{$song->vzkaz}
+						{/if}
+					</p>
+					<p n:if="$song->note"><i n:if="$song->note" class="glyphicon glyphicon-info-sign note" title="Poznámka DJe"></i> {$song->note}</p>
+					{*<div class="btn-group">
+						<a title="Detail" n:href="song:view $song->id" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-search"></i></a>
+						<a title="Schválit" n:href="song:approve $song->id" class="btn btn-success btn-sm" target="_blank"><i class="glyphicon glyphicon-ok"></i></a>
+						<a title="Zamítnout" n:href="song:reject $song->id" class="btn btn-danger btn-sm" target="_blank"><i class="glyphicon glyphicon-remove"></i></a>
+						<a title="Přehrát" n:href="song:play $song->id" class="btn btn-info btn-sm" target="_blank"><i class="glyphicon glyphicon-play"></i></a>
+					</div>*}
 				</div>
+			</div>
+		{/foreach}
+	</div>
+	<div class="col-md-3">
+		<div class="profile-pic">
+			{foreach $lastfm->image as $image}
+				{if $image->size == 'extralarge'}
+					{var $image_src = (array)$image}
+					<img src="{$image_src['#text']}" alt="{$interpret->nazev}" class="img-thumbnail" />
+				{/if}
 			{/foreach}
 		</div>
-		<div class="col-md-3">
-			<div class="profile-pic">
-				{foreach $lastfm->image as $image}
-					{if $image->size == 'extralarge'}
-						{var $image_src = (array)$image}
-						<img src="{$image_src['#text']}" alt="{$interpret->nazev}" class="img-thumbnail" />
-					{/if}
-				{/foreach}
-			</div>
-			{var $aliasy = $interpret->related("interpret")}
-			<div n:if="count($aliasy)" class="panel panel-default">
-				<!-- Default panel contents -->
-				<div class="panel-heading">Aliasy</div>
-				<ul class="list-group">
+		{var $aliasy = $interpret->related("interpret")}
+		<div n:if="count($aliasy)" class="panel panel-default">
+			<!-- Default panel contents -->
+			<div class="panel-heading">Aliasy</div>
+			<ul class="list-group">
 				{foreach $aliasy as $alias}
 					<li class="list-group-item">{$alias->nazev}</li>
-				{/foreach}
-				</ul>
-			</div>
+					{/foreach}
+			</ul>
 		</div>
 	</div>
+</div>
 </div>
