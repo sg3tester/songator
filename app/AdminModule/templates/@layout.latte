@@ -132,7 +132,7 @@
                                 <span class="label label-warning">{$songStats['waiting']}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">{$songStats['waiting']} songů čeká ke schválení</li>
+                                <li class="header">{$songStats['waiting'] ?: '0'} songů čeká ke schválení</li>
                                 <li>
                                     <!-- inner menu: contains the actual data -->
                                     <ul class="menu">
